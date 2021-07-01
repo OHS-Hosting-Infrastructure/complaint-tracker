@@ -8,7 +8,7 @@ visibility into status and actions taken to address a complaint.
 ### Local Setup
 
 1. Install Ruby 3.0.1
-1. Install NodeJS 14.16.1
+1. Install NodeJS 14.17.2
 1. Install PostgreSQL 12.x: `brew install postgresql@12`
 1. Install Ruby dependencies: `bundle install`
 1. Install JS dependencies: `yarn install`
