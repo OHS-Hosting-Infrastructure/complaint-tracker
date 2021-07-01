@@ -18,7 +18,10 @@ visibility into status and actions taken to address a complaint.
 
 ### Running Tests
 
-`bundle exec rake spec`
+Ruby linter: `bundle exec rake standard`
+Tests: `bundle exec rake spec`
+
+Run everything: `bundle exec rake`
 
 ## CI/CD
 
