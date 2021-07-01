@@ -1,24 +1,33 @@
-# README
+# Complaint Tracker
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The Complaint Tracker is intended to connect complaints data across the OHS ecosystem for greater
+visibility into status and actions taken to address a complaint.
 
-Things you may want to cover:
+## Development
 
-* Ruby version
+### Local Setup
 
-* System dependencies
+1. Install Ruby 3.0.1
+1. Install NodeJS 14.16.1
+1. Install PostgreSQL 12.x: `brew install postgresql@12`
+1. Install Ruby dependencies: `bundle install`
+1. Install JS dependencies: `yarn install`
+1. Create database: `bundle exec rake db:create`
+1. Run migrations: `bundle exec rake db:migrate`
+1. Run the server: `bundle exec rails s`
 
-* Configuration
+### Running Tests
 
-* Database creation
+`bundle exec rake spec`
 
-* Database initialization
+## CI/CD
 
-* How to run the test suite
+TBD
 
-* Services (job queues, cache servers, search engines, etc.)
+### Deployment
 
-* Deployment instructions
+TBD
 
-* ...
+## Documentation
+
+Architectural Decision Records are stored in `doc/adr`
