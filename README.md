@@ -7,18 +7,18 @@ visibility into status and actions taken to address a complaint.
 
 ### Local Setup
 
-1. Install Ruby 3.0.1
-1. Install NodeJS 14.17.2
-1. Install PostgreSQL 12.x: `brew install postgresql@12`
+* Install Ruby 3.0.1
+* Install NodeJS 14.17.2
+* Install PostgreSQL 12.x: `brew install postgresql@12`
   * Add postgres to your PATH if it wasn't done automatically
   `echo 'export PATH="/usr/local/opt/postgresql@12/bin:$PATH"' >> ~/.zshrc`
   * Start the server
   `brew services start postgresql@12`
-1. Install Ruby dependencies: `bundle install`
-1. Install JS dependencies: `yarn install`
-1. Create database: `bundle exec rake db:create`
-1. Run migrations: `bundle exec rake db:migrate`
-1. Run the server: `bundle exec rails s`
+* Install Ruby dependencies: `bundle install`
+* Install JS dependencies: `yarn install`
+* Create database: `bundle exec rake db:create`
+* Run migrations: `bundle exec rake db:migrate`
+* Run the server: `bundle exec rails s`
 
 ### Running Tests
 
