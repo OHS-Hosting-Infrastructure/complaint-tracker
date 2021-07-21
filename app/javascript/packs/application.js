@@ -11,3 +11,6 @@ import "channels"
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+import 'uswds/dist/css/uswds.min.css'
+import 'uswds/dist/js/uswds.min.js'
