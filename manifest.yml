@@ -1,0 +1,5 @@
+---
+applications:
+- name: complaints-tracker
+  buildpacks: 
+    - https://github.com/cloudfoundry/ruby-buildpack.git
