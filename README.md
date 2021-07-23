@@ -20,12 +20,30 @@ visibility into status and actions taken to address a complaint.
 * Run migrations: `bundle exec rake db:migrate`
 * Run the server: `bundle exec rails s`
 
+Consider [setting up automatic linting and testing](#set-up-automatic-linting-and-testing) while you're at it!
+
 ### Running Tests
 
 Ruby linter: `bundle exec rake standard`
 Tests: `bundle exec rake spec`
 
 Run everything: `bundle exec rake`
+
+### Set up automatic linting and testing
+
+If you would like the linter to run before you commit, symlink `.githooks/pre-commit` to `.git/hooks/pre-commit`.
+
+```bash
+cd .git/hooks
+ln -s ../../.githooks/pre-commit pre-commit
+```
+
+To bypass the hook in order to commit something that's not perfect yet,
+run one of the following:
+
+```bash
+git commit -n  # --no-verify
+```
 
 ## CI/CD
 
