@@ -14,13 +14,54 @@ on:
       - 'docs/**'
 
 jobs:
-  test:
+  build_and_test:
+    name: Build and test
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: complaint_tracker
+          POSTGRES_DB: complaint_tracker_test
+          POSTGRES_PASSWORD: postgres
+        ports: 
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - uses: actions/checkout@v2
+      
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
+      
       - name: Install dependencies
         run: bundle install
+
+      - name: Setup test database
+        env:
+          RAILS_ENV: test
+          POSTGRES_HOST: localhost
+          POSTGRES_DB: complaint_tracker_test
+          POSTGRES_USER: complaint_tracker 
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
+        run: |
+          cp config/database.ci.yml config/database.yml
+          bundle exec rake db:create db:migrate
+
+      - name: Precompile assets
+        run: bundle exec rake assets:precompile
+      
       - name: Run tests
+        env:
+          RAILS_ENV: test
+          POSTGRES_HOST: localhost
+          POSTGRES_DB: complaint_tracker_test
+          POSTGRES_USER: complaint_tracker 
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }} 
         run: bundle exec rake
