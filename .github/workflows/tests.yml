@@ -44,13 +44,8 @@ jobs:
       - name: Setup test database
         env:
           RAILS_ENV: test
-          POSTGRES_HOST: localhost
-          POSTGRES_DB: complaint_tracker_test
-          POSTGRES_USER: complaint_tracker 
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
+          DATABASE_URL: postgres://complaint_tracker:postgres@localhost:5432/complaint_tracker_test
         run: |
-          cp config/database.ci.yml config/database.yml
           bundle exec rake db:create db:migrate
 
       - name: Precompile assets
@@ -59,9 +54,5 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
-          POSTGRES_HOST: localhost
-          POSTGRES_DB: complaint_tracker_test
-          POSTGRES_USER: complaint_tracker 
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }} 
+          DATABASE_URL: postgres://complaint_tracker:postgres@localhost:5432/complaint_tracker_test
         run: bundle exec rake
