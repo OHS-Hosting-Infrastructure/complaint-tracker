@@ -12,5 +12,5 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
-import 'uswds/dist/css/uswds.min.css'
-import 'uswds/dist/js/uswds.min.js'
+import 'uswds/src/stylesheets/uswds.scss'
+require('uswds')
