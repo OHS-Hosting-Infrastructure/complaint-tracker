@@ -13,4 +13,5 @@ Turbolinks.start()
 ActiveStorage.start()
 
 import 'uswds/src/stylesheets/uswds.scss'
+
 require('uswds')
