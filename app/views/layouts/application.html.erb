@@ -12,6 +12,16 @@
   </head>
 
   <body>
-    <%= yield %>
+    <a class="usa-skipnav" href="#main-content">Skip to main content</a>
+    <%= render 'usa_banner' %>
+    <div class="usa-overlay"></div>
+    <%= render 'header' %>
+    <main class="usa-layout-docs usa-section" id="main-content">
+      <div class="grid-container">
+        <div class="usa-layout-docs__main usa-prose">
+          <%= yield %>
+        </div>
+      </div>
+    </main>
   </body>
 </html>
