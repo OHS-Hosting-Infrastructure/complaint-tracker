@@ -7,11 +7,21 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
     <%= stylesheet_pack_tag 'application' %>
   </head>
 
   <body>
-    <%= yield %>
+    <a class="usa-skipnav" href="#main-content">Skip to main content</a>
+    <%= render 'usa_banner' %>
+    <div class="usa-overlay"></div>
+    <%= render 'header' %>
+    <main class="usa-layout-docs usa-section" id="main-content">
+      <div class="grid-container">
+        <div class="usa-layout-docs__main usa-prose">
+          <%= yield %>
+        </div>
+      </div>
+    </main>
   </body>
 </html>
