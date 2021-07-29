@@ -18,7 +18,7 @@ jobs:
           POSTGRES_USER: complaint_tracker
           POSTGRES_DB: complaint_tracker_test
           POSTGRES_PASSWORD: postgres
-        ports: 
+        ports:
           - 5432:5432
         options: >-
           --health-cmd pg_isready
@@ -28,10 +28,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
-      
+
       - name: Install dependencies
         run: bundle install
 
@@ -51,7 +51,7 @@ jobs:
           DATABASE_URL: postgres://complaint_tracker:postgres@localhost:5432/complaint_tracker_test
         run: |
           bundle exec rails server &
-          sleep 5 && 
+          sleep 5 &&
           curl http://localhost:3000 -I
 
       - name: Run pa11y-ci.
@@ -70,13 +70,12 @@ jobs:
         uses: thollander/actions-comment-pull-request@master
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          message: '
-<details>
-  <summary>Pa11y testing results</summary>
+          message: |
+            <details>
+              <summary>Pa11y testing results</summary>
 
-  ```${{ steps.pa11y_output.outputs.content }}```
-
-</details>'
+              ```${{ steps.pa11y_output.outputs.content }}```
+            </details>
 
       - name: Check for pa11y failures.
         if: contains(steps.pa11y_output.outputs.content, 'errno 2')
