@@ -1,0 +1,61 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: pa11y tests
+
+on: [pull_request]
+
+jobs:
+   build_and_test:
+    name: Build and test
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: complaint_tracker
+          POSTGRES_DB: complaint_tracker_test
+          POSTGRES_PASSWORD: postgres
+        ports: 
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+      
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Setup test database
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://complaint_tracker:postgres@localhost:5432/complaint_tracker_test
+        run: |
+          bundle exec rake db:create db:migrate
+
+      - name: Install pa11y-ci dependencies.
+        run: yarn install
+
+      - name: Start up rails server in the background
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://complaint_tracker:postgres@localhost:5432/complaint_tracker_test
+        run: |
+          bundle exec rails server &
+          sleep 5 && 
+          curl http://localhost:3000 -I
+
+      - name: Run pa11y-ci.
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://complaint_tracker:postgres@localhost:5432/complaint_tracker_test
+        run: yarn run pa11y-ci

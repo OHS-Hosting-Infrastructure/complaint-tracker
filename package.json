@@ -1,6 +1,9 @@
 {
   "name": "complaint-tracker",
   "private": true,
+  "scripts": {
+    "pa11y-ci": "pa11y-ci"
+  },
   "dependencies": {
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
@@ -13,6 +16,7 @@
   },
   "version": "0.1.0",
   "devDependencies": {
+    "pa11y-ci": "^2.4.2",
     "webpack-dev-server": "^3.11.2"
   },
   "resolutions": {
