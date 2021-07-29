@@ -9,7 +9,7 @@ RSpec.describe "Complaints", type: :request do
 
     it "renders the text" do
       get root_path
-      expect(response.body).to include("OHS Complaints Tracker")
+      expect(response.body).to include("My complaints")
     end
   end
 end

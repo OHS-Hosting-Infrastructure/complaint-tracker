@@ -1,0 +1,84 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: pa11y tests
+
+on: [pull_request]
+
+jobs:
+   build_and_test:
+    name: Build and test
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: complaint_tracker
+          POSTGRES_DB: complaint_tracker_test
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Setup test database
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://complaint_tracker:postgres@localhost:5432/complaint_tracker_test
+        run: |
+          bundle exec rake db:create db:migrate
+
+      - name: Install pa11y-ci dependencies.
+        run: yarn install
+
+      - name: Start up rails server in the background
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://complaint_tracker:postgres@localhost:5432/complaint_tracker_test
+        run: |
+          bundle exec rails server &
+          sleep 5 &&
+          curl http://localhost:3000 -I
+
+      - name: Run pa11y-ci.
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://complaint_tracker:postgres@localhost:5432/complaint_tracker_test
+        run: yarn run pa11y-ci 2>&1 | tee pa11y_output.txt
+
+      - name: Read pa11y_output file.
+        id: pa11y_output
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./pa11y_output.txt
+
+      - name: Comment on pull request.
+        uses: thollander/actions-comment-pull-request@master
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          message: |
+            <details>
+              <summary>Pa11y testing results</summary>
+
+              ```${{ steps.pa11y_output.outputs.content }}```
+            </details>
+
+      - name: Check for pa11y failures.
+        if: contains(steps.pa11y_output.outputs.content, 'errno 2')
+        run: |
+          echo "::error::The site is failing accessibility tests. Please review the comment in the pull request or the pa11y-ci step in the workflow for details."
+          exit 1
