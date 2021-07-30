@@ -10,7 +10,7 @@ Accepted
 
 Users of the complaint tracker need to login for access to sensitive data.
 
-All users will already have an HSES account, and HSES is the main sore of complaint data currently.
+All users will already have an HSES account, and HSES is the main source of complaint data currently.
 
 HSES is also already a provider of OAuth2 sign-in services to other OHS applications.
 
