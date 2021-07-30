@@ -8,6 +8,11 @@
           </a>
         </em>
       </div>
+      <% if user_signed_in? %>
+        <%= link_to "Logout #{current_user}", logout_path, class: "usa-button" %>
+      <% else %>
+        <%= button_to "Login", "/auth/hses", class: "usa-button" %>
+      <% end %>
     </div>
   </div>
 </header>

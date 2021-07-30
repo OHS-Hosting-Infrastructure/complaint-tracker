@@ -57,4 +57,8 @@ Rails.application.configure do
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
+
+  config.x.hses.auth_base = "https://staging.hses.ohs.acf.hhs.gov"
+  config.x.hses.client_id = Rails.application.credentials.hses_client_id
+  config.x.hses.client_secret = Rails.application.credentials.hses_client_secret
 end

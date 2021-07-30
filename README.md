@@ -19,6 +19,12 @@ visibility into status and actions taken to address a complaint.
 * Create database: `bundle exec rake db:create`
 * Run migrations: `bundle exec rake db:migrate`
 * Run the server: `bundle exec rails s`
+* Visit the site: http://localhost:8080
+
+#### Authentication
+
+The Complaint Tracker is utilizing the HSES Staging environment for non-production authentication. If you need an account
+reach out in the #ph-ohs-oneteam channel for help in requesting one.
 
 Consider [setting up automatic linting and testing](#set-up-automatic-linting-and-testing) while you're at it!
 
@@ -81,6 +87,6 @@ This will create a new, numbered ADR in the `doc/adr` directory.
 * Merge after review.
   * Squash commits into meaningful chunks of work and ensure that your commit messages convey meaning.
 
-## Story Acceptance 
+## Story Acceptance
 
 TBD

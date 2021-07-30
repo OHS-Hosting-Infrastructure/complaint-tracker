@@ -52,7 +52,7 @@ jobs:
         run: |
           bundle exec rails server &
           sleep 5 &&
-          curl http://localhost:3000 -I
+          curl http://localhost:8080 -I
 
       - name: Run pa11y-ci.
         env:
