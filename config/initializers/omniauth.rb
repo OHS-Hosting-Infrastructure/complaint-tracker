@@ -3,7 +3,7 @@ module OmniAuth
     class HsesOauth < OmniAuth::Strategies::OAuth2
       option :name, "hses"
       option :client_options, {
-        site: "https://staging.hses.ohs.acf.hhs.gov", # TODO - variable
+        site: Rails.configuration.x.hses.auth_base,
         token_url: "/auth/oauth/token",
         authorize_url: "/auth/oauth/authorize",
         auth_scheme: :basic_auth
@@ -46,5 +46,5 @@ module OmniAuth
 end
 
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :hses_oauth, Rails.application.credentials.hses_client_id, Rails.application.credentials.hses_client_secret
+  provider :hses_oauth, Rails.configuration.x.hses.client_id, Rails.configuration.x.hses.client_secret
 end
