@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe ApplicationHelper, type: :helper do
   describe "#current_user" do
     it "returns the username" do
-      assign :current_user, "Test User"
+      session["username"] = "Test User"
       expect(helper.current_user).to eq "Test User"
     end
   end
