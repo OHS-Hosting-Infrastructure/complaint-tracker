@@ -2,9 +2,14 @@ require "rails_helper"
 
 RSpec.describe ApplicationHelper, type: :helper do
   describe "#current_user" do
+    session_user = {
+      name: "Test User",
+      email: "testuser@example.com"
+    }
+
     it "returns the username" do
-      session["username"] = "Test User"
-      expect(helper.current_user).to eq "Test User"
+      session["user"] = session_user
+      expect(helper.current_user).to eq session_user
     end
   end
 
