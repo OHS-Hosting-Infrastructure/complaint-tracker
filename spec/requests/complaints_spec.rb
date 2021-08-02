@@ -20,7 +20,7 @@ RSpec.describe "Complaints", type: :request do
           name: "Test User",
           email: "testuser@example.com"
         }.with_indifferent_access
-        allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).and_return user
+        allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("user").and_return user
       end
 
       it "welcomes the user" do
