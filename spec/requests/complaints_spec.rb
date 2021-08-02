@@ -15,17 +15,22 @@ RSpec.describe "Complaints", type: :request do
     end
 
     describe "with an authorized user" do
-      before do
-        user = {
+      let(:user) {
+        {
           name: "Test User",
-          email: "testuser@example.com"
+          uid: "testuser@example.com"
         }.with_indifferent_access
+      }
+
+      before do
+        # There are some other session requests before getting to session["user"]
+        allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[])
         allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("user").and_return user
       end
 
       it "welcomes the user" do
         get root_path
-        expect(response.body).to include("Test User's complaints")
+        expect(response.body).to include("#{user["name"]}'s complaints")
       end
     end
   end
