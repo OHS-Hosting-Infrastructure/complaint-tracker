@@ -1,6 +1,9 @@
 class SessionsController < ApplicationController
   def create
-    session["username"] = auth_info["uid"]
+    session["user"] = {
+      uid: auth_info["uid"],
+      name: auth_info["info"]["name"]
+    }
     Rails.logger.debug { "Got auth_info: #{JSON.pretty_generate(auth_info)}" }
     redirect_to root_path
   end

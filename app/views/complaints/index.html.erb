@@ -1,1 +1,6 @@
-<h1>My complaints</h1>
+<h1>Complaints List</h1>
+<% if user_signed_in? %>
+  <div><%= current_user["name"]%>'s complaints</div>
+<% else %>
+  <div>Please log in to access your complaints list</div>
+<% end %>
