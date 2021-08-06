@@ -3,7 +3,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: tests 
+name: tests
 
 on:
   push:
@@ -24,7 +24,7 @@ jobs:
           POSTGRES_USER: complaint_tracker
           POSTGRES_DB: complaint_tracker_test
           POSTGRES_PASSWORD: postgres
-        ports: 
+        ports:
           - 5432:5432
         options: >-
           --health-cmd pg_isready
@@ -34,10 +34,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
-      
+
       - name: Install dependencies
         run: bundle install
 
@@ -50,9 +50,23 @@ jobs:
 
       - name: Precompile assets
         run: bundle exec rake assets:precompile
-      
+
       - name: Run tests
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://complaint_tracker:postgres@localhost:5432/complaint_tracker_test
-        run: bundle exec rake
+        run: bundle exec rake spec
+
+  standard_ruby:
+    name: Standard Ruby Linter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+
+      - name: Install dependencies
+        run: bundle install
+      - name: Run linter
+        run: bundle exec rake standard

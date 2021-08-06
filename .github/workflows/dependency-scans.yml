@@ -1,0 +1,43 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Dependency Scans
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+      - 'docs/**'
+  schedule:
+    - cron: '35 18 * * 3'
+
+jobs:
+  bundle-audit:
+    name: Bundle audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+      - name: Install dependencies
+        run: bundle install
+      - name: Scan
+        run: bundle exec rake bundle:audit
+
+  yarn-audit:
+    name: Yarn audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+      - name: Install dependencies
+        run: bundle install
+      - name: Install javascript dependencies
+        run: yarn install --frozen-lockfile
+      - name: Scan
+        run: bundle exec rake yarn:audit
