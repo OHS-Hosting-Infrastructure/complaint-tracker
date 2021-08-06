@@ -30,8 +30,11 @@ Consider [setting up automatic linting and testing](#set-up-automatic-linting-an
 
 ### Running Tests
 
-Ruby linter: `bundle exec rake standard`
 Tests: `bundle exec rake spec`
+Ruby linter: `bundle exec rake standard`
+Ruby dependency checks: `bundle exec rake bundle:audit`
+JS dependency checks: `bundle exec rake yarn:audit`
+Ruby static security scan: `bundle exec rake brakeman`
 
 Run everything: `bundle exec rake`
 
