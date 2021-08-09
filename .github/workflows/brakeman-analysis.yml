@@ -33,7 +33,7 @@ jobs:
     - name: Brakeman Scan
       continue-on-error: true
       run: |
-        brakeman -f sarif -o output.sarif.json .
+        bundle exec brakeman -f sarif -o output.sarif.json .
 
     # Upload the SARIF file generated in the previous step
     - name: Upload SARIF
