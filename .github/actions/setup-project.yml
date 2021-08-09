@@ -1,0 +1,10 @@
+name: "Set up project"
+description: "Set up project and dependencies"
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+
+    - name: Install ruby dependencies
+      run: bundle install

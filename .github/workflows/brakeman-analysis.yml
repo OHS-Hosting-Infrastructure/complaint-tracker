@@ -10,31 +10,20 @@ on:
     # The branches below must be a subset of the branches above
     branches: [ main ]
   schedule:
-    - cron: '29 18 * * 3'
+    # cron format: 'minute hour dayofmonth month dayofweek'
+    # this will run at noon UTC each Monday (7am EST / 8am EDT)
+    - cron: '0 12 * * 1'
 
 jobs:
   brakeman-scan:
     name: Brakeman Scan
     runs-on: ubuntu-latest
     steps:
-    # Checkout the repository to the GitHub Actions runner
-    - name: Checkout
-      uses: actions/checkout@v2
-
-    # Customize the ruby version depending on your needs
-    - name: Setup Ruby
-      uses: actions/setup-ruby@v1
-      with:
-        ruby-version: '3.0.2'
-
-    - name: Setup Brakeman
-      env:
-        BRAKEMAN_VERSION: '5.1.1' # SARIF support is provided in Brakeman version 4.10+
-      run: |
-        gem install brakeman --version $BRAKEMAN_VERSION
+    - uses: actions/checkout@v2
+    - uses: ./.github/actions/setup-project
 
     # Execute Brakeman CLI and generate a SARIF output with the security issues identified during the analysis
-    - name: Scan
+    - name: Brakeman Scan
       continue-on-error: true
       run: |
         brakeman -f sarif -o output.sarif.json .

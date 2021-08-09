@@ -13,7 +13,9 @@ on:
     paths-ignore:
       - 'docs/**'
   schedule:
-    - cron: '35 18 * * 3'
+    # cron format: 'minute hour dayofmonth month dayofweek'
+    # this will run at noon UTC every day (7am EST / 8am EDT)
+    - cron: '0 12 * * *'
 
 jobs:
   bundle-audit:
@@ -21,11 +23,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-      - name: Install dependencies
-        run: bundle install
-      - name: Scan
+      - uses: ./.github/actions/setup-project
+
+      - name: Scan ruby gems
         run: bundle exec rake bundle:audit
 
   yarn-audit:
@@ -33,11 +33,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-      - name: Install dependencies
-        run: bundle install
-      - name: Install javascript dependencies
-        run: yarn install --frozen-lockfile
-      - name: Scan
+      - uses: ./.github/actions/setup-project
+      - uses: ./.github/actions/setup-javascript
+
+      - name: Scan npm packages
         run: bundle exec rake yarn:audit
