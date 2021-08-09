@@ -1,3 +1,5 @@
+# currently not used because `uses` is not supported within composite steps
+# https://github.com/actions/runner/pull/1040
 name: "Set up javascript"
 description: "Set up javascript and yarn dependencies"
 runs:

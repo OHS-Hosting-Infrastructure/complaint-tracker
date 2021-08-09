@@ -23,7 +23,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/setup-project
+
+      # - uses: ./.github/actions/setup-project
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          # bundler-cache automatically installs gems
+          bundler-cache: true
+          cache-version: 1
 
       - name: Scan ruby gems
         run: bundle exec rake bundle:audit
@@ -33,8 +40,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/setup-project
-      - uses: ./.github/actions/setup-javascript
+
+      # - uses: ./.github/actions/setup-project
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          # bundler-cache automatically installs gems
+          bundler-cache: true
+          cache-version: 1
+
+      # - uses: ./.github/actions/setup-javascript
+      - name: Set up node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.17.2'
+          cache: 'yarn'
+      - name: Install yarn dependencies
+        run: yarn install --frozen-lockfile
 
       - name: Scan npm packages
         run: bundle exec rake yarn:audit
