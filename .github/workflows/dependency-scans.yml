@@ -3,7 +3,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: tests
+name: Dependency Scans
 
 on:
   push:
@@ -12,52 +12,14 @@ on:
     branches: [ main ]
     paths-ignore:
       - 'docs/**'
+  schedule:
+    # cron format: 'minute hour dayofmonth month dayofweek'
+    # this will run at noon UTC every day (7am EST / 8am EDT)
+    - cron: '0 12 * * *'
 
 jobs:
-  build_and_test:
-    name: Build and test
-    runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: complaint_tracker
-          POSTGRES_DB: complaint_tracker_test
-          POSTGRES_PASSWORD: postgres
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    steps:
-      - uses: actions/checkout@v2
-
-      # TODO: switch to run action once composite actions support `uses`
-      #- uses: ./.github/actions/setup-project
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          # bundler-cache automatically installs gems
-          bundler-cache: true
-          cache-version: 1
-
-      - uses: ./.github/actions/setup-database
-
-      # Precompiling assets required for request specs
-      - name: Precompile assets
-        run: bundle exec rake assets:precompile
-
-      - name: Run rspec tests
-        env:
-          RAILS_ENV: test
-          DATABASE_URL: postgres://complaint_tracker:postgres@localhost:5432/complaint_tracker_test
-        run: bundle exec rake spec
-
-  standard_ruby:
-    name: Standard Ruby Linter
+  bundle-audit:
+    name: Bundle audit
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -71,5 +33,33 @@ jobs:
           bundler-cache: true
           cache-version: 1
 
-      - name: Run linter
-        run: bundle exec rake standard
+      - name: Scan ruby gems
+        run: bundle exec rake bundle:audit
+
+  yarn-audit:
+    name: Yarn audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # TODO: switch to run action once composite actions support `uses`
+      # - uses: ./.github/actions/setup-project
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          # bundler-cache automatically installs gems
+          bundler-cache: true
+          cache-version: 1
+
+      # TODO: switch to run action once composite actions support `uses`
+      # - uses: ./.github/actions/setup-javascript
+      - name: Set up node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.17.2'
+          cache: 'yarn'
+      - name: Install yarn dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Scan npm packages
+        run: bundle exec rake yarn:audit

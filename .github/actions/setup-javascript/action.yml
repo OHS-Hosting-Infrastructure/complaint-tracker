@@ -1,0 +1,15 @@
+# currently not used because `uses` is not supported within composite steps
+# https://github.com/actions/runner/pull/1040
+name: "Set up javascript"
+description: "Set up javascript and yarn dependencies"
+runs:
+  using: "composite"
+  steps:
+    - name: Set up node
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14.17.2'
+        cache: 'yarn'
+
+    - name: Install yarn dependencies
+      run: yarn install --frozen-lockfile
