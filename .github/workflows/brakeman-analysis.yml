@@ -21,6 +21,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    # TODO: switch to run action once composite actions support `uses`
     # - uses: ./.github/actions/setup-project
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
