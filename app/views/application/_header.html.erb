@@ -1,18 +1,25 @@
 <header class="usa-header usa-header--basic">
-  <div class="usa-nav-container">
-    <div class="usa-navbar">
-      <div class="usa-logo" id="basic-logo">
+  <div class="grid-container">
+    <div class="grid-row">
+      <div class="usa-logo grid-col-6" id="basic-logo">
         <em class="usa-logo__text">
-          <a href="javascript:void(0)" title="OHS Complaint Tracker">
             OHS Complaint Tracker
-          </a>
         </em>
       </div>
-      <% if user_signed_in? %>
-        <%= link_to "Logout #{current_user["uid"]}", logout_path, class: "usa-button", data: {turbolinks: false} %>
-      <% else %>
-        <%= button_to "Login", "/auth/hses", class: "usa-button" %>
-      <% end %>
+      <div class="grid-row grid-col-6 grid-gap flex-align-center flex-justify-end">
+        <% if user_signed_in? %>
+          <div class="grid-col-auto">
+            <%= current_user["name"] %>
+          </div>
+          <div class="grid-col-auto">
+            <%= button_to "Log out", logout_path, class: "usa-button usa-button--accent-warm", data: {turbolinks: false}, method: :delete %>
+          </div>
+        <% else %>
+          <div class="grid-col-auto">
+            <%= button_to "Log in", "/auth/hses", class: "usa-button usa-button--accent-warm" %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </header>
