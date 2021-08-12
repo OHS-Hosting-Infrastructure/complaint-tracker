@@ -3,5 +3,5 @@ Rails.application.routes.draw do
   get "/", to: "complaints#index", as: :root
 
   get "/oauth2-client/login/oauth2/code/", to: "sessions#create"
-  get "logout", to: "sessions#destroy"
+  delete "/logout", to: "sessions#destroy"
 end
