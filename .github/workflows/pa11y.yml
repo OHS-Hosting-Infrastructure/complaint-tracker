@@ -8,8 +8,8 @@ name: pa11y tests
 on: [pull_request]
 
 jobs:
-   build_and_test:
-    name: Build and test
+   pa11y_scan:
+    name: Pa11y Scan
     runs-on: ubuntu-latest
     services:
       postgres:
