@@ -25,6 +25,9 @@ gem "omniauth", "~> 2.0"
 gem "omniauth-oauth2", "~> 1.7"
 gem "omniauth-rails_csrf_protection", "~> 1.0"
 
+# Use ffaker for faked connections to HSES data
+gem "ffaker", "~> 2.18"
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
