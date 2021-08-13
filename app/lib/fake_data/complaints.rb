@@ -3,14 +3,14 @@ require "ffaker"
 module FakeData::Complaints
   def self.data
     {
-      id: FFaker::Random.rand(9999).to_s,
+      id: identifier,
       type: "issues",
       attributes: {
-        issueLastUpdated: FFaker::Time.date,
-        creationDate: FFaker::Time.date,
-        closedDate: FFaker::Time.date,
-        reopenedDate: FFaker::Time.date,
-        initialContactDate: FFaker::Time.date,
+        issueLastUpdated: datetime,
+        creationDate: datetime,
+        closedDate: datetime,
+        reopenedDate: datetime,
+        initialContactDate: datetime,
         type: FFaker::Random.rand(2),
         otherType: FFaker::Lorem.word,
         issue: FFaker::Lorem.phrase,
@@ -23,17 +23,17 @@ module FakeData::Complaints
       relationships: {
         grantAward: {
           meta: {
-            id: FFaker::Random.rand(9999).to_s
+            id: identifier
           }
         },
         grantProgram: {
           meta: {
-            id: FFaker::Random.rand(999).to_s
+            id: identifier
           }
         },
         region: {
           meta: {
-            id: FFaker::Random.rand(10).to_s
+            id: identifier
           }
         }
       },
@@ -42,6 +42,17 @@ module FakeData::Complaints
         html: "https://example.com/TODO"
       }
     }
+  end
+
+  def self.datetime
+    faketime = FFaker::Time.datetime
+    # format UTC date YYYY-MM-DDTHH:MM:SSZ
+    faketime.strftime("%FT%TZ")
+  end
+
+  # returns a string because actual identifiers may not be integers
+  def self.identifier
+    FFaker::Random.rand(9999).to_s
   end
 
   def self.generate_response
