@@ -1,7 +1,7 @@
 require "ffaker"
 
 module FakeData::ApiResponse
-  def self.generate_hses_response
+  def self.generate_hses_issues_response
     complaints = 25.times.map { |complaint| FakeData::Complaint.new.data }
     jsonapi_wrapper.merge(data: complaints)
   end

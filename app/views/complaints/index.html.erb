@@ -1,6 +1,6 @@
 <h1>Complaints List</h1>
 <% if user_signed_in? %>
-   <%= render 'complaints_data' %>
+   <%= render (@complaints.empty? ? 'no_complaints_alert' : 'complaints_table') %>
 <% else %>
   <div>Please log in to access your complaints list</div>
 <% end %>

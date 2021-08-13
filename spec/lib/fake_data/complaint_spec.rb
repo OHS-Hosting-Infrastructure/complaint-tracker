@@ -17,8 +17,10 @@ RSpec.describe FakeData::Complaint do
 
   describe "datetime" do
     it "returns a string formatted as ISO-8601 UTC datetime" do
-      expect(complaint.datetime).to be_a(String)
-      expect(Time.iso8601(complaint.datetime)).to be_a(Time)
+      datetime = complaint.datetime
+
+      expect(datetime).to be_a(String)
+      expect(Time.iso8601(datetime)).to be_a(Time)
     end
   end
 

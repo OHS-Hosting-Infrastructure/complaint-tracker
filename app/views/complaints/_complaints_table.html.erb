@@ -1,0 +1,40 @@
+<div class="usa-table-container--scrollable">
+  <table class="usa-table">
+    <thead>
+      <tr>
+        <th scope="col" role="columnheader">Issue #</th>
+        <th
+          data-sortable
+          scope="col"
+          role="columnheader"
+        > Date </th>
+        <th scope="col" role="columnheader"> Status </th>
+        <th scope="col" role="columnheader"> Grantee </th>
+        <th scope="col" role="columnheader"> Issue </th>
+        <th scope="col" role="columnheader"> TTA </th>
+        <th scope="col" role="columnheader"> RAN </th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @complaints.each do |complaint| %>
+      <tr>
+        <th scope="row" role="rowheader"><%= complaint[:id] %></th>
+        <td 
+          data-sort-value="<%= DateTime.parse(complaint[:attributes][:creationDate]).to_i %>"
+        >
+          <%= DateTime.parse(complaint[:attributes][:creationDate]).strftime("%m/%d/%Y") %>
+        </td>
+        <td>TBD</td>
+        <td><%= complaint[:attributes][:grantee] %></td>
+        <td><%= truncate(complaint[:attributes][:issue]) %></td>
+        <td> TBD </td>
+        <td > TBD </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <div class="usa-sr-only usa-table__announcement-region" aria-live="polite">
+    <!-- this content will change when sort changes -->
+  </div>
+  <p class="margin-bottom-3">Data for illustration purposes only.</p>
+</div>

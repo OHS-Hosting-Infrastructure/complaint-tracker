@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe FakeData::ApiResponse do
   describe "generate_response" do
     it "returns a JSON-API object with 25 complaints" do
-      res = FakeData::ApiResponse.generate_hses_response
+      res = FakeData::ApiResponse.generate_hses_issues_response
 
       expect(res[:data].length).to eq(25)
     end
