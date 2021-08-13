@@ -28,9 +28,9 @@ RSpec.describe "Complaints", type: :request do
         allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("user").and_return user
       end
 
-      it "welcomes the user" do
+      it "includes the user's name" do
         get root_path
-        expect(response.body).to include("#{user["name"]}'s complaints")
+        expect(response.body).to include user["name"].to_s
       end
     end
   end

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "rendering header buttons do" do
+RSpec.describe "rendering header buttons" do
   describe "with no authorized user logged in" do
     it "has a logout button" do
       render partial: "application/header"
