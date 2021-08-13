@@ -6,6 +6,7 @@ RSpec.describe FakeData::Complaints do
       complaint = FakeData::Complaints.data
 
       expect(complaint[:id]).to_not be_nil
+      expect(complaint[:id]).to be_a(String)
       expect(complaint[:attributes]).to be_a(Hash)
       expect(complaint.dig(:relationships, :grantAward, :meta, :id)).to be_a(String)
       expect(complaint[:links]).to be_a(Hash)
@@ -15,20 +16,17 @@ RSpec.describe FakeData::Complaints do
   describe "datetime" do
     it "returns a string formatted as ISO-8601 UTC datetime" do
       dt = FakeData::Complaints.datetime
+
       expect(dt).to be_a(String)
-      begin
-        expect(Time.iso8601(dt)).to be_a(Time)
-      rescue
-        expect(false).to be_truthy
-      end
+      expect(Time.iso8601(dt)).to be_a(Time)
     end
   end
 
   describe "identifier" do
-    it "returns a string of numbers" do
+    it "returns a string" do
       id = FakeData::Complaints.identifier
+
       expect(id).to be_a(String)
-      expect(id.to_i.to_s).to eq(id)
     end
   end
 
