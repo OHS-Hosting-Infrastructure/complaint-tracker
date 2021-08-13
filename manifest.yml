@@ -6,6 +6,9 @@ applications:
   env:
     RAILS_MASTER_KEY: ((rails_master_key))
     RAILS_ENV: production
+    HSES_AUTH_BASE: ((hses_auth_base))
+    HSES_AUTH_CLIENT_ID: ((hses_auth_client_id))
+    HSES_AUTH_CLIENT_SECRET: ((hses_auth_client_secret))
   processes:
   - type: web
     instances: ((web_instances))
