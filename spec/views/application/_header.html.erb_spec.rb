@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "rendering header buttons do" do
   describe "with no authorized user logged in" do
     it "has a logout button" do
-      render partial: "application/header.html.erb"
+      render partial: "application/header"
 
       expect(rendered).to match '<input class="usa-button usa-button--accent-warm" type="submit" value="Log in" />'
     end
@@ -19,7 +19,7 @@ RSpec.describe "rendering header buttons do" do
 
     it "has a logout button" do
       session["user"] = user
-      render partial: "application/header.html.erb"
+      render partial: "application/header"
       expect(rendered).to match '<input class="usa-button usa-button--accent-warm" data-turbolinks="false" type="submit" value="Log out" />'
     end
   end
