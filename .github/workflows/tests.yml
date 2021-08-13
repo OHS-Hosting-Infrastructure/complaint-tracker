@@ -8,10 +8,11 @@ name: tests
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - 'docs/**'
+      - 'README.md'
   pull_request:
     branches: [ main ]
-    paths-ignore:
-      - 'doc/**'
 
 jobs:
   build_and_test:
