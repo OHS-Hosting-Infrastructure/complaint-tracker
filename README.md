@@ -7,7 +7,7 @@ visibility into status and actions taken to address a complaint.
 
 ### Local Setup
 
-* Install Ruby 3.0.1
+* Install Ruby 3.0.2
 * Install NodeJS 14.17.2
 * Install PostgreSQL 12.x: `brew install postgresql@12`
   * Add postgres to your PATH if it wasn't done automatically
@@ -24,17 +24,17 @@ visibility into status and actions taken to address a complaint.
 #### Authentication
 
 The Complaint Tracker is utilizing the HSES Staging environment for non-production authentication. If you need an account
-reach out in the #ph-ohs-oneteam channel for help in requesting one.
+reach out in the [#ph-ohs-oneteam](https://gsa-tts.slack.com/archives/C01TT2YNX0R) Slack channel for help in requesting one.
 
 Consider [setting up automatic linting and testing](#set-up-automatic-linting-and-testing) while you're at it!
 
 ### Running Tests
 
-Tests: `bundle exec rake spec`
-Ruby linter: `bundle exec rake standard`
-Ruby dependency checks: `bundle exec rake bundle:audit`
-JS dependency checks: `bundle exec rake yarn:audit`
-Ruby static security scan: `bundle exec rake brakeman`
+* Tests: `bundle exec rake spec`
+* Ruby linter: `bundle exec rake standard`
+* Ruby dependency checks: `bundle exec rake bundle:audit`
+* JS dependency checks: `bundle exec rake yarn:audit`
+* Ruby static security scan: `bundle exec rake brakeman`
 
 Run everything: `bundle exec rake`
 
@@ -64,9 +64,9 @@ Security scans are also run on a scheduled basis. Weekly for static code scans, 
 
 #### Staging
 
-GitHub Actions are used to deploy to staging after any PR is merged into main.
+GitHub Actions are used to deploy to staging after any PR is merged into `main`.
 
-Branch protection rules prevent any direct pushes to `main` or PRs from being merged into main until all tests and scans pass.
+Branch protection rules prevent any direct pushes to `main` or PRs from being merged into `main` until all tests and scans pass.
 
 #### Production
 
@@ -79,7 +79,7 @@ the `env:` block in `manifest.yml`
 
 Items that are both **public** and **consistent** across staging and production can be set directly there.
 
-Otherwise, they are set as a `((variable))` and the variable is defined depending on sensitivity:
+Otherwise, they are set as a `((variable))` within `manifest.yml` and the variable is defined depending on sensitivity:
 
 #### Credentials and other Secrets
 
