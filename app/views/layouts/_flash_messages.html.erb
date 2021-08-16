@@ -1,0 +1,18 @@
+<% if flash[:notice] %>
+  <div class="usa-alert usa-alert--success usa-alert--slim">
+    <div class="usa-alert__body">
+      <p class="usa-alert__text">
+        <%= flash[:notice] %>
+      </p>
+    </div>
+  </div>
+<% end %>
+<% if flash[:error] %>
+  <div class="usa-alert usa-alert--error usa-alert--slim">
+    <div class="usa-alert__body">
+      <p class="usa-alert__text">
+        <%= flash[:error] %>
+      </p>
+    </div>
+  </div>
+<% end %>

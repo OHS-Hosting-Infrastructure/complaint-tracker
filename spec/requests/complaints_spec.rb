@@ -14,6 +14,14 @@ RSpec.describe "Complaints", type: :request do
       end
     end
 
+    describe "on log out" do
+      it "displays a message that user was logged out" do
+        delete logout_path
+        follow_redirect!
+        expect(response.body).to include("You are now logged out")
+      end
+    end
+
     describe "with an authorized user" do
       let(:user) {
         {
