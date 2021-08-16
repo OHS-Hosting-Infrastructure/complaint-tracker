@@ -63,15 +63,20 @@ jobs:
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://complaint_tracker:postgres@localhost:5432/complaint_tracker_test
-        run: yarn run pa11y-ci 2>&1 | tee pa11y_output.txt
+        shell: bash
+        run: |
+          set -o pipefail
+          yarn run pa11y-ci 2>&1 | tee pa11y_output.txt
 
       - name: Read pa11y_output file.
+        if: ${{ failure() }}
         id: pa11y_output
         uses: juliangruber/read-file-action@v1
         with:
           path: ./pa11y_output.txt
 
       - name: Comment on pull request.
+        if: ${{ failure() }}
         uses: thollander/actions-comment-pull-request@master
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -81,9 +86,3 @@ jobs:
 
               ```${{ steps.pa11y_output.outputs.content }}```
             </details>
-
-      - name: Check for pa11y failures.
-        if: contains(steps.pa11y_output.outputs.content, 'errno 2')
-        run: |
-          echo "::error::The site is failing accessibility tests. Please review the comment in the pull request or the pa11y-ci step in the workflow for details."
-          exit 1
