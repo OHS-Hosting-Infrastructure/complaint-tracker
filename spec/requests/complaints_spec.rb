@@ -28,9 +28,30 @@ RSpec.describe "Complaints", type: :request do
         allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("user").and_return user
       end
 
-      it "welcomes the user" do
+      it "includes the user's name" do
         get root_path
-        expect(response.body).to include("#{user["name"]}'s complaints")
+        expect(response.body).to include user["name"].to_s
+      end
+
+      describe "User has a complaint" do
+        let(:complaint) { FakeData::Complaint.new }
+
+        it "includes the alert" do
+          allow(FakeData::ApiResponse).to receive(:generate_hses_issues_response).and_return data: [complaint.data]
+          get root_path
+
+          expect(response.body).to include '<table class="usa-table">'
+        end
+      end
+
+      describe "User has no complaints" do
+        it "includes the alert" do
+          allow(FakeData::ApiResponse).to receive(:generate_hses_issues_response).and_return data: []
+
+          get root_path
+          expect(response.body).to include user["name"].to_s
+          expect(response.body).to include '<h3 class="usa-alert__heading">No issues found</h3>'
+        end
       end
     end
   end
