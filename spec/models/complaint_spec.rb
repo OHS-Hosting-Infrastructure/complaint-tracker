@@ -14,19 +14,4 @@ RSpec.describe FakeData::Complaint do
       expect(data[:links]).to be_a(Hash)
     end
   end
-
-  describe "datetime" do
-    it "returns a string formatted as ISO-8601 UTC datetime" do
-      datetime = complaint.datetime
-
-      expect(datetime).to be_a(String)
-      expect(Time.iso8601(datetime)).to be_a(Time)
-    end
-  end
-
-  describe "identifier" do
-    it "returns a string" do
-      expect(complaint.identifier).to be_a(String)
-    end
-  end
 end
