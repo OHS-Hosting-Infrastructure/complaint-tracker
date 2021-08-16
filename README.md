@@ -7,7 +7,7 @@ visibility into status and actions taken to address a complaint.
 
 ### Local Setup
 
-* Install Ruby 3.0.1
+* Install Ruby 3.0.2
 * Install NodeJS 14.17.2
 * Install PostgreSQL 12.x: `brew install postgresql@12`
   * Add postgres to your PATH if it wasn't done automatically
@@ -24,17 +24,17 @@ visibility into status and actions taken to address a complaint.
 #### Authentication
 
 The Complaint Tracker is utilizing the HSES Staging environment for non-production authentication. If you need an account
-reach out in the #ph-ohs-oneteam channel for help in requesting one.
+reach out in the [#ph-ohs-oneteam](https://gsa-tts.slack.com/archives/C01TT2YNX0R) Slack channel for help in requesting one.
 
 Consider [setting up automatic linting and testing](#set-up-automatic-linting-and-testing) while you're at it!
 
 ### Running Tests
 
-Tests: `bundle exec rake spec`
-Ruby linter: `bundle exec rake standard`
-Ruby dependency checks: `bundle exec rake bundle:audit`
-JS dependency checks: `bundle exec rake yarn:audit`
-Ruby static security scan: `bundle exec rake brakeman`
+* Tests: `bundle exec rake spec`
+* Ruby linter: `bundle exec rake standard`
+* Ruby dependency checks: `bundle exec rake bundle:audit`
+* JS dependency checks: `bundle exec rake yarn:audit`
+* Ruby static security scan: `bundle exec rake brakeman`
 
 Run everything: `bundle exec rake`
 
@@ -56,11 +56,40 @@ git commit -n  # --no-verify
 
 ## CI/CD
 
-TBD
+GitHub actions are used to run all tests and scans as part of pull requests.
+
+Security scans are also run on a scheduled basis. Weekly for static code scans, and daily for dependency scans.
 
 ### Deployment
 
+#### Staging
+
+GitHub Actions are used to deploy to staging after any PR is merged into `main`.
+
+Branch protection rules prevent any direct pushes to `main` or PRs from being merged into `main` until all tests and scans pass.
+
+#### Production
+
 TBD
+
+### Configuring ENV variables in cloud.gov
+
+All configuration that needs to be added to the deployed application's ENV should be added to
+the `env:` block in `manifest.yml`
+
+Items that are both **public** and **consistent** across staging and production can be set directly there.
+
+Otherwise, they are set as a `((variable))` within `manifest.yml` and the variable is defined depending on sensitivity:
+
+#### Credentials and other Secrets
+
+1. Store variables that must be secret using [GitHub Environment Secrets](https://docs.github.com/en/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-an-environment)
+1. Add the secret to the `env:` block of the deploy action [as in this example](https://github.com/OHS-Hosting-Infrastructure/complaint-tracker/blob/a9e8d22aae2023a0afb631a6182251c04f597f7e/.github/workflows/deploy-stage.yml#L20)
+1. Add the appropriate `--var` addition to the `push_arguments` line on the deploy action [as in this example](https://github.com/OHS-Hosting-Infrastructure/complaint-tracker/blob/a9e8d22aae2023a0afb631a6182251c04f597f7e/.github/workflows/deploy-stage.yml#L27)
+
+#### Non-secrets
+
+Configuration that changes from staging to production, but is public, should be added to `config/deployment/stage.yml` and `config/deployment/production.yml`
 
 ## Documentation
 
