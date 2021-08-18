@@ -8,7 +8,7 @@
           scope="col"
           role="columnheader"
         > Date Created </th>
-        <th scope="col" role="columnheader"> Status </th>
+        <th data-sortable scope="col" role="columnheader"> Status </th>
         <th scope="col" role="columnheader"> Grantee </th>
         <th scope="col" role="columnheader"> Issue </th>
         <th scope="col" role="columnheader"> TTA </th>
@@ -24,7 +24,12 @@
         >
           <%= DateTime.parse(complaint[:attributes][:creationDate]).strftime("%m/%d/%Y") %>
         </td>
-        <td>TBD</td>
+        <% formatted_status = status(complaint[:attributes]) %>
+        <td
+         data-sort-value="<%= ComplaintsHelper::STATUS_SORT_ORDER[formatted_status] %>"
+        >
+          <%= formatted_status %>
+        </td>
         <td><%= complaint[:attributes][:grantee] %></td>
         <td><%= truncate(complaint[:attributes][:issue]) %></td>
         <td> TBD </td>
