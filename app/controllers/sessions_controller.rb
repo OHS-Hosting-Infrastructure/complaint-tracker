@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  skip_before_action :require_user!
+
   def create
     session["user"] = {
       uid: auth_info["uid"],

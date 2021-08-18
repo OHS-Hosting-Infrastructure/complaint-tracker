@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  private
+  before_action :require_user!
 
   def require_user!
     return if helpers.user_signed_in?
@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
     return false if Rails.env.production?
     if ENV["BYPASS_AUTH"] == "true"
       session["user"] ||= {
-        uid: ENV.fetch("CURRENT_USER_UID", "1"),
+        uid: ENV.fetch("CURRENT_USER_UID", "fake.testuser@test.com"),
         name: ENV.fetch("CURRENT_USER_NAME", "Fake Test-User")
       }.with_indifferent_access
       return true
