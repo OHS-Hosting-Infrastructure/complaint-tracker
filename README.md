@@ -26,6 +26,12 @@ visibility into status and actions taken to address a complaint.
 The Complaint Tracker is utilizing the HSES Staging environment for non-production authentication. If you need an account
 reach out in the [#ph-ohs-oneteam](https://gsa-tts.slack.com/archives/C01TT2YNX0R) Slack channel for help in requesting one.
 
+##### Bypassing HSES Authentication
+
+When `RAILS_ENV` is either `test` or `development` you can bypass authentication by setting the `BYPASS_AUTH` environment variable to `true`.
+
+When bypassing auth, you may use `CURRENT_USER_UID` and/or `CURRENT_USER_NAME` to override the current user's HSES name or username.
+
 Consider [setting up automatic linting and testing](#set-up-automatic-linting-and-testing) while you're at it!
 
 ### Running Tests
