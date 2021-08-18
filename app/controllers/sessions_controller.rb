@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
       name: auth_info["info"]["name"]
     }
     Rails.logger.debug { "Got auth_info: #{JSON.pretty_generate(auth_info)}" }
-    redirect_to root_path
+    redirect_to user_root_path
   end
 
   def destroy
