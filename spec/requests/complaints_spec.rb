@@ -59,9 +59,9 @@ RSpec.describe "Complaints", type: :request do
       end
 
       describe "User has no complaints" do
+        before { ComplaintsController.class_variable_set :@@hses_issues, [] }
         it "includes the alert" do
           allow(FakeData::ApiResponse).to receive(:generate_hses_issues_response).and_return data: []
-
           get complaints_path
           expect(response.body).to include user["name"].to_s
           expect(response.body).to include '<h3 class="usa-alert__heading">No issues found</h3>'
