@@ -4,6 +4,10 @@ class FakeData::ApiResponse
     jsonapi_wrapper.merge(data: complaints)
   end
 
+  def self.hses_issues_response
+    @issues_response ||= generate_hses_issues_response
+  end
+
   def self.jsonapi_wrapper
     {
       meta: {

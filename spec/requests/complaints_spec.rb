@@ -51,7 +51,7 @@ RSpec.describe "Complaints", type: :request do
         let(:complaint) { FakeData::Complaint.new }
 
         it "includes the alert" do
-          allow(FakeData::ApiResponse).to receive(:generate_hses_issues_response).and_return data: [complaint.data]
+          allow(FakeData::ApiResponse).to receive(:hses_issues_response).and_return data: [complaint.data]
           get complaints_path
 
           expect(response.body).to include '<table class="usa-table">'
@@ -59,9 +59,8 @@ RSpec.describe "Complaints", type: :request do
       end
 
       describe "User has no complaints" do
-        before { ComplaintsController.class_variable_set :@@hses_issues, [] }
         it "includes the alert" do
-          allow(FakeData::ApiResponse).to receive(:generate_hses_issues_response).and_return data: []
+          allow(FakeData::ApiResponse).to receive(:hses_issues_response).and_return data: []
           get complaints_path
           expect(response.body).to include user["name"].to_s
           expect(response.body).to include '<h3 class="usa-alert__heading">No issues found</h3>'
