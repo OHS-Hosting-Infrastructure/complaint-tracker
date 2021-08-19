@@ -20,7 +20,7 @@ RSpec.describe "rendering header buttons" do
     it "has a logout button" do
       session["user"] = user
       render partial: "application/header"
-      expect(rendered).to match '<input class="usa-button usa-button--accent-warm" data-turbolinks="false" type="submit" value="Log out" />'
+      expect(rendered).to match '<input class="usa-button usa-button--accent-warm" type="submit" value="Log out" />'
     end
   end
 end
