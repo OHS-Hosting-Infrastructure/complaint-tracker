@@ -1,6 +1,13 @@
 require "rails_helper"
 
 RSpec.describe "Complaints", type: :request do
+  let(:user) {
+    {
+      name: "Test User",
+      uid: "testuser@example.com"
+    }.with_indifferent_access
+  }
+
   describe "GET /complaints" do
     it "returns a 302 status" do
       get complaints_path
@@ -24,13 +31,6 @@ RSpec.describe "Complaints", type: :request do
     end
 
     describe "with an authorized user" do
-      let(:user) {
-        {
-          name: "Test User",
-          uid: "testuser@example.com"
-        }.with_indifferent_access
-      }
-
       before do
         # There are some other session requests before getting to session["user"]
         allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[])
@@ -65,6 +65,23 @@ RSpec.describe "Complaints", type: :request do
           expect(response.body).to include user["name"].to_s
           expect(response.body).to include '<h3 class="usa-alert__heading">No issues found</h3>'
         end
+      end
+    end
+  end
+
+  describe "GET /complaint/:id" do
+    context "with an authorized user" do
+      before do
+        # There are some other session requests before getting to session["user"]
+        allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[])
+        allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("user").and_return user
+      end
+
+      let(:complaint_id) { FakeData::ApiResponse.hses_issues_response[:data].first[:id] }
+
+      it "returns a 200 status" do
+        get complaint_path(id: complaint_id)
+        expect(response).to have_http_status(200)
       end
     end
   end

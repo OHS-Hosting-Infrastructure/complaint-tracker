@@ -15,12 +15,12 @@
     <%= render 'usa_banner' %>
     <div class="usa-overlay"></div>
     <%= render 'header' %>
-    <main class="usa-section" id="main-content">
-      <div class="grid-container">
-        <div class="usa-prose">
+    <main id="main-content">
+      <div class="usa-prose">
+        <div class="grid-container">
           <%= render "layouts/flash_messages" %>
-          <%= yield %>
         </div>
+        <%= yield %>
       </div>
     </main>
   </body>
