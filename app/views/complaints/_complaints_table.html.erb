@@ -17,24 +17,7 @@
     </thead>
     <tbody>
     <% @complaints.each do |complaint| %>
-      <tr>
-        <th scope="row" role="rowheader"><%= complaint[:id] %></th>
-        <td 
-          data-sort-value="<%= DateTime.parse(complaint[:attributes][:creationDate]).to_i %>"
-        >
-          <%= DateTime.parse(complaint[:attributes][:creationDate]).strftime("%m/%d/%Y") %>
-        </td>
-        <% formatted_status = status(complaint[:attributes]) %>
-        <td
-         data-sort-value="<%= ComplaintsHelper::STATUS_SORT_ORDER[formatted_status] %>"
-        >
-          <%= formatted_status %>
-        </td>
-        <td><%= complaint[:attributes][:grantee] %></td>
-        <td><%= truncate(complaint[:attributes][:issue]) %></td>
-        <td> TBD </td>
-        <td> TBD </td>
-      </tr>
+     <%= render 'complaints/complaints_table_detail', :complaint => complaint %> 
     <% end %>
     </tbody>
   </table>

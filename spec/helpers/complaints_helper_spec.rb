@@ -18,7 +18,7 @@ RSpec.describe ComplaintsHelper, type: :helper do
         end
       end
     end
-    
+
     describe "a complaint that is more than a week old" do
       let(:complaint) { {status: 0, creationDate: 1.month.ago} }
 
