@@ -16,7 +16,7 @@ class FakeData::Complaint
         otherType: word,
         issue: phrase,
         priority: random_int,
-        status: random_int,
+        status: random_int(4),
         dueDate: date,
         grantee: grantee_name
       },

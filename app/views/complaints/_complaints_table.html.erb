@@ -8,7 +8,7 @@
           scope="col"
           role="columnheader"
         > Date Created </th>
-        <th scope="col" role="columnheader"> Status </th>
+        <th data-sortable scope="col" role="columnheader"> Status </th>
         <th scope="col" role="columnheader"> Grantee </th>
         <th scope="col" role="columnheader"> Issue </th>
         <th scope="col" role="columnheader"> TTA </th>
@@ -17,19 +17,7 @@
     </thead>
     <tbody>
     <% @complaints.each do |complaint| %>
-      <tr>
-        <th scope="row" role="rowheader"><%= complaint[:id] %></th>
-        <td 
-          data-sort-value="<%= DateTime.parse(complaint[:attributes][:creationDate]).to_i %>"
-        >
-          <%= DateTime.parse(complaint[:attributes][:creationDate]).strftime("%m/%d/%Y") %>
-        </td>
-        <td>TBD</td>
-        <td><%= complaint[:attributes][:grantee] %></td>
-        <td><%= truncate(complaint[:attributes][:issue]) %></td>
-        <td> TBD </td>
-        <td> TBD </td>
-      </tr>
+     <%= render 'complaints/complaints_table_detail', :complaint => complaint %> 
     <% end %>
     </tbody>
   </table>
