@@ -10,7 +10,7 @@ RSpec.describe "rendering flash_messages" do
   end
 
   it "matches an error message" do
-    flash[:error] = "Testing error notice"
+    flash[:alert] = "Testing error notice"
     render partial: "layouts/flash_messages"
 
     expect(rendered).to match "Testing error notice"
@@ -19,7 +19,7 @@ RSpec.describe "rendering flash_messages" do
 
   it "matches a notice and error message" do
     flash[:notice] = "Testing flash notice"
-    flash[:error] = "Testing error notice"
+    flash[:alert] = "Testing error notice"
     render partial: "layouts/flash_messages"
 
     expect(rendered).to match "Testing flash notice"

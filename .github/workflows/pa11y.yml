@@ -53,6 +53,7 @@ jobs:
       - name: Start up rails server in the background
         env:
           RAILS_ENV: test
+          BYPASS_AUTH: true
           DATABASE_URL: postgres://complaint_tracker:postgres@localhost:5432/complaint_tracker_test
         run: |
           bundle exec rails server &
