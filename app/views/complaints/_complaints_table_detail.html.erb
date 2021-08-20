@@ -2,10 +2,10 @@
   <% formatted_status = status(complaint[:attributes]) %>
   <th scope="row" role="rowheader">
     <span class="<%= formatted_status == "New" ? "text-bold" : "" %>">
-      <%= complaint[:id] %>
+      <%= link_to complaint[:id], complaint_path(complaint[:id]), class: "usa-link" %>
     </span>
   </th>
-  <td 
+  <td
     data-sort-value="<%= DateTime.parse(complaint[:attributes][:creationDate]).to_i %>"
   >
     <%= DateTime.parse(complaint[:attributes][:creationDate]).strftime("%m/%d/%Y") %>

@@ -12,7 +12,7 @@
             <%= current_user["name"] %>
           </div>
           <div class="grid-col-auto">
-            <%= button_to "Log out", logout_path, class: "usa-button usa-button--accent-warm", data: {turbolinks: false}, method: :delete %>
+            <%= button_to "Log out", logout_path, class: "usa-button usa-button--accent-warm", method: :delete %>
           </div>
         <% else %>
           <div class="grid-col-auto">
