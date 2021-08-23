@@ -34,3 +34,10 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# Terraform
+.terraform.lock.hcl
+**/.terraform/*
+*.tfvars
+terraform.tfstate
+terraform.tfstate.backup

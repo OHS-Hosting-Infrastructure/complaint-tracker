@@ -20,3 +20,16 @@ else
     echo "Fix above before committing. Run 'git commit -n' to bypass linter."
     exit 1
 fi
+
+echo "Running Terraform formatter"
+# imitates https://github.com/HHS/Head-Start-TTADP/blob/3b72ff05d94fab4cda877c63d8cd6970f0eeffc7/.githooks/pre-commit
+
+files=$(git diff terraform --cached --name-only)
+for f in $files
+do
+  # Format any *.tf files that were cached/staged
+  if [ -e "$f" ] && [[ $f == *.tf ]]; then
+    terraform fmt "$f"
+    git add "$f"
+  fi
+end
