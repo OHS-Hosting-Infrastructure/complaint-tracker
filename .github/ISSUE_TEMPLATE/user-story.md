@@ -16,4 +16,3 @@ Acceptance:
 Given that I am a [type of user] 
 When I [take a specific action]
 Then I [can do the desired action]
-
