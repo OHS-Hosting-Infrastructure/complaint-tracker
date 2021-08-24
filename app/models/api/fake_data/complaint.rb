@@ -1,5 +1,6 @@
 require "ffaker_wrapper"
-class FakeData::Complaint
+
+class Api::FakeData::Complaint
   include FfakerWrapper
 
   def data
