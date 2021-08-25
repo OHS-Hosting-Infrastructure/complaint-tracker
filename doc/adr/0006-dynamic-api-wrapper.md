@@ -28,7 +28,7 @@ method that will fetch the requested data.
 
 ## Consequences
 
-There is an easily extendable structure for us to add diferent systems and endpoints moving forward. The business
+There is an easily extendable structure for us to add different systems and endpoints moving forward. The business
 logic gets an easy entry point into the Api, each endpoint can handle its own implemetation details, and the system
 level class can handle individual system details and config.
 

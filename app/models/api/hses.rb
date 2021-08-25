@@ -2,9 +2,6 @@ require "fake_api_response_wrapper"
 require "fake_issues"
 
 class Api::Hses
-  def initalize(**)
-  end
-
   class Issue
     include FakeApiResponseWrapper
     attr_accessor :id

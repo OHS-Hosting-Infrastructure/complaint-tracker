@@ -20,6 +20,6 @@ class Api
   end
 
   def self.needs_fake_data?
-    Rails.env == "development" || Rails.env == "test"
+    Rails.env.development? || Rails.env.test?
   end
 end

@@ -43,7 +43,7 @@ RSpec.describe Api do
 
   describe "in a dev environment" do
     before do
-      allow(Rails).to receive(:env).and_return("development")
+      allow(Rails).to receive(:env) { "development".inquiry }
     end
 
     describe "#self.request" do
@@ -64,7 +64,7 @@ RSpec.describe Api do
 
   describe "in a production environment" do
     before do
-      allow(Rails).to receive(:env).and_return("production")
+      allow(Rails).to receive(:env) { "production".inquiry }
     end
 
     it "returns the real request" do
@@ -83,7 +83,7 @@ RSpec.describe Api do
 
   describe "in a staging environment" do
     before do
-      allow(Rails).to receive(:env).and_return("staging")
+      allow(Rails).to receive(:env) { "staging".inquiry }
     end
 
     it "returns the real request" do
