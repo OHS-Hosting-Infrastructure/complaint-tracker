@@ -6,7 +6,7 @@ RSpec.describe Api::FakeData::Hses do
     let(:complaint) { FakeIssues.instance.json[:data][4] }
 
     describe "#request" do
-      let(:issue_endpoint) { Api::FakeData::Hses::Issue.new([:id, complaint[:id]]) }
+      let(:issue_endpoint) { Api::FakeData::Hses::Issue.new(id: complaint[:id]) }
       it "returns the correct complaint" do
         expect(issue_endpoint.request[:data]).to eq complaint
       end

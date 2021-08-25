@@ -32,9 +32,11 @@ RSpec.describe Api do
       end
     end
 
-    describe "#self.env" do
-      it "returns the FakeData string" do
-        expect(Api.env).to eq "FakeData::"
+    describe "self.namespaced_class" do
+      it "returns the full class" do
+        expect(
+          Api.namespaced_class("Testsystem", "Endpoint")
+        ).to eq Api::FakeData::Testsystem::Endpoint
       end
     end
   end
@@ -51,9 +53,11 @@ RSpec.describe Api do
       end
     end
 
-    describe "#self.env" do
-      it "returns the FakeData string" do
-        expect(Api.env).to eq "FakeData::"
+    describe "#self.namespaced_class" do
+      it "returns the full class" do
+        expect(
+          Api.namespaced_class("Testsystem", "Endpoint")
+        ).to eq Api::FakeData::Testsystem::Endpoint
       end
     end
   end
@@ -68,9 +72,11 @@ RSpec.describe Api do
       expect(result).to eq "real request"
     end
 
-    describe "#self.env" do
-      it "returns nil" do
-        expect(Api.env).to be nil
+    describe "#self.namespaced_class" do
+      it "returns the full class" do
+        expect(
+          Api.namespaced_class("Testsystem", "Endpoint")
+        ).to eq Api::Testsystem::Endpoint
       end
     end
   end
@@ -85,10 +91,10 @@ RSpec.describe Api do
       expect(result).to eq "real request"
     end
 
-    describe "#self.env" do
-      it "returns nil" do
-        expect(Api.env).to be nil
-      end
+    it "returns the full class" do
+      expect(
+        Api.namespaced_class("Testsystem", "Endpoint")
+      ).to eq Api::Testsystem::Endpoint
     end
   end
 end

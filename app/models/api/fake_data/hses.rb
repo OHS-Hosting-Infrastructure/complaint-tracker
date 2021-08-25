@@ -1,13 +1,15 @@
 require "fake_api_response_wrapper"
 require "fake_issues"
 class Api::FakeData::Hses
+  def initalize(**)
+  end
+
   class Issue
     include FakeApiResponseWrapper
     attr_accessor :id
 
-    def initialize(options_arr)
-      options = Hash[*options_arr]
-      @id = options[:id]
+    def initialize(id:)
+      @id = id
     end
 
     def request
