@@ -1,0 +1,80 @@
+name: OWASP ZAP scan
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - 'docs/**'
+      - 'README.md'
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # cron format: 'minute hour dayofmonth month dayofweek'
+    # this will run at noon UTC every day (7am EST / 8am EDT)
+    - cron: '0 12 * * *'
+
+jobs:
+  owasp-scan:
+    name: OWASP ZAP
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: complaint_tracker
+          POSTGRES_DB: complaint_tracker_test
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # TODO: switch to run action once composite actions support `uses`
+      # - uses: ./.github/actions/setup-project
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          # bundler-cache automatically installs gems
+          bundler-cache: true
+          cache-version: 1
+
+      - uses: ./.github/actions/setup-database
+
+      # TODO: switch to run action once composite actions support `uses`
+      # - uses: ./.github/actions/setup-javascript
+      - name: Set up node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.17.3'
+          cache: 'yarn'
+      - name: Install yarn dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Compile assets
+        env:
+          RAILS_ENV: production
+        run: bundle exec rake assets:precompile
+
+      - name: Start up rails server in the background
+        env:
+          RAILS_ENV: owasp
+          RAILS_SERVE_STATIC_FILES: true
+          BYPASS_AUTH: true
+          DATABASE_URL: postgres://complaint_tracker:postgres@localhost:5432/complaint_tracker_test
+        run: |
+          bundle exec rails server &
+          sleep 5 &&
+          curl http://localhost:8080 -I
+
+      - name: Run OWASP Full Scan
+        uses: zaproxy/action-full-scan@v0.2.0
+        with:
+          target: 'http://localhost:8080/complaints'
+          fail_action: true
+          cmd_options: '-c zap.conf -I'
