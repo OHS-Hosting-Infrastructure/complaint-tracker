@@ -25,17 +25,14 @@ variable "cf_password" {
 variable "cf_space_name" {
   type        = string
   description = "cloud.gov space name (ct-<env>)"
-  default     = "ct-stage"
 }
 
 variable "cf_user" {
   type        = string
-  description = "secret; cloud.gov deployer account user"
-  sensitive   = true
+  description = "cloud.gov deployer account user"
 }
 
 variable "env" {
   type        = string
-  description = "deployment environment in shortened form (dev, staging, prod)"
-  default     = "dev"
+  description = "deployment environment in shortened form (dev, stage, prod)"
 }

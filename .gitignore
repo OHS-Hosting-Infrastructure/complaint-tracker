@@ -38,6 +38,6 @@ yarn-debug.log*
 # Terraform
 .terraform.lock.hcl
 **/.terraform/*
-*.tfvars
+secrets.auto.tfvars
 terraform.tfstate
 terraform.tfstate.backup
