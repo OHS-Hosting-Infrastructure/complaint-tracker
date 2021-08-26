@@ -28,7 +28,14 @@ reach out in the [#ph-ohs-oneteam](https://gsa-tts.slack.com/archives/C01TT2YNX0
 
 ##### Bypassing HSES Authentication
 
-When `RAILS_ENV` is either `test` or `development` you can bypass authentication by setting the `BYPASS_AUTH` environment variable to `true`.
+HSES Authentication can be bypassed depending on the value of `RAILS_ENV`
+
+| Environment | HSES Bypass |
+| ----------- | ----------- |
+| test | set `BYPASS_AUTH` environment variable to `true` |
+| development | set `BYPASS_AUTH` environment variable to `true` |
+| ci | always bypassed |
+| production | never bypassed |
 
 When bypassing auth, you may use `CURRENT_USER_UID` and/or `CURRENT_USER_NAME` to override the current user's HSES name or username.
 
