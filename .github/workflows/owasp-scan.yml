@@ -56,11 +56,6 @@ jobs:
       - name: Install yarn dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Compile assets
-        env:
-          RAILS_ENV: production
-        run: bundle exec rake assets:precompile
-
       - name: Start up rails server in the background
         env:
           RAILS_ENV: owasp
