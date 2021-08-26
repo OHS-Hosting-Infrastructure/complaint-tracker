@@ -36,3 +36,9 @@ variable "env" {
   type        = string
   description = "deployment environment in shortened form (dev, stage, prod)"
 }
+
+variable "recursive_delete" {
+  type        = bool
+  description = "when true, deletes service bindings attached to the resource (not recommended for production)"
+  default     = false
+}
