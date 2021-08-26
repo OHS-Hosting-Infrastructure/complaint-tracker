@@ -58,9 +58,7 @@ jobs:
 
       - name: Start up rails server in the background
         env:
-          RAILS_ENV: owasp
-          RAILS_SERVE_STATIC_FILES: true
-          BYPASS_AUTH: true
+          RAILS_ENV: ci
           DATABASE_URL: postgres://complaint_tracker:postgres@localhost:5432/complaint_tracker_test
         run: |
           bundle exec rails server &

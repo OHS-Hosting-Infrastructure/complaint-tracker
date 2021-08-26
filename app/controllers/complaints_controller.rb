@@ -1,5 +1,5 @@
 class ComplaintsController < ApplicationController
-  before_action :check_pa11y_id, only: :show, if: -> { Rails.env.test? }
+  before_action :check_pa11y_id, only: :show, if: -> { Rails.env.ci? }
 
   def index
     @complaints = FakeData::ApiResponse.hses_issues_response[:data]

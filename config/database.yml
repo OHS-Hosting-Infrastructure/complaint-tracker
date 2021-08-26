@@ -59,7 +59,7 @@ test:
   <<: *default
   database: complaint_tracker_test
 
-owasp:
+ci:
   <<: *default
   database: complaint_tracker_development
 
