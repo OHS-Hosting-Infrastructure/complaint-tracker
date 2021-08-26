@@ -1,0 +1,7 @@
+---
+scripts:
+  app/views/application/_usa_banner.html.erb:
+  - "'sha256-yluTuRa/g4CIjK/9FqYwx2MVm9TYSoEUPCMYx2q4i9E='"
+styles:
+  app/views/layouts/mailer.html.erb:
+  - "'sha256-r+DMEHh1kLfHskaQ873xDBRCVRaiUr+RcT0XRcJhb+U='"
