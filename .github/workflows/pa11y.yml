@@ -62,6 +62,7 @@ jobs:
       - name: Run pa11y-ci.
         env:
           RAILS_ENV: test
+          SECRET_KEY_BASE: not-actually-secret
           DATABASE_URL: postgres://complaint_tracker:postgres@localhost:5432/complaint_tracker_test
         shell: bash
         run: |
