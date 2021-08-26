@@ -53,6 +53,7 @@ jobs:
       - name: Start up rails server in the background
         env:
           RAILS_ENV: ci
+          SECRET_KEY_BASE: not-actually-secret
           DATABASE_URL: postgres://complaint_tracker:postgres@localhost:5432/complaint_tracker_test
         run: |
           bundle exec rails server &
@@ -60,10 +61,6 @@ jobs:
           curl http://localhost:8080 -I
 
       - name: Run pa11y-ci.
-        env:
-          RAILS_ENV: test
-          SECRET_KEY_BASE: not-actually-secret
-          DATABASE_URL: postgres://complaint_tracker:postgres@localhost:5432/complaint_tracker_test
         shell: bash
         run: |
           set -o pipefail

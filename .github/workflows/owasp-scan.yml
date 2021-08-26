@@ -72,10 +72,3 @@ jobs:
           target: 'http://localhost:8080/complaints'
           fail_action: true
           cmd_options: '-c zap.conf -I'
-
-      - name: Upload ZAP Report
-        uses: actions/upload-artifact@v2
-        if: ${{ always() }}
-        with:
-          name: zap-report
-          path: report_html.html
