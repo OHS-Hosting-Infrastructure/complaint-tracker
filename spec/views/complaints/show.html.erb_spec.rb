@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "complaints/show.html.erb", type: :view do
-  let(:complaint) { FakeData::Complaint.new.data }
+  let(:complaint) { Api::FakeData::Complaint.new.data }
   let(:issue_number) { complaint[:id] }
   let(:grantee_name) { complaint.dig :attributes, :grantee }
   let(:issue_text) { complaint.dig :attributes, :issue }
@@ -16,10 +16,10 @@ RSpec.describe "complaints/show.html.erb", type: :view do
   end
 
   it "displays the grantee name" do
-    expect(rendered).to match grantee_name
+    expect(rendered).to match CGI.escapeHTML(grantee_name)
   end
 
   it "displays the issue text" do
-    expect(rendered).to match issue_text
+    expect(rendered).to match CGI.escapeHTML(issue_text)
   end
 end

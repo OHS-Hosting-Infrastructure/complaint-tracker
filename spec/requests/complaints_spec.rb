@@ -1,4 +1,5 @@
 require "rails_helper"
+require "fake_issues"
 
 RSpec.describe "Complaints", type: :request do
   let(:user) {
@@ -48,10 +49,10 @@ RSpec.describe "Complaints", type: :request do
       end
 
       describe "User has a complaint" do
-        let(:complaint) { FakeData::Complaint.new }
+        let(:complaint) { Api::FakeData::Complaint.new }
 
         it "includes the alert" do
-          allow(FakeData::ApiResponse).to receive(:hses_issues_response).and_return data: [complaint.data]
+          allow_any_instance_of(Api::FakeData::Hses::Issues).to receive(:request).and_return data: [complaint.data]
           get complaints_path
 
           expect(response.body).to include '<table class="usa-table">'
@@ -60,7 +61,7 @@ RSpec.describe "Complaints", type: :request do
 
       describe "User has no complaints" do
         it "includes the alert" do
-          allow(FakeData::ApiResponse).to receive(:hses_issues_response).and_return data: []
+          allow_any_instance_of(Api::FakeData::Hses::Issues).to receive(:request).and_return data: []
           get complaints_path
           expect(response.body).to include user["name"].to_s
           expect(response.body).to include '<h3 class="usa-alert__heading">No issues found</h3>'
@@ -77,7 +78,7 @@ RSpec.describe "Complaints", type: :request do
         allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("user").and_return user
       end
 
-      let(:complaint_id) { FakeData::ApiResponse.hses_issues_response[:data].first[:id] }
+      let(:complaint_id) { FakeIssues.instance.json[:data].first[:id] }
 
       it "returns a 200 status" do
         get complaint_path(id: complaint_id)
