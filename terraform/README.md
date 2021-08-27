@@ -20,6 +20,8 @@
     # return a username/password pair for the service instance
     cf service-key < NAME > space-deployer-key
     ```
+    `cloud-gov-service-account` and `space-deployer` are unique to cloud.gov and provide an account with the permissions to deploy your application. Read more in the [cloud.gov service account documentation](https://cloud.gov/docs/services/cloud-gov-service-account/).
+
 1. Copy `terraform/<ENV>/secrets.auto.tfvars.example` to `secrets.auto.tfvars` and add the service key information from the above step
     ```
     cf_user = "some-user"
@@ -59,4 +61,4 @@ In the environment-specific modules:
 - `providers.tf` lists the required providers
 - `main.tf` calls the shared Terraform code, but this is also a place where you can add any other services, resources, etc, which you would like to set up for that environment
 - `variables.tf` lists the variables that will be needed, either to pass through to the child module or for use in this module
-- `secrets.auto.tfvars` is a file which contains the information about the service-key, and which should not be shared
+- `secrets.auto.tfvars` is a file which contains the information about the service-key and other secrets that should not be shared
