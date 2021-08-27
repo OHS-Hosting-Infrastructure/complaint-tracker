@@ -6,6 +6,8 @@ Date: 2021-08-06
 
 Accepted
 
+Amended by [7. Use OWASP ZAP for dynamic security scans](0007-use-owasp-zap-for-dynamic-security-scans.md)
+
 ## Context
 
 In order to maintain a secure system, it is important that we are kept notified of any potential

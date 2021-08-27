@@ -22,6 +22,7 @@ gem "jbuilder", "~> 2.7"
 gem "omniauth", "~> 2.0"
 gem "omniauth-oauth2", "~> 1.7"
 gem "omniauth-rails_csrf_protection", "~> 1.0"
+gem "secure_headers", "~> 6.3"
 
 # Use ffaker for faked connections to HSES data
 gem "ffaker", "~> 2.18"

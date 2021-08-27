@@ -12,8 +12,7 @@ class ApplicationController < ActionController::Base
   end
 
   def bypass_local_auth?
-    return false if Rails.env.production?
-    if ENV["BYPASS_AUTH"] == "true"
+    if Rails.configuration.x.bypass_auth
       session["user"] ||= {
         uid: ENV.fetch("CURRENT_USER_UID", "fake.testuser@test.com"),
         name: ENV.fetch("CURRENT_USER_NAME", "Fake Test-User")
