@@ -39,7 +39,11 @@ HSES Authentication can be bypassed depending on the value of `RAILS_ENV`
 
 When bypassing auth, you may use `CURRENT_USER_UID` and/or `CURRENT_USER_NAME` to override the current user's HSES name or username.
 
-Consider [setting up automatic linting and testing](#set-up-automatic-linting-and-testing) while you're at it!
+### Inline `<script>` and `<style>` security
+
+The system's Content-Security-Policy header prevents `<script>` and `<style>` tags from working without further
+configuration. See the [CSP compliant script tag helpers](./doc/adr/0008-csp-compliant-script-tag-helpers.md) ADR for
+more information on setting these up successfully.
 
 ### Running Tests
 
