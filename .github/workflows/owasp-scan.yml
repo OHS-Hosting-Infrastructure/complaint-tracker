@@ -57,14 +57,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Start up rails server in the background
-        env:
-          RAILS_ENV: ci
-          SECRET_KEY_BASE: not-actually-secret
-          DATABASE_URL: postgres://complaint_tracker:postgres@localhost:5432/complaint_tracker_test
-        run: |
-          bundle exec rails server &
-          sleep 5 &&
-          curl http://localhost:8080 -I
+        uses: ./.github/actions/run-server
 
       - name: Run OWASP Full Scan
         uses: zaproxy/action-full-scan@v0.2.0
