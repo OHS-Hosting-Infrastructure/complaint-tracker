@@ -121,4 +121,5 @@ Rails.application.configure do
   config.x.hses.auth_base = ENV["HSES_AUTH_BASE"]
   config.x.hses.client_id = ENV["HSES_AUTH_CLIENT_ID"]
   config.x.hses.client_secret = ENV["HSES_AUTH_CLIENT_SECRET"]
+  config.x.bypass_auth = false
 end

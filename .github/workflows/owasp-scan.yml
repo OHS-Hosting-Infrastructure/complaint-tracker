@@ -1,9 +1,4 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-name: Dependency Scans
+name: OWASP ZAP scan
 
 on:
   push:
@@ -19,9 +14,24 @@ on:
     - cron: '0 12 * * *'
 
 jobs:
-  bundle-audit:
-    name: Bundle audit
+  owasp-scan:
+    name: OWASP ZAP
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: complaint_tracker
+          POSTGRES_DB: complaint_tracker_test
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - uses: actions/checkout@v2
 
@@ -34,23 +44,7 @@ jobs:
           bundler-cache: true
           cache-version: 1
 
-      - name: Scan ruby gems
-        run: bundle exec rake bundle:audit
-
-  yarn-audit:
-    name: Yarn audit
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      # TODO: switch to run action once composite actions support `uses`
-      # - uses: ./.github/actions/setup-project
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          # bundler-cache automatically installs gems
-          bundler-cache: true
-          cache-version: 1
+      - uses: ./.github/actions/setup-database
 
       # TODO: switch to run action once composite actions support `uses`
       # - uses: ./.github/actions/setup-javascript
@@ -62,5 +56,12 @@ jobs:
       - name: Install yarn dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Scan npm packages
-        run: bundle exec rake yarn:audit
+      - name: Start up rails server in the background
+        uses: ./.github/actions/run-server
+
+      - name: Run OWASP Full Scan
+        uses: zaproxy/action-full-scan@v0.2.0
+        with:
+          target: 'http://localhost:8080/complaints'
+          fail_action: true
+          cmd_options: '-c zap.conf -I'

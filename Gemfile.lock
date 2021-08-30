@@ -236,6 +236,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    secure_headers (6.3.2)
     semantic_range (3.0.0)
     spring (2.1.1)
     sprockets (4.0.2)
@@ -290,6 +291,7 @@ DEPENDENCIES
   rails (~> 6.1.4)
   rspec-rails (~> 5.0)
   sass-rails (>= 6)
+  secure_headers (~> 6.3)
   spring
   standard (~> 1.1)
   tzinfo-data
