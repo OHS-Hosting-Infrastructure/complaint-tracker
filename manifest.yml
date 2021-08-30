@@ -13,3 +13,5 @@ applications:
   - type: web
     instances: ((web_instances))
     memory: ((web_memory))
+  services:
+  - ohs-ct-rds-((env))
