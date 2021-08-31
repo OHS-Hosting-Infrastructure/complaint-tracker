@@ -9,29 +9,35 @@
     # follow temporary authorization code prompts
     # select the desired OHS org and complaint tracker environment space
 
-    # create a service instance that can provision service accounts
-    # the value for < YOUR-NAME > can be anything, although we recommend
-    # ct-<ENV>-deployer
-    cf create-service cloud-gov-service-account space-deployer < NAME >
-
-    # bind a service key to the service instance
-    cf create-service-key < NAME > space-deployer-key
-
-    # return a username/password pair for the service instance
-    cf service-key < NAME > space-deployer-key
+    # create a service instance that can log in with just a username and password
+    # the value of < SPACE-NAME > should be `ct-stage` or `ct-prod` depending on where you are working
+    # the value for < SERVICE-NAME > can be anything, although we recommend
+    # something that communicates the purpose of the deployer
+    # for example: github-action-deployer for the credentials Github Actions uses to
+    # deploy the applicaiton
+    ./create_space_deployer.sh < SPACE-NAME > < SERVICE-NAME >
     ```
-    `cloud-gov-service-account` and `space-deployer` are unique to cloud.gov and provide an account with the permissions to deploy your application. Read more in the [cloud.gov service account documentation](https://cloud.gov/docs/services/cloud-gov-service-account/).
+
+    The script will output the `username` and `password` for your `< SERVICE-NAME >`. Read more in the [cloud.gov service account documentation](https://cloud.gov/docs/services/cloud-gov-service-account/).
 
 1. Copy `terraform/<ENV>/secrets.auto.tfvars.example` to `secrets.auto.tfvars` and add the service key information from the above step
+
     ```
     cf_user = "some-user"
     cf_password = "some-password"
     ```
+
 1. Run terraform with
     ```bash
     terraform init
     terraform plan
     terraform apply
+    ```
+
+1. Remove the service instance if it doesn't need to be used again, such as by CI/CD.
+    ```bash
+    # < SPACE-NAME > and < SERVICE-NAME > have the same values as used above.
+    ./destroy_space_deployer.sh < SPACE-NAME > < SERVICE-NAME >
     ```
 
 ## Structure
