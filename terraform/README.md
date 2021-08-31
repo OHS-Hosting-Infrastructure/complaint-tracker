@@ -39,6 +39,12 @@
 Each environment has its own module, which relies on a shared module for everything except the providers code and environment specific variables and settings.
 
 ```
+- bootstrap/
+  |- main.tf
+  |- providers.tf
+  |- variables.tf
+  |- run.sh
+  |- teardown_creds.sh
 - <env>/
   |- main.tf
   |- providers.tf
@@ -62,3 +68,10 @@ In the environment-specific modules:
 - `main.tf` calls the shared Terraform code, but this is also a place where you can add any other services, resources, etc, which you would like to set up for that environment
 - `variables.tf` lists the variables that will be needed, either to pass through to the child module or for use in this module
 - `secrets.auto.tfvars` is a file which contains the information about the service-key and other secrets that should not be shared
+
+In the bootstrap module:
+- `providers.tf` lists the required providers
+- `main.tf` sets up s3 bucket to be shared across all environments. It lives in ct-prod to communciate that it should not be deleted
+- `variables.tf` lists the variables that will be needed. Most values are hard-coded in this module
+- `run.sh` Helper script to set up a space deployer and run terraform. The terraform action (`plan`/`apply`/`destroy`) is passed as an argument
+- `teardown_creds.sh` Helper script to remove the space deployer setup as part of `run.sh`
