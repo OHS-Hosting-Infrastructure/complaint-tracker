@@ -75,3 +75,20 @@ In the bootstrap module:
 - `variables.tf` lists the variables that will be needed. Most values are hard-coded in this module
 - `run.sh` Helper script to set up a space deployer and run terraform. The terraform action (`show`/`plan`/`apply`/`destroy`) is passed as an argument
 - `teardown_creds.sh` Helper script to remove the space deployer setup as part of `run.sh`
+
+## Bootstrap Process
+
+Bootstrap is used to create an s3 bucket for later terraform runs to store their state in.
+
+### To run the bootstrap the first time or make changes
+
+1. Run `./run.sh plan` to verify that the changes are what you expect
+1. Run `./run.sh apply` to create the shared config bucket and retrieve the bucket credentials
+1. TODO: better instructions around "Copy the bucket credentials to the place you need to use them"
+1. Run `./teardown_creds.sh` to remove the space deployer account used to create the s3 bucket
+
+### Retrieving existing bucket credentials
+
+1. Run `./run.sh show` to retrieve the bucket credentials
+1. TODO: better instructions around "Copy the bucket credentials to the place you need to use them"
+1. Run `./teardown_creds.sh` to remove the space deployer account used to read the s3 bucket credentials
