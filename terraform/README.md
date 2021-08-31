@@ -84,11 +84,31 @@ Bootstrap is used to create an s3 bucket for later terraform runs to store their
 
 1. Run `./run.sh plan` to verify that the changes are what you expect
 1. Run `./run.sh apply` to create the shared config bucket and retrieve the bucket credentials
-1. TODO: better instructions around "Copy the bucket credentials to the place you need to use them"
+1. Follow instructions under `Use bootstrap credentials`
 1. Run `./teardown_creds.sh` to remove the space deployer account used to create the s3 bucket
 
 ### Retrieving existing bucket credentials
 
 1. Run `./run.sh show` to retrieve the bucket credentials
-1. TODO: better instructions around "Copy the bucket credentials to the place you need to use them"
+1. Follow instructions under `Use bootstrap credentials`
 1. Run `./teardown_creds.sh` to remove the space deployer account used to read the s3 bucket credentials
+
+#### Use bootstrap credentials
+
+1. Add the following to `~/.aws/config`
+
+```
+[profile ct-terraform]
+region = us-gov-west-1
+output = json
+```
+
+2. Add the following to `~/.aws/credentials`
+
+```
+[ct-terraform]
+aws_access_key_id = <<access_key_id from bucket_credentials>>
+aws_secret_access_key = <<secret_access_key from bucket_credentials>>
+```
+
+3. Copy `bucket` from `bucket_credentials` to the backend block of `<env>/providers.tf`
