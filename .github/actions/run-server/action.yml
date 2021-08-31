@@ -12,6 +12,12 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: "Precompile assets"
+      shell: bash
+      env:
+        RAILS_ENV: ${{ inputs.rails_env }}
+      run: bundle exec rake assets:precompile
+
     - name: "Start server in background"
       shell: bash
       env:
