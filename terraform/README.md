@@ -71,7 +71,7 @@ In the environment-specific modules:
 
 In the bootstrap module:
 - `providers.tf` lists the required providers
-- `main.tf` sets up s3 bucket to be shared across all environments. It lives in ct-prod to communciate that it should not be deleted
+- `main.tf` sets up s3 bucket to be shared across all environments. It lives in ct-prod to communicate that it should not be deleted
 - `variables.tf` lists the variables that will be needed. Most values are hard-coded in this module
 - `run.sh` Helper script to set up a space deployer and run terraform. The terraform action (`plan`/`apply`/`destroy`) is passed as an argument
 - `teardown_creds.sh` Helper script to remove the space deployer setup as part of `run.sh`
