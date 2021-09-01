@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-action=$1
-
 if [[ ! -f "secrets.auto.tfvars" ]]; then
   cf target -o hhs-acf-ohs-hses -s ct-prod
 
@@ -21,5 +19,9 @@ if [[ ! -f "secrets.auto.tfvars" ]]; then
   echo "cf_password = $password" >> secrets.auto.tfvars
 fi
 
-# run terraform $1
-terraform $1
+if [[ $# -gt 0 ]]; then
+  echo "Running terraform $@"
+  terraform $@
+else
+  echo "Not running terraform"
+fi
