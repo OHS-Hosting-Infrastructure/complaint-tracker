@@ -82,9 +82,9 @@ In the bootstrap module:
 - `run.sh` Helper script to set up a space deployer and run terraform. The terraform action (`show`/`plan`/`apply`/`destroy`) is passed as an argument
 - `teardown_creds.sh` Helper script to remove the space deployer setup as part of `run.sh`
 
-## Bootstrap Process
+## Terraform State Credentials
 
-Bootstrap is used to create an s3 bucket for later terraform runs to store their state in.
+The bootstrap module is used to create an s3 bucket for later terraform runs to store their state in.
 
 ### To run the bootstrap the first time or make changes
 
@@ -100,6 +100,8 @@ Bootstrap is used to create an s3 bucket for later terraform runs to store their
 1. Run `./teardown_creds.sh` to remove the space deployer account used to read the s3 bucket credentials
 
 #### Use bootstrap credentials
+
+##### Locally
 
 1. Add the following to `~/.aws/config`
 
@@ -118,3 +120,10 @@ aws_secret_access_key = <<secret_access_key from bucket_credentials>>
 ```
 
 3. Copy `bucket` from `bucket_credentials` to the backend block of `<env>/providers.tf`
+
+##### In GitHub Actions
+
+Set environment variables for configuration, using [GitHub Environment Secrets](https://docs.github.com/en/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-an-environment)
+
+* `AWS_ACCESS_KEY_ID`
+* `AWS_SECRET_ACCESS_KEY`
