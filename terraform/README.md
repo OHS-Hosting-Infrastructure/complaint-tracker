@@ -14,7 +14,7 @@
     # the value for < SERVICE-NAME > can be anything, although we recommend
     # something that communicates the purpose of the deployer
     # for example: github-action-deployer for the credentials Github Actions uses to
-    # deploy the applicaiton
+    # deploy the application
     ./create_space_deployer.sh < SPACE-NAME > < SERVICE-NAME >
     ```
 
