@@ -9,12 +9,15 @@ terraform {
       version = "~> 3.11.0"
     }
   }
+}
 
-  backend "s3" {
-    bucket  = "cg-804abf2a-8993-4201-9ede-3b4da2b1babf"
-    key     = "terraform.tfstate.stage"
-    encrypt = "true"
-    region  = "us-gov-west-1"
-    profile = "ct-terraform"
-  }
+provider "cloudfoundry" {
+  api_url      = "https://api.fr.cloud.gov"
+  user         = var.cf_user
+  password     = var.cf_password
+  app_logs_max = 30
+}
+
+provider "aws" {
+  region = "us-gov-west-1"
 }

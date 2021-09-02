@@ -14,9 +14,7 @@ echo "Running linter..."
 bundle exec rake standard
 linter_status=$?
 
-if [ "${linter_status}" = 0 ]; then
-    exit 0
-else
+if [ $linter_status -ne 0 ]; then
     echo "Fix above before committing. Run 'git commit -n' to bypass linter."
     exit 1
 fi
@@ -24,7 +22,7 @@ fi
 echo "Running Terraform formatter"
 # imitates https://github.com/HHS/Head-Start-TTADP/blob/3b72ff05d94fab4cda877c63d8cd6970f0eeffc7/.githooks/pre-commit
 
-files=$(git diff terraform --cached --name-only)
+files=$(git diff --cached --name-only terraform)
 for f in $files
 do
   # Format any *.tf files that were cached/staged
@@ -32,4 +30,4 @@ do
     terraform fmt "$f"
     git add "$f"
   fi
-end
+done
