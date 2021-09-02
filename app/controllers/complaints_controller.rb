@@ -6,7 +6,7 @@ class ComplaintsController < ApplicationController
   end
 
   def show
-    @complaint = Api.request("hses", "issue", {id: params[:id]})[:data]
+    @complaint = Complaint.new(Api.request("hses", "issue", {id: params[:id]})[:data])
     render layout: "details"
   end
 

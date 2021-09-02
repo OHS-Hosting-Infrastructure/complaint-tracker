@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "complaints/show.html.erb", type: :view do
-  let(:complaint) { Api::FakeData::Complaint.new.data }
-  let(:issue_number) { complaint[:id] }
-  let(:grantee_name) { complaint.dig :attributes, :grantee }
-  let(:issue_text) { complaint.dig :attributes, :issue }
+  let(:complaint) { Complaint.new(Api::FakeData::Complaint.new.data) }
+  let(:issue_number) { complaint.id }
+  let(:grantee_name) { complaint.grantee }
+  let(:issue_text) { complaint.issue }
 
   before do
     assign(:complaint, complaint)
