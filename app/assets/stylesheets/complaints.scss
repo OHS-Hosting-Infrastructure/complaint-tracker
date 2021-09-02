@@ -19,9 +19,23 @@
   padding-bottom: 1rem;
 }
 
+.ct-timeline__two-part-container {
+  display: flex;
+  align-items: baseline;
+}
+
 .ct-timeline__date {
   color: #71767A;
-  float: right;
+  flex: 1;
   font-size: 0.8em;
   font-weight: normal;
+  text-align: right;
+}
+
+.ct-timeline__overdue {
+  color: #B50909;
+}
+
+.ct-timeline__due-soon {
+  color: #E5A000;
 }

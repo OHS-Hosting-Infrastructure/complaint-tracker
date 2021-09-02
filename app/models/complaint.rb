@@ -34,6 +34,24 @@ class Complaint
     EVENT_LABELS[attribute_name] || "Updated"
   end
 
+  def due_date?
+    due_date.present?
+  end
+
+  def overdue?
+    due_date? && due_date.past?
+  end
+
+  def due_soon?
+    due_date? && due_date < 1.week.from_now
+  end
+
+  def due_date
+    Date.parse(attributes[:dueDate])
+  rescue
+    nil
+  end
+
   def method_missing(method_name, *arguments, &block)
     camelized_method = method_name.to_s.camelize(:lower)
     if attributes.has_key?(camelized_method)

@@ -1,6 +1,10 @@
 require "ffaker"
 
 module FfakerWrapper
+  def date_string
+    date.strftime("%F")
+  end
+
   def date
     FFaker::Time.date
   end

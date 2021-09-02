@@ -18,7 +18,7 @@ class Api::FakeData::Complaint
         issue: phrase,
         priority: random_int,
         status: random_int(4),
-        dueDate: date,
+        dueDate: date_string,
         grantee: grantee_name
       },
       relationships: {

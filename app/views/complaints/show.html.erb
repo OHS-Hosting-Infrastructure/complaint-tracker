@@ -17,11 +17,24 @@
 
     <div class="grid-col-8">
       <div class="summary-section">
-        <h2 class="ct-timeline__header"><%= status(@complaint.attributes) %></h2>
+        <h2 class="ct-timeline__header ct-timeline__two-part-container">
+          <%= status(@complaint.attributes) %>
+          <span class="ct-timeline__date">
+            <% if @complaint.overdue? %>
+              <span class="ct-timeline__overdue">Overdue (Due <%= @complaint.due_date.strftime("%-m/%-d/%Y") %>)</span>
+            <% elsif @complaint.due_soon? %>
+              <span class="ct-timeline__due-soon">TODO relative time to due (<%= @complaint.due_date.strftime("%-m/%-d/%Y") %>)</span>
+            <% elsif @complaint.due_date? %>
+              TODO relative time to due (<%= @complaint.due_date.strftime("%-m/%-d/%Y") %>)
+            <% else %>
+              No Due Date
+            <% end %>
+          </span>
+        </h2>
         <ul class="usa-process-list">
           <% @complaint.events.each do |event| %>
             <li class="usa-process-list__item usa-process-list__item-disc">
-              <h4 class="usa-process-list__heading">
+              <h4 class="usa-process-list__heading ct-timeline__two-part-container">
                 <%= @complaint.event_label(event.first) %>
                 <span class="ct-timeline__date"><%= event.last.strftime("%-m/%-d/%Y") %></span>
               </h4>
