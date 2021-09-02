@@ -4,3 +4,12 @@
   border-radius: 5px;
   padding: 0 1rem;
 }
+
+.usa-process-list__item.usa-process-list__item-disc::before {
+  content: '•';
+  color: #1A4480;
+  border: 0;
+  font-size: 3rem;
+  height: 1.25rem;
+  margin-top: 0;
+}
