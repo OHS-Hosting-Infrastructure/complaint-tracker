@@ -6,7 +6,7 @@ module FfakerWrapper
   end
 
   def date
-    FFaker::Time.date
+    FFaker::Time.between(1.month.ago, 1.month.after).to_date
   end
 
   def datetime_string
@@ -15,7 +15,7 @@ module FfakerWrapper
   end
 
   def datetime
-    FFaker::Time.datetime
+    FFaker::Time.between(1.month.ago, 1.month.after).to_datetime
   end
 
   def grantee_name

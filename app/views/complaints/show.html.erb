@@ -21,13 +21,13 @@
           <%= status(@complaint.attributes) %>
           <span class="ct-timeline__date">
             <% if @complaint.overdue? %>
-              <span class="ct-timeline__overdue">Overdue (Due <%= @complaint.due_date.strftime("%-m/%-d/%Y") %>)</span>
-            <% elsif @complaint.due_soon? %>
-              <span class="ct-timeline__due-soon">TODO relative time to due (<%= @complaint.due_date.strftime("%-m/%-d/%Y") %>)</span>
-            <% elsif @complaint.due_date? %>
-              TODO relative time to due (<%= @complaint.due_date.strftime("%-m/%-d/%Y") %>)
-            <% else %>
+              <span class="ct-timeline__overdue">Overdue (Due <%= @complaint.formatted_due_date %>)</span>
+            <% elsif !@complaint.due_date? %>
               No Due Date
+            <% else %>
+              <span class="<%= 'ct-timeline__due-soon' if @complaint.due_soon? %>">
+                <%= @complaint.relative_due_date_string %>
+              </span>
             <% end %>
           </span>
         </h2>
@@ -35,8 +35,8 @@
           <% @complaint.events.each do |event| %>
             <li class="usa-process-list__item usa-process-list__item-disc">
               <h4 class="usa-process-list__heading ct-timeline__two-part-container">
-                <%= @complaint.event_label(event.first) %>
-                <span class="ct-timeline__date"><%= event.last.strftime("%-m/%-d/%Y") %></span>
+                <%= @complaint.event_label(event[:name]) %>
+                <span class="ct-timeline__date"><%= event[:date].strftime("%-m/%-d/%Y") %></span>
               </h4>
             </li>
           <% end %>
