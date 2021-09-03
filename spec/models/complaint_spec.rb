@@ -81,14 +81,6 @@ RSpec.describe Complaint do
     end
   end
 
-  describe "formatted_due_date" do
-    before { subject.attributes[:dueDate] = Date.today.to_date.iso8601 }
-
-    it "returns the correctly formatted due date" do
-      expect(subject.formatted_due_date).to eq Date.today.strftime("%-m/%-d/%Y")
-    end
-  end
-
   describe "#overdue?" do
     before { subject.attributes[:dueDate] = 1.day.ago.iso8601 }
 
@@ -133,34 +125,52 @@ RSpec.describe Complaint do
     end
   end
 
-  describe "relative_due_date_string" do
+  describe "relative_due_date_html" do
     context "due today" do
       before { subject.attributes[:dueDate] = Date.today.to_date.iso8601 }
 
-      it "returns the correct string" do
-        strftime = Date.today.strftime("%-m/%-d/%Y")
+      it "returns the correct html string" do
+        strftime = Date.today.strftime("%m/%d/%Y")
 
-        expect(subject.relative_due_date_string).to eq "Due today (#{strftime})"
+        expect(subject.relative_due_date_html).to eq(
+          "<span class=\"ct-timeline__due-soon\">Due today (#{strftime})</span>"
+        )
       end
     end
 
     context "due in a single day" do
       before { subject.attributes[:dueDate] = 1.day.after.to_date.iso8601 }
 
-      it "returns the correct string" do
-        strftime = 1.day.after.strftime("%-m/%-d/%Y")
+      it "returns the correct html string" do
+        strftime = 1.day.after.strftime("%m/%d/%Y")
 
-        expect(subject.relative_due_date_string).to eq "Due in 1 day (#{strftime})"
+        expect(subject.relative_due_date_html).to eq(
+          "<span class=\"ct-timeline__due-soon\">Due in 1 day (#{strftime})</span>"
+        )
       end
     end
 
     context "due in a week" do
       before { subject.attributes[:dueDate] = 7.days.after.to_date.iso8601 }
 
-      it "returns the correct string" do
-        strftime = 7.days.after.strftime("%-m/%-d/%Y")
+      it "returns the correct html string" do
+        strftime = 7.days.after.strftime("%m/%d/%Y")
 
-        expect(subject.relative_due_date_string).to eq "Due in 7 days (#{strftime})"
+        expect(subject.relative_due_date_html).to eq(
+          "<span class=\"ct-timeline__due-soon\">Due in 7 days (#{strftime})</span>"
+        )
+      end
+    end
+
+    context "due in a month" do
+      before { subject.attributes[:dueDate] = 12.days.after.to_date.iso8601 }
+
+      it "returns the correct html string" do
+        strftime = 12.days.after.strftime("%m/%d/%Y")
+
+        expect(subject.relative_due_date_html).to eq(
+          "<span>Due in 12 days (#{strftime})</span>"
+        )
       end
     end
   end

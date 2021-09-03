@@ -20,24 +20,20 @@
         <h2 class="ct-timeline__header ct-timeline__two-part-container">
           <%= status(@complaint.attributes) %>
           <span class="ct-timeline__date">
-            <% if @complaint.overdue? %>
-              <span class="ct-timeline__overdue">Overdue (Due <%= @complaint.formatted_due_date %>)</span>
-            <% elsif !@complaint.due_date? %>
+            <% if !@complaint.due_date? %>
               No Due Date
             <% else %>
-              <span class="<%= 'ct-timeline__due-soon' if @complaint.due_soon? %>">
-                <%= @complaint.relative_due_date_string %>
-              </span>
+                <%= sanitize @complaint.relative_due_date_html %>
             <% end %>
           </span>
         </h2>
         <ul class="usa-process-list">
           <% @complaint.events.each do |event| %>
             <li class="usa-process-list__item usa-process-list__item-disc">
-              <h4 class="usa-process-list__heading ct-timeline__two-part-container">
+              <h3 class="usa-process-list__heading ct-timeline__two-part-container">
                 <%= @complaint.event_label(event[:name]) %>
-                <span class="ct-timeline__date"><%= event[:date].strftime("%-m/%-d/%Y") %></span>
-              </h4>
+                <span class="ct-timeline__date"><%= event[:date].strftime("%m/%d/%Y") %></span>
+              </h3>
             </li>
           <% end %>
         </ul>
