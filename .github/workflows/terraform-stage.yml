@@ -1,0 +1,89 @@
+name: Run Terraform in staging
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'terraform/**' ]
+  pull_request:
+    branches: [ main ]
+
+defaults:
+  run:
+    working-directory: terraform/stage
+
+jobs:
+  terraform:
+    name: Terraform
+    runs-on: ubuntu-latest
+    environment: stage
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.TERRAFORM_STATE_ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.TERRAFORM_STATE_SECRET_ACCESS_KEY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Terraform format
+        id: format
+        run: terraform fmt -check
+
+      - name: Terraform init
+        id: init
+        run: terraform init
+
+      - name: Terraform validate
+        id: validation
+        run: terraform validate -no-color
+
+      - name: Terraform plan
+        id: plan
+        if: github.event_name == 'pull_request'
+        env:
+          CF_STAGE: ${{ secrets.CF_STAGE }}
+          CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+        run: terraform plan -no-color
+
+      # source: https://learn.hashicorp.com/tutorials/terraform/github-actions#review-actions-workflow
+      - name: Update PR
+        uses: actions/github-script@v4
+        # TODO we don't actually always want this to happen
+        if: ${{ always() }}
+        # if: github.event_name == 'pull_request'
+        # TODO would we rather use pa11y style of outputting to PR?
+        env:
+          PLAN: 'terraform\n${{ steps.plan.outputs.stdout }}'
+        with:
+          github-topic: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const output = `Terraform Format and Style: ${{ steps.format.outcome }}
+            Terraform Initialization: ${{ steps.init.outcome }}
+            Terraform Plan: ${{ steps.plan.outcome }}
+            Terraform Validation: ${{ steps.validate.outcome }}
+
+            <details><summary>Show Plan</summary>
+
+            \`\`\`\n
+            ${process.env.PLAN}
+            \`\`\`
+
+            </details>
+
+            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+
+      - name: Terraform plan status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
+
+      - name: Terraform apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        env:
+          CF_STAGE: ${{ secrets.CF_STAGE }}
+          CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+        run: terraform apply -auto-approve
