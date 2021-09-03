@@ -75,7 +75,7 @@ RSpec.describe Complaint do
     context "due date is blank" do
       before { subject.attributes[:dueDate] = nil }
 
-      it "return false" do
+      it "returns false" do
         expect(subject.due_date?).to be false
       end
     end
