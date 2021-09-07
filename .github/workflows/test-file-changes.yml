@@ -21,3 +21,13 @@ jobs:
         uses: tj-actions/changed-files@v1.1.2
         with:
           files: db/migrate
+
+      - name: Show output
+        run: |
+          echo '${{ toJSON(steps.changed-files.outputs) }}'
+        shell:
+          bash
+
+      - name: Test expression
+        if: steps.changed-files.outputs.any_changed
+        run: echo "any changed was true"
