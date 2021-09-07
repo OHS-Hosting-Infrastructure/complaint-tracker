@@ -1,0 +1,23 @@
+name: Test File Changes
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+      - 'doc/**'
+      - 'README.md'
+
+jobs:
+  deploy:
+    name: Test file change code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v1.1.2
+        with:
+          files: db/migrate
