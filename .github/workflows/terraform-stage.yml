@@ -6,6 +6,7 @@ on:
     paths: [ 'terraform/**' ]
   pull_request:
     branches: [ main ]
+    paths: [ 'terraform/**' ]
 
 defaults:
   run:
@@ -39,9 +40,9 @@ jobs:
         id: plan
         if: github.event_name == 'pull_request'
         env:
-          CF_STAGE: ${{ secrets.CF_STAGE }}
-          CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-        run: terraform plan -no-color
+          TF_VAR_cf_user: ${{ secrets.CF_USERNAME }}
+          TF_VAR_cf_password: ${{ secrets.CF_PASSWORD }}
+        run: terraform plan -no-color -input=false
 
       # source: https://learn.hashicorp.com/tutorials/terraform/github-actions#review-actions-workflow
       - name: Update PR
@@ -84,6 +85,6 @@ jobs:
       - name: Terraform apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         env:
-          CF_STAGE: ${{ secrets.CF_STAGE }}
-          CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-        run: terraform apply -auto-approve
+          TF_VAR_cf_user: ${{ secrets.CF_USERNAME }}
+          TF_VAR_cf_password: ${{ secrets.CF_PASSWORD }}
+        run: terraform apply -auto-approve -input=false
