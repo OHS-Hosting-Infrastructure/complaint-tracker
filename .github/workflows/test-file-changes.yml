@@ -29,5 +29,5 @@ jobs:
           bash
 
       - name: Test expression
-        if: steps.changed-files.outputs.any_changed
+        if: steps.changed-files.outputs.any_changed == "true"
         run: echo "any changed was true"
