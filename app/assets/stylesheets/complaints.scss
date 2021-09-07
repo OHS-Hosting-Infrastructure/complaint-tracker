@@ -4,3 +4,38 @@
   border-radius: 5px;
   padding: 0 1rem;
 }
+
+.usa-process-list__item.usa-process-list__item-disc::before {
+  border: 0;
+  color: #1A4480;
+  content: '•';
+  font-size: 3rem;
+  height: 1.25rem;
+  margin-top: 0;
+}
+
+.ct-timeline__header {
+  border-bottom: 1px solid #DFE1E2;
+  padding-bottom: 1rem;
+}
+
+.ct-timeline__two-part-container {
+  display: flex;
+  align-items: baseline;
+}
+
+.ct-timeline__date {
+  color: #71767A;
+  flex: 1;
+  font-size: 0.8em;
+  font-weight: normal;
+  text-align: right;
+}
+
+.ct-timeline__overdue {
+  color: #B50909;
+}
+
+.ct-timeline__due-soon {
+  color: #c05600;
+}

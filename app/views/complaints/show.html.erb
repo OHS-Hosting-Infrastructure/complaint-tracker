@@ -1,6 +1,6 @@
 <div class="details-header">
   <div class="grid-container">
-    <h1>Issue #<%= @complaint[:id] %></h1>
+    <h1>Issue #<%= @complaint.id %></h1>
   </div>
 </div>
 <div class="details-body grid-container">
@@ -9,15 +9,34 @@
       <div class="summary-section">
         <h2>Summary</h2>
         <p>
-          <strong><%= @complaint.dig(:attributes, :grantee) %>:</strong>
-          <%= @complaint.dig(:attributes, :issue) %>
+          <strong><%= @complaint.grantee %>:</strong>
+          <%= @complaint.issue %>
         </p>
       </div>
     </div>
 
     <div class="grid-col-8">
       <div class="summary-section">
-        <h2><%= status(@complaint[:attributes]) %></h2>
+        <h2 class="ct-timeline__header ct-timeline__two-part-container">
+          <%= status(@complaint.attributes) %>
+          <span class="ct-timeline__date">
+            <% if !@complaint.due_date? %>
+              No Due Date
+            <% else %>
+                <%= sanitize @complaint.relative_due_date_html %>
+            <% end %>
+          </span>
+        </h2>
+        <ul class="usa-process-list">
+          <% @complaint.events.each do |event| %>
+            <li class="usa-process-list__item usa-process-list__item-disc">
+              <h3 class="usa-process-list__heading ct-timeline__two-part-container">
+                <%= @complaint.event_label(event[:name]) %>
+                <span class="ct-timeline__date"><%= event[:date].strftime("%m/%d/%Y") %></span>
+              </h3>
+            </li>
+          <% end %>
+        </ul>
       </div>
     </div>
   </div>
