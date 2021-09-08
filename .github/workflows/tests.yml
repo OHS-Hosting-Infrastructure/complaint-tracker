@@ -36,14 +36,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # TODO: switch to run action once composite actions support `uses`
-      #- uses: ./.github/actions/setup-project
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          # bundler-cache automatically installs gems
-          bundler-cache: true
-          cache-version: 1
+      - uses: ./.github/actions/setup-project
 
       - uses: ./.github/actions/setup-database
 
@@ -63,14 +56,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # TODO: switch to run action once composite actions support `uses`
-      # - uses: ./.github/actions/setup-project
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          # bundler-cache automatically installs gems
-          bundler-cache: true
-          cache-version: 1
+      - uses: ./.github/actions/setup-project
 
       - name: Run linter
         run: bundle exec rake standard
