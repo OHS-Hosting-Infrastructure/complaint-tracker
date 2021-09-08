@@ -17,18 +17,6 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Deploy app
-        uses: 18F/cg-deploy-action@main
-        env:
-          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-          HSES_AUTH_CLIENT_SECRET: ${{ secrets.HSES_AUTH_CLIENT_SECRET }}
-        with:
-          cf_username: ${{ secrets.CF_USERNAME }}
-          cf_password: ${{ secrets.CF_PASSWORD }}
-          cf_org: hhs-acf-ohs-hses
-          cf_space: ct-stage
-          push_arguments: "--vars-file config/deployment/stage.yml --var rails_master_key=$RAILS_MASTER_KEY --var hses_auth_client_secret=$HSES_AUTH_CLIENT_SECRET"
-
       - name: Check for changes to Terraform
         id: changed-files
         uses: tj-actions/changed-files@v1.1.2
@@ -46,3 +34,15 @@ jobs:
           TF_VAR_cf_user: ${{ secrets.CF_USERNAME }}
           TF_VAR_cf_password: ${{ secrets.CF_PASSWORD }}
         run: terraform apply -auto-approve -input=false
+
+      - name: Deploy app
+        uses: 18F/cg-deploy-action@main
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          HSES_AUTH_CLIENT_SECRET: ${{ secrets.HSES_AUTH_CLIENT_SECRET }}
+        with:
+          cf_username: ${{ secrets.CF_USERNAME }}
+          cf_password: ${{ secrets.CF_PASSWORD }}
+          cf_org: hhs-acf-ohs-hses
+          cf_space: ct-stage
+          push_arguments: "--vars-file config/deployment/stage.yml --var rails_master_key=$RAILS_MASTER_KEY --var hses_auth_client_secret=$HSES_AUTH_CLIENT_SECRET"
