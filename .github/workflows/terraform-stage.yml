@@ -41,7 +41,14 @@ jobs:
       - name: Terraform plan
         id: plan
         if: github.event_name == 'pull_request'
-        run: terraform plan -no-color -input=false
+        run: terraform plan -no-color -input=false 2>&1 | tee plan_output.txt
+
+      - name: Read Terraform plan output file
+        if: github.event_name == 'pull_request'
+        id: terraform_output
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./plan_output.txt
 
       # inspiration: https://learn.hashicorp.com/tutorials/terraform/github-actions#review-actions-workflow
       - name: Update PR
@@ -58,7 +65,7 @@ jobs:
             <details><summary>Show Plan</summary>
 
             \`\`\`\n
-            ${{ steps.plan.outputs.result }}
+            ${{ steps.terraform_output.outputs.content }}
             \`\`\`
 
             </details>
