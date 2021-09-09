@@ -42,6 +42,7 @@ jobs:
       - name: Read Terraform plan output file
         id: terraform_output
         uses: juliangruber/read-file-action@v1
+        if: ${{ always() }}
         with:
           path: ./terraform/stage/plan_output.txt
 
@@ -73,7 +74,3 @@ jobs:
               repo: context.repo.repo,
               body: output
             })
-
-      - name: Terraform plan status
-        if: ${{ always() }} && steps.plan.outcome == 'failure'
-        run: exit 1

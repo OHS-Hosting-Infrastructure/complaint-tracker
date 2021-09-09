@@ -2,6 +2,8 @@
 
 ## Set up a new environment
 
+The below steps rely on you first configuring access to the Terraform state in s3 as described in [Terraform State Credentials](#terraform-state-credentials).
+
 1. Set up a service key
     ```bash
     # login
@@ -27,7 +29,7 @@
     cf_password = "password"
     ```
 
-1. Run terraform with
+1. Run terraform from your new environment directory with
     ```bash
     terraform init
     terraform plan
@@ -119,12 +121,11 @@ region = us-gov-west-1
 output = json
 ```
 
-2. Add the following to `~/.aws/credentials`
+2. You will need to set the following environment variables:
 
 ```
-[ct-terraform]
-aws_access_key_id = <<access_key_id from bucket_credentials or cf service-key>>
-aws_secret_access_key = <<secret_access_key from bucket_credentials or cf service-key>>
+export AWS_ACCESS_KEY_ID=<<access_key_id from bucket_credentials or cf service-key>>
+export AWS_SECRET_ACCESS_KEY=<<secret_access_key from bucket_credentials or cf service-key>>
 ```
 
 3. Copy `bucket` from `terraform` or `cf service-key` output to the backend block of `<env>/providers.tf`
