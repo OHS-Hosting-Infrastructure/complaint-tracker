@@ -1,5 +1,3 @@
-# currently not used because `uses` is not supported within composite steps
-# https://github.com/actions/runner/pull/1040
 name: "Set up javascript"
 description: "Set up javascript and yarn dependencies"
 runs:
@@ -12,4 +10,5 @@ runs:
         cache: 'yarn'
 
     - name: Install yarn dependencies
+      shell: bash
       run: yarn install --frozen-lockfile

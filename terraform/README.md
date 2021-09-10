@@ -33,8 +33,10 @@ The below steps rely on you first configuring access to the Terraform state in s
     ```bash
     terraform init
     terraform plan
-    terraform apply
     ```
+
+1. GitHub Actions will apply the changes when your PR is merged. To force `terraform apply` to run even if you didn't
+update any terraform files, make any change to `terraform/<env>/.force-action-apply`
 
 1. Remove the space deployer service instance if it doesn't need to be used again, such as when manually running terraform once.
     ```bash
@@ -60,6 +62,7 @@ Each environment has its own module, which relies on a shared module for everyth
   |- secrets.auto.tfvars
   |- secrets.auto.tfvars.example
   |- variables.tf
+  |- .force-action-apply
 - shared/
   |- database/
      |- main.tf
@@ -77,6 +80,7 @@ In the environment-specific modules:
 - `main.tf` calls the shared Terraform code, but this is also a place where you can add any other services, resources, etc, which you would like to set up for that environment
 - `variables.tf` lists the variables that will be needed, either to pass through to the child module or for use in this module
 - `secrets.auto.tfvars` is a file which contains the information about the service-key and other secrets that should not be shared
+- `.force-action-apply` is a file that can be updated to force GitHub Actions to run `terraform apply` during the deploy phase
 
 In the bootstrap module:
 - `providers.tf` lists the required providers

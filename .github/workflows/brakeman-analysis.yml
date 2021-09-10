@@ -24,14 +24,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    # TODO: switch to run action once composite actions support `uses`
-    # - uses: ./.github/actions/setup-project
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        # bundler-cache automatically installs gems
-        bundler-cache: true
-        cache-version: 1
+    - uses: ./.github/actions/setup-project
 
     # Execute Brakeman CLI and generate a SARIF output with the security issues identified during the analysis
     - name: Brakeman Scan
