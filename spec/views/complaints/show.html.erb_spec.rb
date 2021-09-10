@@ -4,7 +4,7 @@ RSpec.describe "complaints/show.html.erb", type: :view do
   let(:complaint) { Complaint.new(Api::FakeData::Complaint.new.data) }
   let(:issue_number) { complaint.id }
   let(:grantee_name) { complaint.grantee }
-  let(:issue_text) { complaint.issue }
+  let(:summary) { complaint.summary }
 
   before do
     assign(:complaint, complaint)
@@ -20,6 +20,6 @@ RSpec.describe "complaints/show.html.erb", type: :view do
   end
 
   it "displays the issue text" do
-    expect(rendered).to match CGI.escapeHTML(issue_text)
+    expect(rendered).to match CGI.escapeHTML(summary)
   end
 end

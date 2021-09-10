@@ -9,7 +9,7 @@ RSpec.describe Api::FakeData::Complaint do
 
       expect(data[:id]).to be_a(String)
       expect(data[:attributes]).to be_a(Hash)
-      expect(data.dig(:relationships, :grantAward, :meta, :id)).to be_a(String)
+      expect(data.dig(:attributes, :issueType, :label)).to be_a(String)
       expect(data[:links]).to be_a(Hash)
     end
 

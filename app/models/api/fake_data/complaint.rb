@@ -8,35 +8,21 @@ class Api::FakeData::Complaint
       id: identifier,
       type: "issues",
       attributes: {
-        issueLastUpdated: datetime_string,
-        creationDate: datetime_string,
-        closedDate: datetime_string,
-        reopenedDate: datetime_string,
-        initialContactDate: datetime_string,
-        type: random_int(2),
-        otherType: word,
-        issue: phrase,
-        priority: random_int,
-        status: random_int(4),
+        status: status_object,
+        regarding: regarding,
+        agencyId: random_int(999),
+        grantNumber: grant_number,
+        grantee: grantee_name,
+        region: random_int(13),
+        issueType: issue_type_object,
+        summary: phrase,
+        priority: priority_object,
+        initialContactDate: date_string,
         dueDate: date_string,
-        grantee: grantee_name
-      },
-      relationships: {
-        grantAward: {
-          meta: {
-            id: identifier
-          }
-        },
-        grantProgram: {
-          meta: {
-            id: identifier
-          }
-        },
-        region: {
-          meta: {
-            id: identifier
-          }
-        }
+        creationDate: datetime_string,
+        issueLastUpdated: datetime_string,
+        closedDate: datetime_string,
+        reopenedDate: datetime_string
       },
       links: {
         self: "https://example.com/TODO",

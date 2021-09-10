@@ -56,6 +56,10 @@ class Complaint
     end
   end
 
+  def summary
+    attributes["summary"]
+  end
+
   private
 
   def day_string
