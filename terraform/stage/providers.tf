@@ -15,6 +15,5 @@ terraform {
     key     = "terraform.tfstate.stage"
     encrypt = "true"
     region  = "us-gov-west-1"
-    profile = "ct-terraform"
   }
 }
