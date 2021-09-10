@@ -12,6 +12,11 @@ jobs:
     name: Deploy to staging
     runs-on: ubuntu-latest
     environment: stage
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.TERRAFORM_STATE_ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.TERRAFORM_STATE_SECRET_ACCESS_KEY }}
+      TF_VAR_cf_user: ${{ secrets.CF_USERNAME }}
+      TF_VAR_cf_password: ${{ secrets.CF_PASSWORD }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -25,14 +30,14 @@ jobs:
             terraform/shared
             terraform/stage
 
+      - name: Terraform init
+        if: steps.changed-files.outputs.any_changed == 'true'
+        working-directory: terraform/stage
+        run: terraform init
+
       - name: Terraform apply
         if: steps.changed-files.outputs.any_changed == 'true'
         working-directory: terraform/stage
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.TERRAFORM_STATE_ACCESS_KEY }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.TERRAFORM_STATE_SECRET_ACCESS_KEY }}
-          TF_VAR_cf_user: ${{ secrets.CF_USERNAME }}
-          TF_VAR_cf_password: ${{ secrets.CF_PASSWORD }}
         run: terraform apply -auto-approve -input=false
 
       - name: Deploy app
