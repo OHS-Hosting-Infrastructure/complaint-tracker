@@ -12,10 +12,33 @@ jobs:
     name: Deploy to staging
     runs-on: ubuntu-latest
     environment: stage
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.TERRAFORM_STATE_ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.TERRAFORM_STATE_SECRET_ACCESS_KEY }}
+      TF_VAR_cf_user: ${{ secrets.CF_USERNAME }}
+      TF_VAR_cf_password: ${{ secrets.CF_PASSWORD }}
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 2
+
+      - name: Check for changes to Terraform
+        id: changed-terraform-files
+        uses: tj-actions/changed-files@v1.1.2
+        with:
+          files: |
+            terraform/shared
+            terraform/stage
+
+      - name: Terraform init
+        if: steps.changed-terraform-files.outputs.any_changed == 'true'
+        working-directory: terraform/stage
+        run: terraform init
+
+      - name: Terraform apply
+        if: steps.changed-terraform-files.outputs.any_changed == 'true'
+        working-directory: terraform/stage
+        run: terraform apply -auto-approve -input=false
 
       - name: Deploy app
         uses: 18F/cg-deploy-action@main
@@ -30,13 +53,13 @@ jobs:
           push_arguments: "--vars-file config/deployment/stage.yml --var rails_master_key=$RAILS_MASTER_KEY --var hses_auth_client_secret=$HSES_AUTH_CLIENT_SECRET"
 
       - name: Check for changes to migrations
-        id: changed-files
+        id: changed-migration-files
         uses: tj-actions/changed-files@v1.1.2
         with:
           files: db/migrate
 
       - name: Run migration
-        if: steps.changed-files.outputs.any_changed == 'true'
+        if: steps.changed-migration-files.outputs.any_changed == 'true'
         uses: 18f/cg-deploy-action@main
         with:
           cf_username: ${{ secrets.CF_USERNAME }}
@@ -48,11 +71,11 @@ jobs:
 
 
       - name: "wait a minute for task to run"
-        if: steps.changed-files.outputs.any_changed == 'true'
+        if: steps.changed-migration-files.outputs.any_changed == 'true'
         run: sleep 60
 
       - name: Restart server
-        if: steps.changed-files.outputs.any_changed == 'true'
+        if: steps.changed-migration-files.outputs.any_changed == 'true'
         uses: 18f/cg-deploy-action@main
         with:
           cf_username: ${{ secrets.CF_USERNAME }}
