@@ -36,10 +36,6 @@ class Complaint
     attributes["grantee"]
   end
 
-  def issue
-    attributes["issue"]
-  end
-
   def overdue?
     due_date? && due_date.past?
   end

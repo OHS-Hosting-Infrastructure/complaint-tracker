@@ -20,6 +20,13 @@ module FfakerWrapper
     2 => "FYI"
   }
 
+  REGARDING = [
+    "Grantee",
+    "State",
+    "Region",
+    "DRS"
+  ]
+
   def date
     FFaker::Time.between(1.month.ago, 1.month.after).to_date
   end
@@ -77,7 +84,7 @@ module FfakerWrapper
   end
 
   def regarding
-    ["Grantee", "State", "Region", "DRS"].sample
+    REGARDING.sample
   end
 
   def status_object
