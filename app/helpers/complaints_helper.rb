@@ -17,7 +17,7 @@ module ComplaintsHelper
   }
 
   def status(complaint_attributes)
-    formatted_status = FORMATTED_STATUS[complaint_attributes[:status]]
+    formatted_status = FORMATTED_STATUS[complaint_attributes[:status][:id]]
     if complaint_attributes[:creationDate] > 1.week.ago && formatted_status == "In Progress"
       "New"
     else
