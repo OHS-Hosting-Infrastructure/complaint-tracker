@@ -17,7 +17,6 @@ To be completed by the submitter:
 
 <!-- Add details to each completed item -->
 - [ ] Meets issue criteria
-- [ ] Project board status updated
 - [ ] Code is meaningfully tested
 - [ ] Meets accessibility standards (WCAG 2.1 Levels A, AA)
 - [ ] API Documentation updated

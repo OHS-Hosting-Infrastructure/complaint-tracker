@@ -8,7 +8,7 @@ visibility into status and actions taken to address a complaint.
 ### Local Setup
 
 * Install Ruby 3.0.2
-* Install NodeJS 14.17.3
+* Install NodeJS 14.17.5
 * Install PostgreSQL 12.x: `brew install postgresql@12`
   * Add postgres to your PATH if it wasn't done automatically
   `echo 'export PATH="/usr/local/opt/postgresql@12/bin:$PATH"' >> ~/.zshrc`
