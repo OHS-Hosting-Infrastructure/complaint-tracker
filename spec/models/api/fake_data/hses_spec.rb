@@ -12,7 +12,7 @@ RSpec.describe Api::FakeData::Hses do
       end
 
       it "wraps the complaint in a detail wrapper" do
-        expect(issue_endpoint.request.keys).to eq [:data, :included]
+        expect(issue_endpoint.request.keys).to eq [:data]
       end
     end
   end
@@ -25,7 +25,7 @@ RSpec.describe Api::FakeData::Hses do
       end
 
       it "wraps the complaint in a detail wrapper" do
-        expect(issues_endpoint.request.keys).to eq [:meta, :data, :links, :included]
+        expect(issues_endpoint.request.keys).to eq [:meta, :data]
       end
     end
   end

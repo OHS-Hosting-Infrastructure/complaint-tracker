@@ -36,10 +36,6 @@ class Complaint
     attributes["grantee"]
   end
 
-  def issue
-    attributes["issue"]
-  end
-
   def overdue?
     due_date? && due_date.past?
   end
@@ -54,6 +50,10 @@ class Complaint
     else
       "<span>Due in #{day_string} (#{formatted_due_date})</span>"
     end
+  end
+
+  def summary
+    attributes["summary"]
   end
 
   private

@@ -36,12 +36,6 @@ RSpec.describe Complaint do
     end
   end
 
-  describe "#issue" do
-    it "deletages to the attributes" do
-      expect(subject.issue).to eq hses_complaint[:attributes][:issue]
-    end
-  end
-
   describe "#events" do
     let(:events) do
       [
@@ -172,6 +166,12 @@ RSpec.describe Complaint do
           "<span>Due in 12 days (#{strftime})</span>"
         )
       end
+    end
+  end
+
+  describe "#summary" do
+    it "delegates to the attributes" do
+      expect(subject.summary).to eq hses_complaint[:attributes][:summary]
     end
   end
 end

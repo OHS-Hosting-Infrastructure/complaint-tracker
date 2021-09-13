@@ -9,8 +9,6 @@ RSpec.describe FakeApiResponseWrapper do
 
       expect(wrapper[:meta]).to be_a(Hash)
       expect(wrapper[:data]).to be_a(Array)
-      expect(wrapper[:links]).to be_a(Hash)
-      expect(wrapper[:included]).to be_a(Array)
     end
   end
 
@@ -19,7 +17,6 @@ RSpec.describe FakeApiResponseWrapper do
       wrapper = test_class.details_wrapper
 
       expect(wrapper[:data]).to be_a(Hash)
-      expect(wrapper[:included]).to be_a(Array)
     end
   end
 end
