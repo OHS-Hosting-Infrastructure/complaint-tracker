@@ -7,17 +7,29 @@
   <div class="grid-row grid-gap">
     <div class="grid-col-4">
       <div class="summary-section">
-        <h2>Summary</h2>
-        <p>
-          <strong><%= @complaint.grantee %>:</strong>
-          <%= @complaint.summary %>
-        </p>
+        <div class="ct-section-divider">
+          <h2>Summary</h2>
+          <p>
+            <strong><%= @complaint.grantee %>:</strong>
+            <%= @complaint.summary %>
+          </p>
+        </div>
+        <div>
+          <a>
+            <span class="text-middle text-primary">
+              <svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
+                <use xlink:href="/assets/img/sprite.svg#add_circle"></use>
+              </svg>
+            </span>
+              <%= link_to "Add TTA Activity Report", "#", class: "ct-add-report-link", id: "js-add-tta-report" %>
+            </span>
+          </p>
+        </div>
       </div>
     </div>
-
     <div class="grid-col-8">
       <div class="summary-section">
-        <h2 class="ct-timeline__header ct-timeline__two-part-container">
+        <h2 class="ct-section-divider ct-timeline__two-part-container">
           <%= status(@complaint.attributes) %>
           <span class="ct-timeline__date">
             <% if !@complaint.due_date? %>
