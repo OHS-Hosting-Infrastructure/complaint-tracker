@@ -9,6 +9,9 @@ applications:
     HSES_AUTH_BASE: ((hses_auth_base))
     HSES_AUTH_CLIENT_ID: ((hses_auth_client_id))
     HSES_AUTH_CLIENT_SECRET: ((hses_auth_client_secret))
+    HSES_API: ((hses_api))
+    HSES_API_USERNAME: ((hses_api_username))
+    HSES_API_PASSWORD: ((hses_api_password))
   processes:
   - type: web
     instances: ((web_instances))

@@ -74,6 +74,12 @@ Rails.application.configure do
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
 
+  # HSES API
+  config.x.hses.api = "staging.hses.ohs.acf.hhs.gov"
+  config.x.hses.api_username = Rails.application.credentials.hses_api_username
+  config.x.hses.api_password = Rails.application.credentials.hses_api_password
+
+  # HSES authentication
   config.x.hses.auth_base = "https://staging.hses.ohs.acf.hhs.gov"
   config.x.hses.client_id = Rails.application.credentials.hses_client_id
   config.x.hses.client_secret = Rails.application.credentials.hses_client_secret

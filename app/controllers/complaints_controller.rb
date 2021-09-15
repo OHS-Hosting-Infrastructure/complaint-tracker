@@ -2,7 +2,11 @@ class ComplaintsController < ApplicationController
   before_action :check_pa11y_id, only: :show, if: -> { Rails.env.ci? }
 
   def index
-    @complaints = Api.request("hses", "issues")[:data]
+    api_res = Api.request(
+      "hses", "issues",
+      {user: session["user"]}
+    )
+    @complaints = api_res[:data]
   end
 
   def show
