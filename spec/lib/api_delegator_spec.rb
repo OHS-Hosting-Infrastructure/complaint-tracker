@@ -1,5 +1,5 @@
 require "rails_helper"
-require "fake_issues"
+require "api_delegator"
 
 class Api::FakeData::Testsystem
   class Endpoint
@@ -23,19 +23,19 @@ class Api::Testsystem
   end
 end
 
-RSpec.describe Api do
+RSpec.describe ApiDelegator do
   describe "in a testing environment" do
     describe "#self.request" do
       it "returns the test request" do
-        result = Api.request("testsystem", "endpoint")
-        expect(result).to eq "test request"
+        api = ApiDelegator.use("testsystem", "endpoint")
+        expect(api.request).to eq "test request"
       end
     end
 
     describe "self.namespaced_class" do
       it "returns the full class" do
         expect(
-          Api.namespaced_class("Testsystem", "Endpoint")
+          ApiDelegator.namespaced_class("Testsystem", "Endpoint")
         ).to eq Api::FakeData::Testsystem::Endpoint
       end
     end
@@ -48,15 +48,15 @@ RSpec.describe Api do
 
     describe "#self.request" do
       it "returns the test request" do
-        result = Api.request("testsystem", "endpoint")
-        expect(result).to eq "test request"
+        api = ApiDelegator.use("testsystem", "endpoint")
+        expect(api.request).to eq "test request"
       end
     end
 
     describe "#self.namespaced_class" do
       it "returns the full class" do
         expect(
-          Api.namespaced_class("Testsystem", "Endpoint")
+          ApiDelegator.namespaced_class("Testsystem", "Endpoint")
         ).to eq Api::FakeData::Testsystem::Endpoint
       end
     end
@@ -68,14 +68,14 @@ RSpec.describe Api do
     end
 
     it "returns the real request" do
-      result = Api.request("testsystem", "endpoint")
-      expect(result).to eq "real request"
+      api = ApiDelegator.use("testsystem", "endpoint")
+      expect(api.request).to eq "real request"
     end
 
     describe "#self.namespaced_class" do
       it "returns the full class" do
         expect(
-          Api.namespaced_class("Testsystem", "Endpoint")
+          ApiDelegator.namespaced_class("Testsystem", "Endpoint")
         ).to eq Api::Testsystem::Endpoint
       end
     end
@@ -87,13 +87,13 @@ RSpec.describe Api do
     end
 
     it "returns the real request" do
-      result = Api.request("testsystem", "endpoint")
-      expect(result).to eq "real request"
+      api = ApiDelegator.use("testsystem", "endpoint")
+      expect(api.request).to eq "real request"
     end
 
     it "returns the full class" do
       expect(
-        Api.namespaced_class("Testsystem", "Endpoint")
+        ApiDelegator.namespaced_class("Testsystem", "Endpoint")
       ).to eq Api::Testsystem::Endpoint
     end
   end
@@ -104,13 +104,13 @@ RSpec.describe Api do
     end
 
     it "returns the test request" do
-      result = Api.request("testsystem", "endpoint")
-      expect(result).to eq "test request"
+      api = ApiDelegator.use("testsystem", "endpoint")
+      expect(api.request).to eq "test request"
     end
 
     it "returns the full class" do
       expect(
-        Api.namespaced_class("Testsystem", "Endpoint")
+        ApiDelegator.namespaced_class("Testsystem", "Endpoint")
       ).to eq Api::FakeData::Testsystem::Endpoint
     end
   end

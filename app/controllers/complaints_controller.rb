@@ -1,16 +1,17 @@
+require "api_delegator"
+
 class ComplaintsController < ApplicationController
   before_action :check_pa11y_id, only: :show, if: -> { Rails.env.ci? }
 
   def index
-    api_res = Api.request(
-      "hses", "issues",
-      {user: session["user"]}
-    )
-    @complaints = api_res[:data]
+    api = ApiDelegator.use("hses", "issues", {user: session["user"]})
+    @complaints = api.request[:data]
   end
 
   def show
-    @complaint = Complaint.new(Api.request("hses", "issue", {id: params[:id]})[:data])
+    @complaint = Complaint.new(
+      ApiDelegator.use("hses", "issue", {id: params[:id]}).request[:data]
+    )
     @tta_reports = IssueTtaReport.where(issue_id: params[:id])
     render layout: "details"
   end
@@ -19,7 +20,10 @@ class ComplaintsController < ApplicationController
 
   def check_pa11y_id
     if params[:id] == "pa11y-id"
-      params[:id] = Api.request("hses", "issues")[:data].first[:id]
+      params[:id] = ApiDelegator
+        .use("hses", "issues", {user: session["user"]})
+        .request[:data]
+        .first[:id]
     end
   end
 end

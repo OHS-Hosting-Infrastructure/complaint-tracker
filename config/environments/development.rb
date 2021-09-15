@@ -75,7 +75,7 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   # HSES API
-  config.x.hses.api = "staging.hses.ohs.acf.hhs.gov"
+  config.x.hses.api_base = "staging.hses.ohs.acf.hhs.gov"
   config.x.hses.api_username = Rails.application.credentials.hses_api_username
   config.x.hses.api_password = Rails.application.credentials.hses_api_password
 

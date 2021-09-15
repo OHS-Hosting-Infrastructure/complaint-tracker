@@ -59,9 +59,9 @@ Rails.application.configure do
   # config.action_view.annotate_rendered_view_with_filenames = true
 
   # HSES API
-  config.x.hses.api = "staging.hses.ohs.acf.hhs.gov"
-  config.x.hses.api_username = Rails.application.credentials.hses_api_username
-  config.x.hses.api_password = Rails.application.credentials.hses_api_password
+  config.x.hses.api_base = "staging.hses.ohs.acf.hhs.gov"
+  config.x.hses.api_username = "test.user"
+  config.x.hses.api_password = "test.password"
 
   # HSES authentication
   config.x.hses.auth_base = "https://staging.hses.ohs.acf.hhs.gov"
