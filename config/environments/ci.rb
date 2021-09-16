@@ -9,4 +9,9 @@ Rails.application.configure do
   config.logger = ActiveSupport::TaggedLogging.new(logger)
 
   config.x.bypass_auth = true
+
+  # override settings for production which are not used for ci
+  config.x.hses.auth_base = nil
+  config.x.hses.client_id = nil
+  config.x.hses.client_secret = nil
 end

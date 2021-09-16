@@ -97,4 +97,21 @@ RSpec.describe Api do
       ).to eq Api::Testsystem::Endpoint
     end
   end
+
+  describe "in a ci environment" do
+    before do
+      allow(Rails).to receive(:env) { "ci".inquiry }
+    end
+
+    it "returns the test request" do
+      result = Api.request("testsystem", "endpoint")
+      expect(result).to eq "test request"
+    end
+
+    it "returns the full class" do
+      expect(
+        Api.namespaced_class("Testsystem", "Endpoint")
+      ).to eq Api::FakeData::Testsystem::Endpoint
+    end
+  end
 end
