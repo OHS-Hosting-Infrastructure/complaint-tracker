@@ -3,8 +3,10 @@
     <span>
       <p>
         TTA Activity:
-        <% tta_reports.each do |report| %>
-          <%= report.tta_report_display_id %>
+        <% tta_reports.each_with_index do |report, i| %>
+          <div>
+            <%= report.tta_report_display_id %>
+          </div>
         <% end %>
       </p>
     </span>
