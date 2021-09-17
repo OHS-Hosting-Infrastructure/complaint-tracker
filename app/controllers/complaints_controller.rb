@@ -7,6 +7,7 @@ class ComplaintsController < ApplicationController
 
   def show
     @complaint = Complaint.new(Api.request("hses", "issue", {id: params[:id]})[:data])
+    @tta_reports = IssueTtaReport.where(issue_id: params[:id])
     render layout: "details"
   end
 

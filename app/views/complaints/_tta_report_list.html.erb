@@ -1,0 +1,17 @@
+ <div class="ct-section-divider">
+  <div class="display-flex flex-justify flex-align-center">
+    <span>
+      <p>
+        TTA Activity:
+        <% tta_reports.each do |report| %>
+          <%= report.tta_report_display_id %>
+        <% end %>
+      </p>
+    </span>
+    <span class="display-none">
+      <svg class="usa-icon text-primary" aria-hidden="true" focusable="false" role="img">
+        <use xlink:href="/assets/img/sprite.svg#edit"></use>
+      </svg>
+    </span>
+  </div>
+</div>

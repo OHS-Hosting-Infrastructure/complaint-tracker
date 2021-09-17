@@ -14,11 +14,16 @@
             <%= @complaint.summary %>
           </p>
         </div>
-        <%= render "tta_activity_report_form", :complaint => @complaint %>
+        <% unless @tta_reports.empty? %>
+          <%= render "tta_report_list", :tta_reports => @tta_reports %> 
+        <% end %>
+        <div class="display-none" id="tta-activity-form">
+          <%= render "tta_activity_report_form", :complaint => @complaint %>
+        </div>
         <div class="ct-section-divider">
           <p>
-            <span class="text-middle text-primary">
-              <svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
+            <span class="text-middle">
+              <svg class="usa-icon text-primary" aria-hidden="true" focusable="false" role="img">
                 <use xlink:href="/assets/img/sprite.svg#add_circle"></use>
               </svg>
             </span>
