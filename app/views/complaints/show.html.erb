@@ -14,8 +14,9 @@
             <%= @complaint.summary %>
           </p>
         </div>
-        <div>
-          <a>
+        <%= render "tta_activity_report_form", :complaint => @complaint %>
+        <div class="ct-section-divider">
+          <p>
             <span class="text-middle text-primary">
               <svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
                 <use xlink:href="/assets/img/sprite.svg#add_circle"></use>
@@ -53,3 +54,4 @@
     </div>
   </div>
 </div>
+<%= javascript_pack_tag 'add-report' %>

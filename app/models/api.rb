@@ -1,7 +1,7 @@
 class Api
   def self.request(system, endpoint, args = {})
     Api
-      .namespaced_class(system.capitalize, endpoint.capitalize)
+      .namespaced_class(system.camelize, endpoint.camelize)
       .new(**args)
       .request
   end

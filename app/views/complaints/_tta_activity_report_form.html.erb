@@ -1,0 +1,13 @@
+<div class="ct-section-divider">
+  <p class="display-flex flex-justify">
+    <label for="tta-report-id">Activity Report ID</label>
+    <span><%= link_to "Cancel", "#", id: "js-close-tta-form" %></span>
+    <div>
+      <%= form_with url: "/issue_tta_reports", method: "post", class: "usa-search display-flex" do %>
+        <%= text_field_tag :tta_report_id %>
+        <%= hidden_field_tag(:issue_id, complaint.id) %>
+        <%= submit_tag "Add", class: "usa-button usa-search__submit-text" %>
+      <% end %>
+    </div>
+  </p>
+</div>
