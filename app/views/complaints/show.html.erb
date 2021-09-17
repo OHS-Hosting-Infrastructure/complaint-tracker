@@ -14,11 +14,11 @@
             <%= @complaint.summary %>
           </p>
         </div>
-        <% unless @tta_reports.empty? %>
-          <%= render "tta_report_list", :tta_reports => @tta_reports %> 
+        <% if @tta_reports.present? %>
+          <%= render "tta_report_list", tta_reports: @tta_reports %> 
         <% end %>
         <div class="display-none" id="tta-activity-form">
-          <%= render "tta_activity_report_form", :complaint => @complaint %>
+          <%= render "tta_activity_report_form", complaint: @complaint %>
         </div>
         <div class="ct-section-divider">
           <p>
@@ -27,7 +27,7 @@
                 <use xlink:href="/assets/img/sprite.svg#add_circle"></use>
               </svg>
             </span>
-              <%= link_to "Add TTA Activity Report", "#", class: "ct-add-report-link", id: "js-add-tta-report" %>
+              <%= link_to "Add TTA Activity Report", "#tta_report_id", class: "ct-add-report-link", id: "js-add-tta-report" %>
             </span>
           </p>
         </div>

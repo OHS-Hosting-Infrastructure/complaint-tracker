@@ -1,7 +1,5 @@
 class IssueTtaReportsController < ApplicationController
   def create
-    activity_data = Api.request("tta", "activity_report", {display_id: tta_report_id})[:data]
-
     @issue_tta_report = IssueTtaReport.new(
       issue_id: params[:issue_id],
       tta_report_display_id: tta_report_id,
@@ -11,6 +9,12 @@ class IssueTtaReportsController < ApplicationController
     if @issue_tta_report.save
       redirect_to complaint_path(params[:issue_id])
     end
+  end
+
+  private
+
+  def activity_data
+    Api.request("tta", "activity_report", {display_id: tta_report_id})[:data]
   end
 
   def tta_report_id
