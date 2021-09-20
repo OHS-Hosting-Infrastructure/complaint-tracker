@@ -3,17 +3,12 @@
     <span>
       <p>
         TTA Activity:
-        <% tta_reports.each_with_index do |report, i| %>
+        <% tta_reports.each do |report, i| %>
           <div>
             <%= report.tta_report_display_id %>
           </div>
         <% end %>
       </p>
-    </span>
-    <span class="display-none">
-      <svg class="usa-icon text-primary" aria-hidden="true" focusable="false" role="img">
-        <use xlink:href="/assets/img/sprite.svg#edit"></use>
-      </svg>
     </span>
   </div>
 </div>

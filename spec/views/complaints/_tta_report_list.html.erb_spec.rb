@@ -5,7 +5,7 @@ RSpec.describe "complaints/_tta_report_list.html.erb", type: :view do
     IssueTtaReport.new(
       issue_id: "12345",
       tta_report_display_id: "RO2-AR-10992",
-      tta_report_id: 12345
+      tta_report_id: "12345"
     )
   end
 
