@@ -11,6 +11,7 @@ RSpec.describe ApiRequest do
           .to receive(:send_api_request)
           .and_return success
         expect(success).to receive(:body).and_return('{"meta":{},"data":[]}')
+
         # mock in host, path, and query
         allow_any_instance_of(ApiRequest).to receive(:host).and_return "example.com"
         allow_any_instance_of(ApiRequest).to receive(:path).and_return "/path"
@@ -18,6 +19,13 @@ RSpec.describe ApiRequest do
 
         res = ApiRequest.new.response
         expect(res).to match({code: "200", body: {"meta" => {}, "data" => []}})
+      end
+
+      it "is memoized" do
+        api = ApiRequest.new
+        expect(api).to receive(:get_response).once.and_return "value"
+        api.response
+        api.response
       end
     end
 
@@ -40,12 +48,6 @@ RSpec.describe ApiRequest do
         allow_any_instance_of(ApiRequest).to receive(:path).and_return "/path"
         expect { ApiRequest.new.response }.to raise_error(RuntimeError)
       end
-    end
-  end
-
-  describe "#request_uri" do
-    it "returns an error because of missing a host" do
-      expect { ApiRequest.new.request_uri }.to raise_error(RuntimeError)
     end
   end
 end

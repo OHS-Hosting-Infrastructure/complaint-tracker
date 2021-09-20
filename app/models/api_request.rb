@@ -1,16 +1,6 @@
 class ApiRequest
-  def request_uri
-    URI::HTTPS.build(
-      host: host,
-      path: path,
-      query: query
-    )
-  end
-
   def response
-    uri = request_uri
-    res = send_api_request(uri)
-    format_response(res)
+    @response ||= get_response
   end
 
   private
@@ -20,6 +10,11 @@ class ApiRequest
       code: res.code,
       body: JSON.parse(res.body)
     }.with_indifferent_access
+  end
+
+  def get_response
+    res = send_api_request(request_uri)
+    format_response(res)
   end
 
   # Inheriting class defines
@@ -35,6 +30,14 @@ class ApiRequest
   # Inheriting class defines
   def query
     raise "Please define a query method in #{self.class}"
+  end
+
+  def request_uri
+    URI::HTTPS.build(
+      host: host,
+      path: path,
+      query: query
+    )
   end
 
   # NOTE: this will need refactoring if we connect to multiple APIs

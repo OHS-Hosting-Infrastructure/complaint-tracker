@@ -29,6 +29,12 @@ RSpec.describe Api::Hses do
       end
     end
 
+    describe "#host" do
+      it "returns the value set in the Api::Hses module" do
+        expect(issues.host).to eq Rails.configuration.x.hses.api_base
+      end
+    end
+
     describe "#request" do
       it "returns a Ruby object with meta and data keys" do
         # stub the net/http request / response
@@ -37,16 +43,6 @@ RSpec.describe Api::Hses do
         expect(response).to receive(:body).and_return('{"meta":{},"data":[]}')
 
         expect(issues.request).to match({"meta" => {}, "data" => []})
-      end
-    end
-
-    describe "#request_uri" do
-      it "returns a URI object with the HSES issues host, path, and query" do
-        uri = issues.request_uri
-        expect(uri).to be_an_instance_of URI::HTTPS
-        expect(uri.host).to eq(Rails.configuration.x.hses.api_base)
-        expect(uri.path).to eq("/issues-ws/issues")
-        expect(uri.query).to eq("username=test.uid&types=1")
       end
     end
   end

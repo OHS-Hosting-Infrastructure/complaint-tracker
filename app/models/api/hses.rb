@@ -3,9 +3,13 @@ require "fake_api_response_wrapper"
 require "fake_issues"
 
 module Api::Hses
+  def host
+    Rails.configuration.x.hses.api_base
+  end
 end
 
 class Api::Hses::Issue < ApiRequest
+  include Api::Hses
   include FakeApiResponseWrapper
   attr_accessor :id
 
@@ -19,29 +23,19 @@ class Api::Hses::Issue < ApiRequest
       data: FakeIssues.instance.json[:data].sample
     )
   end
-
-  private
-
-  def host
-    Rails.configuration.x.hses.api_base
-  end
 end
 
 class Api::Hses::Issues < ApiRequest
+  include Api::Hses
   def initialize(user:)
     @username = user["uid"]
   end
 
   def request
-    res = response
-    res[:code] == "200" ? res[:body] : {}
+    response[:code] == "200" ? response[:body] : {}
   end
 
   private
-
-  def host
-    Rails.configuration.x.hses.api_base
-  end
 
   def path
     "/issues-ws/issues"
