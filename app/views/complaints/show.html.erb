@@ -27,7 +27,12 @@
                 <use xlink:href="/assets/img/sprite.svg#add_circle"></use>
               </svg>
             </span>
-              <%= link_to "Add TTA Activity Report", "#tta_report_id", class: "ct-add-report-link", id: "js-add-tta-report" %>
+              <%= link_to "Add TTA Activity Report", "#tta-report-id", {
+                class: "ct-add-report-link",
+                id: "js-add-tta-report",
+                role: "button"
+                }
+              %>
             </span>
           </p>
         </div>

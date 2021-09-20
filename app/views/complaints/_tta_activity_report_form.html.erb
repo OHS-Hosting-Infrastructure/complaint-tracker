@@ -1,10 +1,11 @@
 <div class="ct-section-divider">
   <p class="display-flex flex-justify">
-    <label for="tta-report-id">Activity Report ID</label>
-    <span><%= link_to "Cancel", "#", id: "js-close-tta-form" %></span>
+    <span> Activity Report ID</span>
+    <span><%= link_to "Cancel", "#js-add-tta-report", id: "js-close-tta-form", role: "button" %></span>
     <div>
-      <%= form_with url: issue_tta_reports_path, method: "post", class: "usa-search display-flex" do %>
-        <%= text_field_tag :tta_report_id %>
+      <%= form_with url: issue_tta_reports_path, method: "post", class: "usa-search display-flex", id: "tta-report-form"  do %>
+        <%= label_tag "tta-report-id", "TTA report display id", id: "tta-report-label" %>
+        <%= text_field_tag :tta_report_id, nil, id: "tta-report-id", "aria-describedBy": "tta-report-label" %>
         <%= hidden_field_tag(:issue_id, complaint.id) %>
         <%= submit_tag "Add", class: "usa-button usa-search__submit-text" %>
       <% end %>
