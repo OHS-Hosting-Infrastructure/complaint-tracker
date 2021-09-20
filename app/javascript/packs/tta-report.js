@@ -1,6 +1,7 @@
 const openForm = function () {
   const form = document.querySelector("#tta-activity-form")
-  form.classList.remove("display-none") 
+  form.classList.remove("display-none")
+  document.querySelector("#tta-report-id").focus()
 }
 
 const closeForm = function () {
@@ -10,26 +11,16 @@ const closeForm = function () {
   form.classList.add("display-none")
 }
 
-document.querySelector("#js-add-tta-report").addEventListener("keydown", event => {
-  if (event.keyCode == 32) {
-    event.preventDefault()
-    openForm()
-  }
-})
-
-document.querySelector("#js-close-tta-form").addEventListener("keydown", event => {
-  if (event.keyCode == 32) {
-    event.preventDefault()
-    closeForm()
-  }
-})
-
-
 document.querySelector("#js-add-tta-report").addEventListener('click', event => {
+  event.preventDefault()
   openForm()
 })
 
+document.querySelector("#tta-report-icon").addEventListener('click', event => {
+  openForm()
+})
 
 document.querySelector("#js-close-tta-form").addEventListener('click', event => {
+  event.preventDefault()
   closeForm()
 })

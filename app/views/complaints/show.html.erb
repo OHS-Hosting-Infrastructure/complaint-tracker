@@ -20,21 +20,16 @@
         <div class="display-none" id="tta-activity-form">
           <%= render "tta_activity_report_form", complaint: @complaint %>
         </div>
-        <div class="ct-section-divider">
-          <p>
-            <span class="text-middle">
-              <svg class="usa-icon text-primary" aria-hidden="true" focusable="false" role="img">
-                <use xlink:href="/assets/img/sprite.svg#add_circle"></use>
-              </svg>
-            </span>
-              <%= link_to "Add TTA Activity Report", "#tta-report-id", {
-                class: "ct-add-report-link",
-                id: "js-add-tta-report",
-                role: "button"
-                }
-              %>
-            </span>
-          </p>
+        <div class="ct-section-divider display-flex flex-align-center">
+          <svg class="usa-icon text-primary" id="tta-report-icon" aria-hidden="true" focusable="false" role="button">
+            <use xlink:href="/assets/img/sprite.svg#add_circle"></use>
+          </svg>
+          <%= button_to "Add TTA Activity Report", "#tta-report-id", {
+            class: "usa-link usa-button--unstyled ct-add-report-link",
+            id: "js-add-tta-report",
+            role: "button"
+            }
+          %>
         </div>
       </div>
     </div>

@@ -17,6 +17,7 @@
 .ct-section-divider {
   border-bottom: 1px solid #DFE1E2;
   padding-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .ct-timeline__two-part-container {
@@ -42,10 +43,4 @@
 
 .ct-add-report-link {
   color: #005ea2
-}
-
-label#tta-report-label {
-  visibility: hidden;
-  height: 0px;
-  width: 0px;
 }

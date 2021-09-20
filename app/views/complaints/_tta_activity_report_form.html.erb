@@ -1,10 +1,12 @@
 <div class="ct-section-divider">
-  <p class="display-flex flex-justify">
-    <span> Activity Report ID</span>
-    <span><%= link_to "Cancel", "#js-add-tta-report", id: "js-close-tta-form", role: "button" %></span>
+  <p>
+    <div class="display-flex flex-justify margin-bottom-2"> 
+      <span> Activity Report ID</span>
+      <%= button_to "Cancel", "#js-add-tta-report", class: "usa-link usa-button--unstyled", id: "js-close-tta-form" %>
+    </div>
     <div>
       <%= form_with url: issue_tta_reports_path, method: "post", class: "usa-search display-flex", id: "tta-report-form"  do %>
-        <%= label_tag "tta-report-id", "TTA report display id", id: "tta-report-label" %>
+        <%= label_tag "tta-report-id", "TTA report display ID", class: "usa-sr-only", id: "tta-report-label" %>
         <%= text_field_tag :tta_report_id, nil, id: "tta-report-id", "aria-describedBy": "tta-report-label" %>
         <%= hidden_field_tag(:issue_id, complaint.id) %>
         <%= submit_tag "Add", class: "usa-button usa-search__submit-text" %>
