@@ -20,7 +20,7 @@ RSpec.describe "IssueTtaReports", type: :request do
           uid: "request.spec@test.com"
         }.with_indifferent_access
       }
-      let(:activity_data) { Api::FakeData::ActivityReport.new(display_id: tta_display_id).data }
+      let(:activity_report) { Api::FakeData::Tta::ActivityReport.new(display_id: tta_display_id) }
 
       before do
         # There are some other session requests before getting to session["user"]
@@ -29,8 +29,11 @@ RSpec.describe "IssueTtaReports", type: :request do
       end
 
       it "sends an API request to the tta system" do
-        expect(Api).to receive(:request).with("tta", "activity_report", {display_id: tta_display_id}).and_return data: activity_data
-        post issue_tta_reports_path, params: {tta_report_id: tta_display_id, issue_id: complaint_id}
+        expect(ApiDelegator).to receive(:use)
+          .with("tta", "activity_report", {display_id: tta_display_id})
+          .and_return activity_report
+        post issue_tta_reports_path,
+          params: {tta_report_id: tta_display_id, issue_id: complaint_id}
       end
 
       it "adds an IssueTtaReport object" do
