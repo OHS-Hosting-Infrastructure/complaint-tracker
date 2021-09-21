@@ -14,9 +14,10 @@
   margin-top: 0;
 }
 
-.ct-timeline__header {
+.ct-section-divider {
   border-bottom: 1px solid #DFE1E2;
   padding-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .ct-timeline__two-part-container {
@@ -38,4 +39,8 @@
 
 .ct-timeline__due-soon {
   color: #c05600;
+}
+
+.ct-add-report-link {
+  color: #005ea2
 }

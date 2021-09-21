@@ -7,17 +7,33 @@
   <div class="grid-row grid-gap">
     <div class="grid-col-4">
       <div class="summary-section">
-        <h2>Summary</h2>
-        <p>
-          <strong><%= @complaint.grantee %>:</strong>
-          <%= @complaint.summary %>
-        </p>
+        <div class="ct-section-divider">
+          <h2>Summary</h2>
+          <p>
+            <strong><%= @complaint.grantee %>:</strong>
+            <%= @complaint.summary %>
+          </p>
+        </div>
+        <% if @tta_reports.present? %>
+          <%= render "tta_report_list", tta_reports: @tta_reports %> 
+        <% end %>
+        <div class="display-none" id="tta-activity-form">
+          <%= render "tta_activity_report_form", complaint: @complaint %>
+        </div>
+        <div class="ct-section-divider display-flex flex-align-center">
+          <%= image_pack_tag "media/usa-icons/add_circle.svg", class: "text-primary", id: "tta-report-icon", "aria-hidden": true %>
+          <%= button_to "Add TTA Activity Report", "#tta-report-id", {
+            class: "usa-link usa-button--unstyled ct-add-report-link",
+            id: "js-add-tta-report",
+            role: "button"
+            }
+          %>
+        </div>
       </div>
     </div>
-
     <div class="grid-col-8">
       <div class="summary-section">
-        <h2 class="ct-timeline__header ct-timeline__two-part-container">
+        <h2 class="ct-section-divider ct-timeline__two-part-container">
           <%= status(@complaint.attributes) %>
           <span class="ct-timeline__date">
             <% if !@complaint.due_date? %>
@@ -41,3 +57,4 @@
     </div>
   </div>
 </div>
+<%= javascript_pack_tag 'tta-report' %>
