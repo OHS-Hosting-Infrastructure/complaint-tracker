@@ -24,8 +24,7 @@ RSpec.describe ApiRequest do
       it "is memoized" do
         api = ApiRequest.new
         expect(api).to receive(:get_response).once.and_return "value"
-        api.response
-        api.response
+        expect(api.response).to eq api.response
       end
     end
 

@@ -13,8 +13,7 @@ class ApiRequest
   end
 
   def get_response
-    res = send_api_request(request_uri)
-    format_response(res)
+    format_response(send_api_request)
   end
 
   # Inheriting class defines
@@ -33,7 +32,7 @@ class ApiRequest
   end
 
   def request_uri
-    URI::HTTPS.build(
+    @uri ||= URI::HTTPS.build(
       host: host,
       path: path,
       query: query
@@ -41,14 +40,14 @@ class ApiRequest
   end
 
   # NOTE: this will need refactoring if we connect to multiple APIs
-  def send_api_request(uri)
-    req = Net::HTTP::Get.new(uri)
+  def send_api_request
+    req = Net::HTTP::Get.new(request_uri)
     req.basic_auth(
       Rails.configuration.x.hses.api_username,
       Rails.configuration.x.hses.api_password
     )
 
-    Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+    Net::HTTP.start(@uri.hostname, @uri.port, use_ssl: true) do |http|
       http.request(req)
     end
   end

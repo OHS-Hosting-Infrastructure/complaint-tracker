@@ -14,8 +14,11 @@ class IssueTtaReportsController < ApplicationController
   private
 
   def activity_data
-    api = ApiDelegator.use("tta", "activity_report",
-      {display_id: tta_report_id})
+    api = ApiDelegator.use(
+      "tta",
+      "activity_report",
+      {display_id: tta_report_id}
+    )
     api.request[:data]
   end
 
