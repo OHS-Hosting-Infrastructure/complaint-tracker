@@ -1,11 +1,11 @@
 const openForm = function () {
   const form = document.querySelector("#tta-activity-form")
   form.classList.remove("display-none")
-  document.querySelector("#tta-report-id").focus()
+  document.querySelector("#tta-report-display-id").focus()
 }
 
 const closeForm = function () {
-  const input = document.querySelector("#tta-report-id")
+  const input = document.querySelector("#tta-report-display-id")
   input.value = ""
   const form = document.querySelector("#tta-activity-form")
   form.classList.add("display-none")
@@ -23,4 +23,30 @@ document.querySelector("#tta-report-icon").addEventListener('click', event => {
 document.querySelector("#js-close-tta-form").addEventListener('click', event => {
   event.preventDefault()
   closeForm()
+})
+
+document.querySelectorAll(".js-edit-tta").forEach((el) => {
+  el.addEventListener('click', event => {
+    event.preventDefault()
+
+    // hide details
+    const displayId = event.currentTarget.dataset.displayId
+    document.querySelector("#tta-activity-show-" + displayId).classList.add("display-none")
+    // show form
+    const form = document.querySelector("#edit-tta-activity-" + displayId)
+    form.classList.remove("display-none")
+  })
+})
+
+document.querySelectorAll(".js-close-edit-tta").forEach((el) => {
+  el.addEventListener('click', event => {
+    event.preventDefault()
+
+    const displayId = event.currentTarget.dataset.displayId
+    // hide form
+    const form = document.querySelector("#edit-tta-activity-" + displayId)
+    form.classList.add("display-none")
+    // show detail
+    document.querySelector("#tta-activity-show-" + displayId).classList.remove("display-none")
+  })
 })

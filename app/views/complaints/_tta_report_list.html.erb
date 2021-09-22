@@ -1,14 +1,10 @@
- <div class="ct-section-divider">
-  <div class="display-flex flex-justify flex-align-center">
-    <span>
-      <p>
-        TTA Activity:
-        <% tta_reports.each do |report, i| %>
-          <div>
-            <%= report.tta_report_display_id %>
-          </div>
-        <% end %>
-      </p>
-    </span>
-  </div>
+ <div>
+  <p>
+    TTA Activity:
+    <% @issue_tta_reports.each do |report| %>
+      <div>
+        <%= render "issue_tta_report", issue_tta_report: report %>
+      </div>
+    <% end %>
+  </p>
 </div>

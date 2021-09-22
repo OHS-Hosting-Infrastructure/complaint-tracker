@@ -4,7 +4,8 @@ RSpec.describe "complaints/_tta_activity_report_form.html.erb", type: :view do
   let(:complaint) { Complaint.new(Api::FakeData::Complaint.new.data) }
 
   before do
-    render partial: "complaints/tta_activity_report_form", locals: {complaint: complaint}
+    @complaint = complaint
+    render partial: "complaints/tta_activity_report_form"
   end
 
   it "is a form" do

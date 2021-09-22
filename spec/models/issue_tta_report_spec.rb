@@ -32,5 +32,12 @@ RSpec.describe IssueTtaReport, type: :model do
       subject.tta_report_id = "12345a"
       expect(subject).not_to be_valid
     end
+
+    it "is not valid if an identical report exists already" do
+      IssueTtaReport.create(issue_id: "ISSUE_ID",
+        tta_report_display_id: "ACTIVITY_REPORT_ID",
+        tta_report_id: "12345")
+      expect(subject).not_to be_valid
+    end
   end
 end
