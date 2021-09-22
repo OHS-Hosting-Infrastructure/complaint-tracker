@@ -3,3 +3,5 @@ web_instances: 1
 web_memory: 512M
 hses_auth_base: https://staging.hses.ohs.acf.hhs.gov
 hses_auth_client_id: tta-smarthub
+hses_api_base: staging.hses.ohs.acf.hss.gov
+hses_api_username: complaints-tracker

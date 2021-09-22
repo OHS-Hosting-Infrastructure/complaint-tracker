@@ -1,25 +1,47 @@
+require "api_request"
 require "fake_api_response_wrapper"
 require "fake_issues"
 
-class Api::Hses
-  class Issue
-    include FakeApiResponseWrapper
-    attr_accessor :id
+module Api::Hses
+  def host
+    Rails.configuration.x.hses.api_base
+  end
+end
 
-    def initialize(id:)
-      @id = id
-    end
+class Api::Hses::Issue < ApiRequest
+  include Api::Hses
+  include FakeApiResponseWrapper
+  attr_accessor :id
 
-    def request
-      details_wrapper.merge(
-        data: FakeIssues.instance.json[:data].find { |c| c[:id] == @id }
-      )
-    end
+  def initialize(id:)
+    @id = id
   end
 
-  class Issues
-    def request
-      @issues ||= FakeIssues.instance.json
-    end
+  # TODO update this with real data once we have /issue endpoint
+  def request
+    details_wrapper.merge(
+      data: FakeIssues.instance.json[:data].sample
+    )
+  end
+end
+
+class Api::Hses::Issues < ApiRequest
+  include Api::Hses
+  def initialize(user:)
+    @username = user["uid"]
+  end
+
+  def request
+    response[:code] == "200" ? response[:body] : {}
+  end
+
+  private
+
+  def path
+    "/issues-ws/issues"
+  end
+
+  def query
+    "username=#{@username}&types=1"
   end
 end

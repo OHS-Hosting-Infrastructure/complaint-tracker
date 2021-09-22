@@ -20,6 +20,10 @@ class Api::FakeData::Hses
   end
 
   class Issues
+    def initialize(user:)
+      @username = user["uid"]
+    end
+
     def request
       @issues ||= FakeIssues.instance.json
     end

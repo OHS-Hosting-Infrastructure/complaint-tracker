@@ -48,12 +48,13 @@ jobs:
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           HSES_AUTH_CLIENT_SECRET: ${{ secrets.HSES_AUTH_CLIENT_SECRET }}
+          HSES_API_PASSWORD: ${{ secrets.HSES_API_PASSWORD }}
         with:
           cf_username: ${{ secrets.CF_USERNAME }}
           cf_password: ${{ secrets.CF_PASSWORD }}
           cf_org: hhs-acf-ohs-hses
           cf_space: ct-stage
-          push_arguments: "--vars-file config/deployment/stage.yml --var rails_master_key=$RAILS_MASTER_KEY --var hses_auth_client_secret=$HSES_AUTH_CLIENT_SECRET"
+          push_arguments: "--vars-file config/deployment/stage.yml --var rails_master_key=$RAILS_MASTER_KEY --var hses_auth_client_secret=$HSES_AUTH_CLIENT_SECRET --var hses_api_password=$HSES_API_PASSWORD"
 
       - name: Check for changes to migrations
         id: changed-migration-files

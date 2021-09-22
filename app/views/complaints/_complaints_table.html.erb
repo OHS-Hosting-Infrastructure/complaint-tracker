@@ -1,28 +1,27 @@
-<div class="usa-table-container--scrollable">
-  <table class="usa-table">
-    <thead>
-      <tr>
-        <th scope="col" role="columnheader">Issue #</th>
-        <th
-          data-sortable
-          scope="col"
-          role="columnheader"
-        > Date Created </th>
-        <th data-sortable scope="col" role="columnheader"> Status </th>
-        <th data-sortable scope="col" role="columnheader"> Grantee </th>
-        <th scope="col" role="columnheader"> Summary </th>
-        <th scope="col" role="columnheader"> TTA </th>
-        <th scope="col" role="columnheader"> RAN </th>
-      </tr>
-    </thead>
-    <tbody>
-    <% @complaints.each do |complaint| %>
-      <%= render 'complaints/complaints_table_detail', :complaint => complaint %>
-    <% end %>
-    </tbody>
-  </table>
-  <div class="usa-sr-only usa-table__announcement-region" aria-live="polite">
-    <!-- this content will change when sort changes -->
-  </div>
-  <p class="margin-bottom-3">Data for illustration purposes only.</p>
+<table class="usa-table">
+  <thead>
+    <tr>
+      <th scope="col" role="columnheader">Issue #</th>
+      <th
+        data-sortable
+        scope="col"
+        role="columnheader"
+      > Date Created </th>
+      <th data-sortable scope="col" role="columnheader"> Status </th>
+      <th data-sortable scope="col" role="columnheader"> Grantee </th>
+      <th scope="col" role="columnheader"> Summary </th>
+      <th scope="col" role="columnheader"> TTA </th>
+      <th scope="col" role="columnheader"> RAN </th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @complaints.each do |complaint| %>
+    <%= render 'complaints/complaints_table_detail', :complaint => complaint %>
+  <% end %>
+  </tbody>
+</table>
+<div class="usa-sr-only usa-table__announcement-region" aria-live="polite">
+  <!-- this content will change when sort changes -->
 </div>
+<p class="margin-bottom-3">Data for illustration purposes only.</p>
+

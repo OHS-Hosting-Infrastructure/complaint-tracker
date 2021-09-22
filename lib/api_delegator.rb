@@ -1,22 +1,21 @@
-class Api
-  def self.request(system, endpoint, args = {})
-    Api
+module ApiDelegator
+  def self.use(system, endpoint, args = {})
+    ApiDelegator
       .namespaced_class(system.camelize, endpoint.camelize)
       .new(**args)
-      .request
   end
 
   def self.namespaced_class(system, endpoint)
     # this method will return the full namespaced Api  wrapper class.
     # this will look like Api::FakeData::Hses::Issues or Api::Hses::Issues
-    Api
+    ApiDelegator
       .namespace
       .const_get(system)
       .const_get(endpoint)
   end
 
   def self.namespace
-    Api.needs_fake_data? ? Api::FakeData : Api
+    ApiDelegator.needs_fake_data? ? Api::FakeData : Api
   end
 
   def self.needs_fake_data?
