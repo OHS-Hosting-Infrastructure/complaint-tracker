@@ -2,17 +2,15 @@
   <div class="ct-tta-divider display-flex flex-justify" id="tta-activity-show-<%= issue_tta_report.tta_report_display_id %>">
     <div><%= issue_tta_report.tta_report_display_id %></div>
     <div>
-      <%= image_pack_tag "media/usa-icons/edit.svg",
-        class: "ct-link-icon js-edit-tta",
-        alt: "Edit Display ID",
-        role: "button",
+      <%= button_tag image_pack_tag("media/usa-icons/edit.svg", alt: "Edit Display ID"),
+        class: "ct-link-icon usa-button--unstyled js-edit-tta",
+        "aria-label": "Edit Display ID",
         "data-display-id": issue_tta_report.tta_report_display_id
       %>
-      <%= image_pack_tag "media/usa-icons/link_off.svg",
-        class: "ct-link-icon",
+      <%=  button_tag image_pack_tag("media/usa-icons/link_off.svg", alt: "Unlink Display ID"),
+        class: "usa-button--unstyled", 
         id: "js-unlink-tta-report",
-        alt: "Unlink Display ID",
-        role: "button",
+        "aria-label": "Unlink Display ID",
         disabled: true
       %>
     </div>

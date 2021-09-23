@@ -35,6 +35,7 @@ document.querySelectorAll(".js-edit-tta").forEach((el) => {
     // show form
     const form = document.querySelector("#edit-tta-activity-" + displayId)
     form.classList.remove("display-none")
+    form.querySelector("input[type='text']").focus()
   })
 })
 
