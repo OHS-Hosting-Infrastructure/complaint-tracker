@@ -21,6 +21,16 @@ visibility into status and actions taken to address a complaint.
 * Run the server: `bundle exec rails s`
 * Visit the site: http://localhost:8080
 
+#### Local Configuration
+
+Environment variables can be set in development using the [dotenv](https://github.com/bkeepers/dotenv) gem.
+
+Consistent but sensitive credentials should be added to `config/credentials.yml.env` by using `$ rails credentials:edit`
+
+Any changes to variables in `.env` that should not be checked into git should be set
+in `.env.local` and/or `.env.test.local`.
+Both files are required because `.env.local` is loaded for all environments _except_ test.
+
 #### Authentication
 
 The Complaint Tracker is utilizing the HSES Staging environment for non-production authentication. If you need an account
@@ -45,8 +55,8 @@ API data will come from real APIs or the Api::FakeData depending on the value of
 
 | Environment | Connects to Real API Endpoints |
 | ----------- | ------------------------------ |
-| test | when `CT_USER_REAL_API_DATA` environment variable is `true` |
-| development | when `CT_USER_REAL_API_DATA` environment variable is `true` |
+| test | when `CT_USE_REAL_API_DATA` environment variable is `true` |
+| development | when `CT_USE_REAL_API_DATA` environment variable is `true` |
 | ci | always uses `Api::FakeData` |
 | production | always attempts to connect to real API |
 

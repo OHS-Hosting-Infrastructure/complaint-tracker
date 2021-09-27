@@ -73,6 +73,10 @@ GEM
     concurrent-ruby (1.1.9)
     crass (1.0.6)
     diff-lcs (1.4.4)
+    dotenv (2.7.6)
+    dotenv-rails (2.7.6)
+      dotenv (= 2.7.6)
+      railties (>= 3.2)
     erubi (1.10.0)
     faraday (1.8.0)
       faraday-em_http (~> 1.0)
@@ -279,6 +283,7 @@ DEPENDENCIES
   brakeman (~> 5.1)
   bundler-audit (~> 0.8)
   byebug
+  dotenv-rails (~> 2.7)
   ffaker (~> 2.18)
   jbuilder (~> 2.7)
   listen (~> 3.3)
