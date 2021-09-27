@@ -12,7 +12,7 @@ class ComplaintsController < ApplicationController
     @complaint = Complaint.new(
       ApiDelegator.use("hses", "issue", {id: params[:id]}).request[:data]
     )
-    @tta_reports = IssueTtaReport.where(issue_id: params[:id])
+    @issue_tta_reports = IssueTtaReport.where(issue_id: params[:id])
     render layout: "details"
   end
 

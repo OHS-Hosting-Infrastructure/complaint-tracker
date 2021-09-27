@@ -20,6 +20,11 @@
   margin-bottom: 1rem;
 }
 
+.ct-tta-divider {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #DFE1E2;
+}
+
 .ct-timeline__two-part-container {
   display: flex;
   align-items: baseline;
@@ -43,4 +48,8 @@
 
 .ct-add-report-link {
   color: #005ea2
+}
+
+.ct-link-icon {
+  filter: invert(14%) sepia(91%) saturate(4253%) hue-rotate(193deg) brightness(96%) contrast(100%);
 }

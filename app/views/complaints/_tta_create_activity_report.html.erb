@@ -6,10 +6,10 @@
     </div>
     <div>
       <%= form_with url: issue_tta_reports_path, method: "post", class: "usa-search display-flex", id: "tta-report-form"  do %>
-        <%= label_tag "tta-report-id", "TTA report display ID", class: "usa-sr-only", id: "tta-report-label" %>
-        <%= text_field_tag :tta_report_id, nil, id: "tta-report-id", "aria-describedBy": "tta-report-label" %>
-        <%= hidden_field_tag(:issue_id, complaint.id) %>
-        <%= submit_tag "Add", class: "usa-button usa-search__submit-text" %>
+        <%= label_tag "tta-report-display-id", "TTA report display ID", class: "usa-sr-only", id: "tta-report-label" %>
+        <%= text_field_tag :tta_report_display_id, nil, id: "tta-report-display-id", "aria-describedBy": "tta-report-label" %>
+        <%= hidden_field_tag(:issue_id, @complaint.id) %>
+        <%= submit_tag "Link", class: "usa-button usa-search__submit-text" %>
       <% end %>
     </div>
   </p>

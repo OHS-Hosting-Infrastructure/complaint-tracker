@@ -14,15 +14,22 @@
             <%= @complaint.summary %>
           </p>
         </div>
-        <% if @tta_reports.present? %>
-          <%= render "tta_report_list", tta_reports: @tta_reports %> 
+        <% if @issue_tta_reports.present? %>
+           <div>
+            <p>
+              TTA Activity:
+                <div>
+                  <%= render partial: "issue_tta_report", collection: @issue_tta_reports %>
+                </div>
+            </p>
+          </div>
         <% end %>
         <div class="display-none" id="tta-activity-form">
-          <%= render "tta_activity_report_form", complaint: @complaint %>
+          <%= render "tta_create_activity_report" %>
         </div>
         <div class="ct-section-divider display-flex flex-align-center">
-          <%= image_pack_tag "media/usa-icons/add_circle.svg", class: "text-primary", id: "tta-report-icon", "aria-hidden": true %>
-          <%= button_to "Add TTA Activity Report", "#tta-report-id", {
+          <%= image_pack_tag "media/usa-icons/link.svg", class: "ct-link-icon", id: "tta-report-icon", "aria-hidden": true %>
+          <%= button_to "Link TTA Activity Report", "#tta-report-id", {
             class: "usa-link usa-button--unstyled ct-add-report-link",
             id: "js-add-tta-report",
             role: "button"

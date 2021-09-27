@@ -2,11 +2,21 @@ class IssueTtaReportsController < ApplicationController
   def create
     @issue_tta_report = IssueTtaReport.new(
       issue_id: params[:issue_id],
-      tta_report_display_id: tta_report_id,
+      tta_report_display_id: tta_report_display_id,
       tta_report_id: activity_data[:id]
     )
 
     if @issue_tta_report.save
+      redirect_to complaint_path(params[:issue_id])
+    end
+  end
+
+  def update
+    report = IssueTtaReport.find(params[:id])
+    if report.update(
+      tta_report_display_id: tta_report_display_id,
+      tta_report_id: activity_data[:id]
+    )
       redirect_to complaint_path(params[:issue_id])
     end
   end
@@ -17,12 +27,12 @@ class IssueTtaReportsController < ApplicationController
     api = ApiDelegator.use(
       "tta",
       "activity_report",
-      {display_id: tta_report_id}
+      {display_id: tta_report_display_id}
     )
     api.request[:data]
   end
 
-  def tta_report_id
-    params[:tta_report_id]
+  def tta_report_display_id
+    params[:tta_report_display_id]
   end
 end

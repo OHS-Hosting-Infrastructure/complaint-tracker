@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get "/oauth2-client/login/oauth2/code/", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
 
-  resources :issue_tta_reports, only: [:create]
+  resources :issue_tta_reports, only: [:create, :update]
 
   root to: "pages#welcome"
 end

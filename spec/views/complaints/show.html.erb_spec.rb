@@ -25,24 +25,4 @@ RSpec.describe "complaints/show.html.erb", type: :view do
       expect(rendered).to match CGI.escapeHTML(summary)
     end
   end
-
-  describe "with a TTA report" do
-    let(:tta_report) do
-      IssueTtaReport.new(
-        issue_id: complaint.id,
-        tta_report_display_id: "RO2-AR-10992",
-        tta_report_id: "12345"
-      )
-    end
-
-    before do
-      assign(:complaint, complaint)
-      assign(:tta_reports, [tta_report])
-      render
-    end
-
-    it "includes the activity report list" do
-      expect(rendered).to match CGI.escapeHTML("TTA Activity:")
-    end
-  end
 end

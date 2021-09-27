@@ -14,7 +14,8 @@ import 'uswds/src/stylesheets/uswds.scss'
 import 'uswds/dist/img/icon-dot-gov.svg'
 import 'uswds/dist/img/us_flag_small.png'
 import 'uswds/dist/img/icon-https.svg'
-import 'uswds/dist/img/usa-icons/add_circle'
-import 'uswds/dist/img/sprite.svg'
+import 'uswds/dist/img/usa-icons/link_off.svg'
+import 'uswds/dist/img/usa-icons/link.svg'
+import 'uswds/dist/img/usa-icons/edit.svg'
 
 require('uswds')
