@@ -128,4 +128,7 @@ Rails.application.configure do
   config.x.hses.client_id = ENV["HSES_AUTH_CLIENT_ID"]
   config.x.hses.client_secret = ENV["HSES_AUTH_CLIENT_SECRET"]
   config.x.bypass_auth = false
+
+  # API configuration
+  config.x.use_real_api_data = true
 end

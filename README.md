@@ -32,12 +32,24 @@ HSES Authentication can be bypassed depending on the value of `RAILS_ENV`
 
 | Environment | HSES Bypass |
 | ----------- | ----------- |
-| test | set `BYPASS_AUTH` environment variable to `true` |
-| development | set `BYPASS_AUTH` environment variable to `true` |
+| test | set `CT_BYPASS_AUTH` environment variable to `true` |
+| development | set `CT_BYPASS_AUTH` environment variable to `true` |
 | ci | always bypassed |
 | production | never bypassed |
 
-When bypassing auth, you may use `CURRENT_USER_UID` and/or `CURRENT_USER_NAME` to override the current user's HSES name or username.
+When bypassing auth, you may use `CT_CURRENT_USER_UID` and/or `CT_CURRENT_USER_NAME` to override the current user's HSES name or username.
+
+#### API Connections
+
+API data will come from real APIs or the Api::FakeData depending on the value of `RAILS_ENV`
+
+| Environment | Connects to Real API Endpoints |
+| ----------- | ------------------------------ |
+| test | when `CT_USER_REAL_API_DATA` environment variable is `true` |
+| development | when `CT_USER_REAL_API_DATA` environment variable is `true` |
+| ci | always uses `Api::FakeData` |
+| production | always attempts to connect to real API |
+
 
 ### Inline `<script>` and `<style>` security
 
