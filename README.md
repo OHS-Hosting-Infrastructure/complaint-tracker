@@ -28,8 +28,11 @@ Environment variables can be set in development using the [dotenv](https://githu
 Consistent but sensitive credentials should be added to `config/credentials.yml.env` by using `$ rails credentials:edit`
 
 Any changes to variables in `.env` that should not be checked into git should be set
-in `.env.local` and/or `.env.test.local`.
-Both files are required because `.env.local` is loaded for all environments _except_ test.
+in `.env.local`.
+
+If you wish to override a config globally for the `test` Rails environment you can set it in `.env.test.local`.
+However, any config that should be set on other machines should either go into `.env` or be explicitely set as part
+of the test.
 
 #### Authentication
 
@@ -57,8 +60,8 @@ API data will come from real APIs or the Api::FakeData depending on the value of
 | ----------- | ------------------------------ |
 | test | when `CT_USE_REAL_API_DATA` environment variable is `true` |
 | development | when `CT_USE_REAL_API_DATA` environment variable is `true` |
-| ci | always uses `Api::FakeData` |
-| production | always attempts to connect to real API |
+| ci | never connects to real APIs |
+| production | always attempts to connect to real APIs |
 
 
 ### Inline `<script>` and `<style>` security

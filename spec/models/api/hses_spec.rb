@@ -31,7 +31,7 @@ RSpec.describe Api::Hses do
 
     describe "#host" do
       it "returns the value set in the Api::Hses module" do
-        expect(issues.host).to eq Rails.configuration.x.hses.api_base
+        expect(issues.host).to eq Rails.configuration.x.hses.api_hostname
       end
     end
 

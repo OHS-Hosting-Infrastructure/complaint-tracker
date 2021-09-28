@@ -4,7 +4,7 @@ require "fake_issues"
 
 module Api::Hses
   def host
-    Rails.configuration.x.hses.api_base
+    Rails.configuration.x.hses.api_hostname
   end
 end
 
