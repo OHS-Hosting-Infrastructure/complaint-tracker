@@ -64,4 +64,52 @@
     </div>
   </div>
 </div>
+
+<div class="margin-y-3">
+  <div
+    class="usa-modal"
+    id="unlink-modal"
+    aria-labelledby="unlink-modal-heading"
+    aria-describedby="unlink-modal-description"
+  >
+    <div class="usa-modal__content">
+      <div class="usa-modal__main">
+        <h2 class="usa-modal__heading" id="unlink-modal-heading">
+          Are you sure you want to unlink this TTA activity report?
+        </h2>
+        <div class="usa-prose">
+          <p id="unlink-modal-description">
+            This will remove the report from this complaint, but will not delete the report from TTA Hub 
+          </p>
+        </div>
+        <div class="usa-modal__footer">
+          <ul class="usa-button-group">
+            <li class="usa-button-group__item">
+            <%= form_with url: unlink_tta_report_path(@complaint.id), method: "delete" do %>
+              <%= hidden_field_tag :tta_report_display_id, nil, id: "hidden-tta-display_id" %>
+              <%= submit_tag "Yes, remove the link", class: "usa-button" %>
+            <% end %>
+            </li>
+            <li class="usa-button-group__item">
+              <button
+                type="button"
+                class="usa-button usa-button--unstyled padding-105 text-center ct-close-modal"
+                data-close-modal
+              >
+                Go back
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <button
+        class="usa-button usa-modal__close ct-close-modal"
+        aria-label="Close this window"
+        data-close-modal
+      >
+        <%= image_pack_tag "media/usa-icons/close.svg", class: "usa-icon", "aria-hidden": true, focusable: false %>
+      </button>
+    </div>
+  </div>
+</div>
 <%= javascript_pack_tag 'tta-report' %>

@@ -51,3 +51,20 @@ document.querySelectorAll(".js-close-edit-tta").forEach((el) => {
     document.querySelector("#tta-activity-show-" + displayId).classList.remove("display-none")
   })
 })
+
+document.querySelectorAll(".js-open-unlink-modal").forEach((el) => {
+  el.addEventListener('click', event => {
+    const displayId = event.currentTarget.dataset.displayId
+    // add display id to hidden input form
+    const hiddenInput = document.querySelector("#hidden-tta-display_id")
+    hiddenInput.value = displayId
+  })
+})
+
+document.querySelectorAll(".ct-close-modal").forEach((el) => {
+  el.addEventListener('click', event => {
+    // remove display id from hidden input form
+    const hiddenInput = document.querySelector("#hidden-tta-display_id")
+    hiddenInput.value = ""
+  })
+})
