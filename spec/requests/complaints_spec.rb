@@ -55,7 +55,7 @@ RSpec.describe "Complaints", type: :request do
           allow_any_instance_of(Api::FakeData::Hses::Issues).to receive(:request).and_return data: [complaint.data]
           get complaints_path
 
-          expect(response.body).to include '<table class="usa-table">'
+          expect(response.body).to include '<table class="usa-table" aria-describedby="#caption" >'
         end
       end
 
