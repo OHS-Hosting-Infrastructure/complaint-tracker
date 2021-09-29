@@ -14,8 +14,8 @@ class ApplicationController < ActionController::Base
   def bypass_local_auth?
     if Rails.configuration.x.bypass_auth
       session["user"] ||= {
-        uid: ENV.fetch("CURRENT_USER_UID", "fake.testuser@test.com"),
-        name: ENV.fetch("CURRENT_USER_NAME", "Fake Test-User")
+        uid: ENV.fetch("CT_CURRENT_USER_UID", "fake.testuser@test.com"),
+        name: ENV.fetch("CT_CURRENT_USER_NAME", "Fake Test-User")
       }.with_indifferent_access
       return true
     end

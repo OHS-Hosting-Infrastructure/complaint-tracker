@@ -59,13 +59,16 @@ Rails.application.configure do
   # config.action_view.annotate_rendered_view_with_filenames = true
 
   # HSES API
-  config.x.hses.api_base = "staging.hses.ohs.acf.hhs.gov"
-  config.x.hses.api_username = "test.user"
-  config.x.hses.api_password = "test.password"
+  config.x.hses.api_hostname = ENV.fetch("HSES_API_HOSTNAME", "staging.hses.ohs.acf.hhs.gov")
+  config.x.hses.api_username = ENV.fetch("HSES_API_USERNAME", "test.user")
+  config.x.hses.api_password = ENV.fetch("HSES_API_PASSWORD", "test.password")
 
   # HSES authentication
-  config.x.hses.auth_base = "https://staging.hses.ohs.acf.hhs.gov"
-  config.x.hses.client_id = Rails.application.credentials.hses_client_id
-  config.x.hses.client_secret = Rails.application.credentials.hses_client_secret
-  config.x.bypass_auth = ENV["BYPASS_AUTH"] == "true"
+  config.x.hses.auth_base = ENV.fetch("HSES_AUTH_BASE", "https://staging.hses.ohs.acf.hhs.gov")
+  config.x.hses.client_id = ENV.fetch("HSES_AUTH_CLIENT_ID", Rails.application.credentials.hses_client_id)
+  config.x.hses.client_secret = ENV.fetch("HSES_AUTH_CLIENT_SECRET", Rails.application.credentials.hses_client_secret)
+  config.x.bypass_auth = ENV["CT_BYPASS_AUTH"] == "true"
+
+  # API configuration
+  config.x.use_real_api_data = ENV["CT_USE_REAL_API_DATA"] == "true"
 end

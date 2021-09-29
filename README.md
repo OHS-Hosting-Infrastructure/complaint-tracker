@@ -21,6 +21,19 @@ visibility into status and actions taken to address a complaint.
 * Run the server: `bundle exec rails s`
 * Visit the site: http://localhost:8080
 
+#### Local Configuration
+
+Environment variables can be set in development using the [dotenv](https://github.com/bkeepers/dotenv) gem.
+
+Consistent but sensitive credentials should be added to `config/credentials.yml.env` by using `$ rails credentials:edit`
+
+Any changes to variables in `.env` that should not be checked into git should be set
+in `.env.local`.
+
+If you wish to override a config globally for the `test` Rails environment you can set it in `.env.test.local`.
+However, any config that should be set on other machines should either go into `.env` or be explicitely set as part
+of the test.
+
 #### Authentication
 
 The Complaint Tracker is utilizing the HSES Staging environment for non-production authentication. If you need an account
@@ -32,12 +45,24 @@ HSES Authentication can be bypassed depending on the value of `RAILS_ENV`
 
 | Environment | HSES Bypass |
 | ----------- | ----------- |
-| test | set `BYPASS_AUTH` environment variable to `true` |
-| development | set `BYPASS_AUTH` environment variable to `true` |
+| test | set `CT_BYPASS_AUTH` environment variable to `true` |
+| development | set `CT_BYPASS_AUTH` environment variable to `true` |
 | ci | always bypassed |
 | production | never bypassed |
 
-When bypassing auth, you may use `CURRENT_USER_UID` and/or `CURRENT_USER_NAME` to override the current user's HSES name or username.
+When bypassing auth, you may use `CT_CURRENT_USER_UID` and/or `CT_CURRENT_USER_NAME` to override the current user's HSES name or username.
+
+#### API Connections
+
+API data will come from real APIs or the Api::FakeData depending on the value of `RAILS_ENV`
+
+| Environment | Connects to Real API Endpoints |
+| ----------- | ------------------------------ |
+| test | when `CT_USE_REAL_API_DATA` environment variable is `true` |
+| development | when `CT_USE_REAL_API_DATA` environment variable is `true` |
+| ci | never connects to real APIs |
+| production | always attempts to connect to real APIs |
+
 
 ### Inline `<script>` and `<style>` security
 

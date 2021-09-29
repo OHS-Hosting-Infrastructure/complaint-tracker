@@ -40,6 +40,7 @@ group :development, :test do
   gem "standard", "~> 1.1"
   gem "brakeman", "~> 5.1"
   gem "bundler-audit", "~> 0.8"
+  gem "dotenv-rails", "~> 2.7"
 end
 
 group :development do

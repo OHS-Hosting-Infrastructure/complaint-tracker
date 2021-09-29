@@ -9,6 +9,7 @@ Rails.application.configure do
   config.logger = ActiveSupport::TaggedLogging.new(logger)
 
   config.x.bypass_auth = true
+  config.x.use_real_api_data = false
 
   # override settings for production which are not used for ci
   config.x.hses.auth_base = nil

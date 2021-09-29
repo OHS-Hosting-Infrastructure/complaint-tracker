@@ -119,7 +119,7 @@ Rails.application.configure do
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
   # HSES API
-  config.x.hses.api_base = ENV["HSES_API_BASE"]
+  config.x.hses.api_hostname = ENV["HSES_API_HOSTNAME"]
   config.x.hses.api_username = ENV["HSES_API_USERNAME"]
   config.x.hses.api_password = ENV["HSES_API_PASSWORD"]
 
@@ -128,4 +128,7 @@ Rails.application.configure do
   config.x.hses.client_id = ENV["HSES_AUTH_CLIENT_ID"]
   config.x.hses.client_secret = ENV["HSES_AUTH_CLIENT_SECRET"]
   config.x.bypass_auth = false
+
+  # API configuration
+  config.x.use_real_api_data = true
 end

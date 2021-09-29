@@ -15,10 +15,6 @@ module ApiDelegator
   end
 
   def self.namespace
-    ApiDelegator.needs_fake_data? ? Api::FakeData : Api
-  end
-
-  def self.needs_fake_data?
-    Rails.env.development? || Rails.env.test? || Rails.env.ci?
+    Rails.configuration.x.use_real_api_data ? Api : Api::FakeData
   end
 end
