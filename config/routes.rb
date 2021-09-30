@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :complaints, only: %i[index show]
-  delete "complaint/:id/unlink_tta_report", to: "complaints#unlink_tta_report", as: :unlink_tta_report
+  delete "issue_tta_report/unlink_report/:issue_id", to: "issue_tta_reports#unlink", as: :unlink_tta_report
   # session pages
   get "/oauth2-client/login/oauth2/code/", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
