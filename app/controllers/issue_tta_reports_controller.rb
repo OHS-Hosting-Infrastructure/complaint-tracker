@@ -1,13 +1,13 @@
 class IssueTtaReportsController < ApplicationController
   def create
     @issue_tta_report = IssueTtaReport.new(
-      issue_id: params[:issue_id],
+      issue_id: issue_id,
       tta_report_display_id: tta_report_display_id,
       tta_report_id: activity_data[:id]
     )
 
     if @issue_tta_report.save
-      redirect_to complaint_path(params[:issue_id])
+      redirect_to complaint_path(issue_id)
     end
   end
 
@@ -17,8 +17,14 @@ class IssueTtaReportsController < ApplicationController
       tta_report_display_id: tta_report_display_id,
       tta_report_id: activity_data[:id]
     )
-      redirect_to complaint_path(params[:issue_id])
+      redirect_to complaint_path(issue_id)
     end
+  end
+
+  def unlink
+    tta_report_link = IssueTtaReport.find_by(issue_id: issue_id, tta_report_display_id: tta_report_display_id)
+    tta_report_link.destroy!
+    redirect_back fallback_location: complaint_path(issue_id)
   end
 
   private
@@ -34,5 +40,9 @@ class IssueTtaReportsController < ApplicationController
 
   def tta_report_display_id
     params[:tta_report_display_id]
+  end
+
+  def issue_id
+    params[:issue_id]
   end
 end

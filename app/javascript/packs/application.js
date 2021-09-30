@@ -17,5 +17,6 @@ import 'uswds/dist/img/icon-https.svg'
 import 'uswds/dist/img/usa-icons/link_off.svg'
 import 'uswds/dist/img/usa-icons/link.svg'
 import 'uswds/dist/img/usa-icons/edit.svg'
+import 'uswds/dist/img/usa-icons/close.svg'
 
 require('uswds')
