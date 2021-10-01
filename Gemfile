@@ -41,6 +41,8 @@ group :development, :test do
   gem "brakeman", "~> 5.1"
   gem "bundler-audit", "~> 0.8"
   gem "dotenv-rails", "~> 2.7"
+  gem "capybara"
+  gem "selenium-webdriver"
 end
 
 group :development do
