@@ -7,7 +7,7 @@ RSpec.describe "rendering complaints table" do
 
     render partial: "complaints/complaints_table"
 
-    expect(rendered).to match '<table class="usa-table">'
+    expect(rendered).to match '<table class="usa-table" aria-describedby="#caption" >'
   end
 
   it "has the ability to sort by grantee" do
