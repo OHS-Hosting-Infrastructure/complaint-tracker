@@ -15,6 +15,10 @@ visibility into status and actions taken to address a complaint.
   * Start the server
   `brew services start postgresql@12`
 * Install Ruby dependencies: `bundle install`
+* Install chromedriver for integration tests: `brew install --cask chromedriver`
+  * Chromedriver must be allowed to run. You can either do that by:
+    * The command line: `xattr -d com.apple.quarantine $(which chromedriver)` (this is the only option if you are on Big Sur)
+    * Manually: clicking "allow" when you run the integration tests for the first time and a dialogue opens up
 * Install JS dependencies: `yarn install`
 * Create database: `bundle exec rake db:create`
 * Run migrations: `bundle exec rake db:migrate`

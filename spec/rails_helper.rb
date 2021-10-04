@@ -32,22 +32,21 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 
-Capybara.register_driver :chrome do |app|
+Capybara.register_driver :headless do |app|
   Capybara::Selenium::Driver.new app, browser: :chrome,
     options: Selenium::WebDriver::Chrome::Options.new(args: %w[headless disable-gpu])
 end
 
-Capybara.javascript_driver = :chrome
+Capybara.register_driver :selenium_chrome do |app|
+  Capybara::Selenium::Driver.new(app, browser: :chrome)
+end
 
-# If you want to run the feature specs with a browser to debug:
-# uncomment lines 46-50
-# comment out lines 35-38
+# To change drivers for debugging or other purposes
+# Pass `driver: :selenium_chrome` as an option in the context, describe, or it block
+# `context "editing the associated report", driver: :selenium_chrome do`
 
-# Capybara.register_driver :selenium_chrome do |app|
-#   Capybara::Selenium::Driver.new(app, browser: :chrome)
-# end
-
-# Capybara.javascript_driver = :selenium_chrome
+Capybara.javascript_driver = :headless
+Capybara.default_driver = :headless
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
