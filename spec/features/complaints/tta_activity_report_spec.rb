@@ -8,12 +8,21 @@ RSpec.feature "Associating TTA Activity Report", type: :feature do
       uid: "request.spec@test.com"
     }.with_indifferent_access
   }
+  let(:access_token_creds) {
+    {
+      token: "access-token",
+      refresh_token: "refresh-token",
+      expires_at: 1.hour.from_now.to_i,
+      expires: true
+    }
+  }
   let(:test_display_id) { "Test-Display-ID" }
 
   before do
     # There are some other session requests before getting to session["user"]
     allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[])
     allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("user").and_return user
+    allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("hses_access_token").and_return access_token_creds
   end
 
   let!(:complaint) { Complaint.new(FakeIssues.instance.json[:data].first) }

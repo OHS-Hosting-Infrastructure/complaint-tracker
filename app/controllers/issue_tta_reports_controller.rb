@@ -33,7 +33,10 @@ class IssueTtaReportsController < ApplicationController
     api = ApiDelegator.use(
       "tta",
       "activity_report",
-      {display_id: tta_report_display_id}
+      {
+        display_id: tta_report_display_id,
+        access_token: HsesAccessToken.new(session["hses_access_token"])
+      }
     )
     api.request[:data]
   end

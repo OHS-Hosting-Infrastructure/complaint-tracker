@@ -27,6 +27,13 @@ module FfakerWrapper
     "DRS"
   ]
 
+  TTA_ROLE = [
+    "GS",
+    "ECS",
+    "HS",
+    "FES"
+  ]
+
   def date
     FFaker::Time.between(1.month.ago, 1.month.after).to_date
   end
@@ -76,6 +83,13 @@ module FfakerWrapper
     {
       id: id,
       label: PRIORITY[id]
+    }
+  end
+
+  def tta_user_id_and_name_object
+    {
+      id: identifier,
+      name: "#{FFaker::Name.name}, #{TTA_ROLE.sample}"
     }
   end
 

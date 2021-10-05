@@ -36,12 +36,32 @@ class ApiRequest
     raise "Please define a configure_auth(request) method in #{self.class}"
   end
 
+  # Optionally override this in the inheriting class
+  def port
+    443
+  end
+
+  # Optionally override this in the inheriting class
+  def use_ssl?
+    true
+  end
+
   def request_uri
-    @uri ||= URI::HTTPS.build(
-      host: host,
-      path: path,
-      query: query
-    )
+    @uri ||= if use_ssl?
+      URI::HTTPS.build(
+        host: host,
+        port: port,
+        path: path,
+        query: query
+      )
+    else
+      URI::HTTP.build(
+        host: host,
+        port: port,
+        path: path,
+        query: query
+      )
+    end
   end
 
   # NOTE: this will need refactoring if we connect to multiple APIs
@@ -50,7 +70,7 @@ class ApiRequest
 
     configure_auth(req)
 
-    Net::HTTP.start(@uri.hostname, @uri.port, use_ssl: true) do |http|
+    Net::HTTP.start(@uri.hostname, @uri.port, use_ssl: use_ssl?) do |http|
       http.request(req)
     end
   end

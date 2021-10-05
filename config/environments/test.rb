@@ -58,11 +58,6 @@ Rails.application.configure do
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
 
-  # HSES API
-  config.x.hses.api_hostname = ENV.fetch("HSES_API_HOSTNAME", "staging.hses.ohs.acf.hhs.gov")
-  config.x.hses.api_username = ENV.fetch("HSES_API_USERNAME", "test.user")
-  config.x.hses.api_password = ENV.fetch("HSES_API_PASSWORD", "test.password")
-
   # HSES authentication
   config.x.hses.auth_base = ENV.fetch("HSES_AUTH_BASE", "https://staging.hses.ohs.acf.hhs.gov")
   config.x.hses.client_id = ENV.fetch("HSES_AUTH_CLIENT_ID", Rails.application.credentials.hses_client_id)
@@ -71,4 +66,14 @@ Rails.application.configure do
 
   # API configuration
   config.x.use_real_api_data = ENV["CT_USE_REAL_API_DATA"] == "true"
+
+  # HSES API
+  config.x.hses.api_hostname = ENV.fetch("HSES_API_HOSTNAME", "staging.hses.ohs.acf.hhs.gov")
+  config.x.hses.api_username = ENV.fetch("HSES_API_USERNAME", "test.user")
+  config.x.hses.api_password = ENV.fetch("HSES_API_PASSWORD", "test.password")
+
+  # TTA Hub API
+  config.x.tta.api_hostname = ENV.fetch("TTA_HUB_API_HOSTNAME", "tta-smarthub-staging.app.cloud.gov")
+  config.x.tta.api_port = Integer(ENV.fetch("TTA_HUB_API_PORT", "443"))
+  config.x.tta.use_ssl = ENV.fetch("TTA_HUB_API_SCHEME", "https") == "https"
 end

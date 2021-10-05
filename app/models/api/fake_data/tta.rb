@@ -1,14 +1,11 @@
 require "fake_api_response_wrapper"
 
 class Api::FakeData::Tta
-  def initalize(**)
-  end
-
   class ActivityReport
     include FakeApiResponseWrapper
     attr_accessor :display_id
 
-    def initialize(display_id:)
+    def initialize(display_id:, access_token:)
       @display_id = display_id
     end
 

@@ -11,7 +11,16 @@ RSpec.describe "IssueTtaReports", type: :request do
       uid: "request.spec@test.com"
     }.with_indifferent_access
   }
-  let(:activity_report) { Api::FakeData::Tta::ActivityReport.new(display_id: tta_display_id) }
+  let(:access_token_creds) {
+    {
+      token: "access-token",
+      refresh_token: "refresh-token",
+      expires_at: 1.hour.from_now.to_i,
+      expires: true
+    }
+  }
+  let(:access_token) { HsesAccessToken.new(access_token_creds) }
+  let(:activity_report) { Api::FakeData::Tta::ActivityReport.new(display_id: tta_display_id, access_token: access_token) }
 
   describe "POST /issue_tta_reports" do
     context "user is not logged in" do
@@ -27,11 +36,12 @@ RSpec.describe "IssueTtaReports", type: :request do
         # There are some other session requests before getting to session["user"]
         allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[])
         allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("user").and_return user
+        allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("hses_access_token").and_return access_token_creds
       end
 
       it "sends an API request to the tta system" do
         expect(ApiDelegator).to receive(:use)
-          .with("tta", "activity_report", {display_id: tta_display_id})
+          .with("tta", "activity_report", {display_id: tta_display_id, access_token: kind_of(HsesAccessToken)})
           .and_return activity_report
         post issue_tta_reports_path,
           params: {tta_report_display_id: tta_display_id, issue_id: complaint_id}
@@ -68,11 +78,12 @@ RSpec.describe "IssueTtaReports", type: :request do
         # There are some other session requests before getting to session["user"]
         allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[])
         allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("user").and_return user
+        allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("hses_access_token").and_return access_token_creds
       end
 
       it "sends an API request to the tta system" do
         expect(ApiDelegator).to receive(:use)
-          .with("tta", "activity_report", {display_id: tta_display_id})
+          .with("tta", "activity_report", {display_id: tta_display_id, access_token: kind_of(HsesAccessToken)})
           .and_return activity_report
         post issue_tta_reports_path, params: {tta_report_display_id: tta_display_id, issue_id: complaint_id}
       end
@@ -93,6 +104,7 @@ RSpec.describe "IssueTtaReports", type: :request do
         # There are some other session requests before getting to session["user"]
         allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[])
         allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("user").and_return user
+        allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("hses_access_token").and_return access_token_creds
       end
 
       let(:display_report_id) { "DisplayID " }
