@@ -13,10 +13,21 @@ class ComplaintsController < ApplicationController
       ApiDelegator.use("hses", "issue", {id: params[:id]}).request[:data]
     )
     @issue_tta_reports = IssueTtaReport.where(issue_id: params[:id])
+    @timeline = Timeline.new(@complaint.attributes, tta_reports)
     render layout: "details"
   end
 
   private
+
+  def tta_reports
+    @issue_tta_reports.pluck(:tta_report_display_id).map do |id|
+      ApiDelegator.use("tta", "activity_report", display_id: id).request[:data]
+    end
+  end
+
+  def tta_report_display_ids
+    IssueTtaReport.where(issue_id: params[:id]).pluck(:tta_report_display_id)
+  end
 
   def check_pa11y_id
     if params[:id] == "pa11y-id"

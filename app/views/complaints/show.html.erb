@@ -51,11 +51,11 @@
           </span>
         </h2>
         <ul class="usa-process-list">
-          <% @complaint.events.each do |event| %>
+          <% @timeline.events.each do |event| %>
             <li class="usa-process-list__item usa-process-list__item-disc">
               <h3 class="usa-process-list__heading ct-timeline__two-part-container">
-                <%= @complaint.event_label(event[:name]) %>
-                <span class="ct-timeline__date"><%= event[:date].strftime("%m/%d/%Y") %></span>
+                <%= event.label %>
+                <span class="ct-timeline__date"><%= event.formatted_date %></span>
               </h3>
             </li>
           <% end %>
