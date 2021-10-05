@@ -6,6 +6,13 @@ module Api::Hses
   def host
     Rails.configuration.x.hses.api_hostname
   end
+
+  def configure_auth(request)
+    request.basic_auth(
+      Rails.configuration.x.hses.api_username,
+      Rails.configuration.x.hses.api_password
+    )
+  end
 end
 
 class Api::Hses::Issue < ApiRequest

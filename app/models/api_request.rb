@@ -31,6 +31,11 @@ class ApiRequest
     raise "Please define a query method in #{self.class}"
   end
 
+  # Inheriting class defines
+  def configure_auth(request)
+    raise "Please define a configure_auth(request) method in #{self.class}"
+  end
+
   def request_uri
     @uri ||= URI::HTTPS.build(
       host: host,
@@ -42,10 +47,8 @@ class ApiRequest
   # NOTE: this will need refactoring if we connect to multiple APIs
   def send_api_request
     req = Net::HTTP::Get.new(request_uri)
-    req.basic_auth(
-      Rails.configuration.x.hses.api_username,
-      Rails.configuration.x.hses.api_password
-    )
+
+    configure_auth(req)
 
     Net::HTTP.start(@uri.hostname, @uri.port, use_ssl: true) do |http|
       http.request(req)
