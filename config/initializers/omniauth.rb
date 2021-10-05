@@ -2,12 +2,7 @@ module OmniAuth
   module Strategies
     class HsesOauth < OmniAuth::Strategies::OAuth2
       option :name, "hses"
-      option :client_options, {
-        site: Rails.configuration.x.hses.auth_base,
-        token_url: "/auth/oauth/token",
-        authorize_url: "/auth/oauth/authorize",
-        auth_scheme: :basic_auth
-      }
+      option :client_options, HsesAccessToken::CLIENT_OPTIONS
       option :callback_path, "/oauth2-client/login/oauth2/code/"
       option :scope, "user_info"
 
