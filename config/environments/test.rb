@@ -62,7 +62,7 @@ Rails.application.configure do
   config.x.hses.auth_base = ENV.fetch("HSES_AUTH_BASE", "https://staging.hses.ohs.acf.hhs.gov")
   config.x.hses.client_id = ENV.fetch("HSES_AUTH_CLIENT_ID", Rails.application.credentials.hses_client_id)
   config.x.hses.client_secret = ENV.fetch("HSES_AUTH_CLIENT_SECRET", Rails.application.credentials.hses_client_secret)
-  config.x.bypass_auth = ENV["CT_BYPASS_AUTH"] == "true"
+  config.x.bypass_auth = true
 
   # API configuration
   config.x.use_real_api_data = ENV["CT_USE_REAL_API_DATA"] == "true"

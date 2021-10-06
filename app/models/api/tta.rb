@@ -34,7 +34,6 @@ class Api::Tta::ActivityReport < ApiRequest
     EODM
     if !response[:success]
       Rails.logger.error "TTA Hub call to #{path} responded with #{response[:code]}"
-      fail response[:body].to_json
     end
     response
   end

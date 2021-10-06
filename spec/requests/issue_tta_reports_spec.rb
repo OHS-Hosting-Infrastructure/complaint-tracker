@@ -24,6 +24,12 @@ RSpec.describe "IssueTtaReports", type: :request do
 
   describe "POST /issue_tta_reports" do
     context "user is not logged in" do
+      around do |example|
+        Rails.configuration.x.bypass_auth = false
+        example.run
+        Rails.configuration.x.bypass_auth = true
+      end
+
       it "redirects to root" do
         post issue_tta_reports_path
         expect(response).to have_http_status(302)
@@ -32,13 +38,6 @@ RSpec.describe "IssueTtaReports", type: :request do
     end
 
     context "with an authorized user" do
-      before do
-        # There are some other session requests before getting to session["user"]
-        allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[])
-        allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("user").and_return user
-        allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("hses_access_token").and_return access_token_creds
-      end
-
       it "sends an API request to the tta system" do
         expect(ApiDelegator).to receive(:use)
           .with("tta", "activity_report", {display_id: tta_display_id, access_token: kind_of(HsesAccessToken)})
@@ -66,6 +65,12 @@ RSpec.describe "IssueTtaReports", type: :request do
     }
 
     context "user is not logged in" do
+      around do |example|
+        Rails.configuration.x.bypass_auth = false
+        example.run
+        Rails.configuration.x.bypass_auth = true
+      end
+
       it "redirects to root" do
         put issue_tta_report_path(issue_tta_report)
         expect(response).to have_http_status(302)
@@ -74,13 +79,6 @@ RSpec.describe "IssueTtaReports", type: :request do
     end
 
     context "with an authorized user" do
-      before do
-        # There are some other session requests before getting to session["user"]
-        allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[])
-        allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("user").and_return user
-        allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("hses_access_token").and_return access_token_creds
-      end
-
       it "sends an API request to the tta system" do
         expect(ApiDelegator).to receive(:use)
           .with("tta", "activity_report", {display_id: tta_display_id, access_token: kind_of(HsesAccessToken)})
@@ -100,13 +98,6 @@ RSpec.describe "IssueTtaReports", type: :request do
 
   describe "DELETE /issue_tta_report/unlink_report/:issue_id" do
     context "with an authorized user" do
-      before do
-        # There are some other session requests before getting to session["user"]
-        allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[])
-        allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("user").and_return user
-        allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("hses_access_token").and_return access_token_creds
-      end
-
       let(:display_report_id) { "DisplayID " }
       let(:complaint_id) { FakeIssues.instance.json[:data].first[:id] }
       let!(:issue_tta_report) do

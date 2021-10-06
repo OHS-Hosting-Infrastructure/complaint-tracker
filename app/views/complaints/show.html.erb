@@ -24,7 +24,7 @@
             </p>
           </div>
         <% end %>
-        <div class="display-none" id="tta-activity-form">
+        <div <%= flash[:tta_errors].blank? && 'class="display-none"'.html_safe %> id="tta-activity-form">
           <%= render "tta_create_activity_report" %>
         </div>
         <div class="ct-section-divider display-flex flex-align-center">
@@ -79,7 +79,7 @@
         </h2>
         <div class="usa-prose">
           <p id="unlink-modal-description">
-            This will remove the report from this complaint, but will not delete the report from TTA Hub 
+            This will remove the report from this complaint, but will not delete the report from TTA Hub
           </p>
         </div>
         <div class="usa-modal__footer">

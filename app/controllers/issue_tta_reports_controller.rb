@@ -1,24 +1,49 @@
 class IssueTtaReportsController < ApplicationController
   def create
-    @issue_tta_report = IssueTtaReport.new(
-      issue_id: issue_id,
-      tta_report_display_id: tta_report_display_id,
-      tta_report_id: activity_data[:id]
-    )
+    if activity_data[:success]
+      activity_report = activity_data[:body][:data]
+      @issue_tta_report = IssueTtaReport.new(
+        issue_id: issue_id,
+        tta_report_display_id: tta_report_display_id,
+        tta_report_id: activity_report[:id]
+      )
 
-    if @issue_tta_report.save
-      redirect_to complaint_path(issue_id)
+      if !@issue_tta_report.save
+        flash[:tta_errors] = {
+          display_id: tta_report_display_id,
+          message: @issue_tta_report.errors.full_messages.join(". ")
+        }
+      end
+    else
+      flash[:tta_errors] = {
+        display_id: tta_report_display_id,
+        message: tta_link_error_message(activity_data)
+      }
     end
+    redirect_to complaint_path(issue_id)
   end
 
   def update
-    report = IssueTtaReport.find(params[:id])
-    if report.update(
-      tta_report_display_id: tta_report_display_id,
-      tta_report_id: activity_data[:id]
-    )
-      redirect_to complaint_path(issue_id)
+    if activity_data[:success]
+      activity_report = activity_data[:body][:data]
+      report = IssueTtaReport.find(params[:id])
+      if !report.update(
+        tta_report_display_id: tta_report_display_id,
+        tta_report_id: activity_report[:id]
+      )
+
+        flash[:tta_errors] = {
+          display_id: tta_report_display_id,
+          message: report.errors.full_messages.join(". ")
+        }
+      end
+    else
+      flash[:tta_errors] = {
+        display_id: tta_report_display_id,
+        message: tta_link_error_message(activity_data)
+      }
     end
+    redirect_to complaint_path(issue_id)
   end
 
   def unlink
@@ -30,18 +55,14 @@ class IssueTtaReportsController < ApplicationController
   private
 
   def activity_data
-    api = ApiDelegator.use(
+    @activity_data ||= ApiDelegator.use(
       "tta",
       "activity_report",
       {
         display_id: tta_report_display_id,
         access_token: HsesAccessToken.new(session["hses_access_token"])
       }
-    )
-    response = api.request
-    if response[:success]
-      response[:body][:data]
-    end
+    ).request
   end
 
   def tta_report_display_id
@@ -50,5 +71,16 @@ class IssueTtaReportsController < ApplicationController
 
   def issue_id
     params[:issue_id]
+  end
+
+  def tta_link_error_message(api_response)
+    case api_response[:code]
+    when 403
+      "You do not have permission to access this activity report."
+    when 404
+      "This number doesn't match any existing activity reports. Please double-check the number."
+    else
+      "We're unable to look up reports in TTA Smart Hub right now. Please try again later."
+    end
   end
 end

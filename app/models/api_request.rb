@@ -6,10 +6,16 @@ class ApiRequest
   private
 
   def format_response(res)
+    response_body = begin
+      JSON.parse(res.body)
+    rescue JSON::ParserError
+      Rails.logger.error("Error parsing response from #{request_uri} response body: \"#{res.body}\"")
+      {}
+    end
     {
       success: res.code == "200",
       code: res.code.to_i,
-      body: JSON.parse(res.body)
+      body: response_body
     }.with_indifferent_access
   end
 

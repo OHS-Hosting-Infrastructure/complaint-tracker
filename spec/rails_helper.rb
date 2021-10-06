@@ -6,7 +6,7 @@ SimpleCov.start "rails" do
   end
   add_filter "/app/jobs/application_job.rb"
   enable_coverage :branch
-  SimpleCov.minimum_coverage line: 90, branch: 70 # TODO, raise to 80 after doing error validations
+  SimpleCov.minimum_coverage line: 90, branch: 80
 end
 
 require "spec_helper"
