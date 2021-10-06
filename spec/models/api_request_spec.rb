@@ -18,7 +18,7 @@ RSpec.describe ApiRequest do
         allow_any_instance_of(ApiRequest).to receive(:query).and_return "?some=query"
 
         res = ApiRequest.new.response
-        expect(res).to match({code: "200", body: {"meta" => {}, "data" => []}})
+        expect(res).to match({success: true, code: 200, body: {"meta" => {}, "data" => []}})
       end
 
       it "is memoized" do

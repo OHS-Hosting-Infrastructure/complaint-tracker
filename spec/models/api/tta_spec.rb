@@ -16,8 +16,8 @@ RSpec.describe Api::Tta do
           expect(response).to receive(:body).and_return('{"data":{}}')
         end
 
-        it "returns a Ruby object with a data key" do
-          expect(subject.request).to match({data: {}})
+        it "returns a Ruby object with success, code, and body keys" do
+          expect(subject.request).to match({success: true, code: 200, body: {data: {}}})
         end
       end
 

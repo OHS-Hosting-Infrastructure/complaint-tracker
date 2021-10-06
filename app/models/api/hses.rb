@@ -40,7 +40,7 @@ class Api::Hses::Issues < ApiRequest
   end
 
   def request
-    response[:code] == "200" ? response[:body] : {}
+    response[:success] ? response[:body] : {}
   end
 
   private

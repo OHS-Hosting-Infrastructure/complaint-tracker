@@ -38,7 +38,10 @@ class IssueTtaReportsController < ApplicationController
         access_token: HsesAccessToken.new(session["hses_access_token"])
       }
     )
-    api.request[:data]
+    response = api.request
+    if response[:success]
+      response[:body][:data]
+    end
   end
 
   def tta_report_display_id

@@ -7,7 +7,8 @@ class ApiRequest
 
   def format_response(res)
     {
-      code: res.code,
+      success: res.code == "200",
+      code: res.code.to_i,
       body: JSON.parse(res.body)
     }.with_indifferent_access
   end
