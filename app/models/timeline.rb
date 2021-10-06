@@ -10,7 +10,7 @@ class Timeline
   }.with_indifferent_access.freeze
 
   def initialize(complaint_attributes, tta_reports)
-    @complaint_events = needed_events(complaint_attributes)
+    @complaint_events = needed_attributes(complaint_attributes)
       .map { |event| ComplaintEvent.new(event) }
 
     @tta_events = tta_reports.map { |report| TtaEvent.new(report) }
@@ -28,7 +28,7 @@ class Timeline
     @complaint_events + @tta_events
   end
 
-  def needed_events(attributes)
+  def needed_attributes(attributes)
     attributes.select do |key, value|
       EVENT_LABELS.key?(key) && value.present?
     end
@@ -36,21 +36,17 @@ class Timeline
 end
 
 class Event
-  attr_reader :name, :date
+  attr_reader :date, :name
 
   def formatted_date
     date.strftime("%m/%d/%Y")
-  end
-
-  def label
-    name
   end
 end
 
 class Timeline::ComplaintEvent < Event
   def initialize(event)
     @name = event[0]
-    @date = Time.parse(event[1])
+    @date = Date.parse(event[1])
   end
 
   def label
@@ -60,7 +56,11 @@ end
 
 class Timeline::TtaEvent < Event
   def initialize(event)
-    @name = "TTA Activity: #{event[:attributes][:display_id]}"
-    @date = Time.parse(event[:attributes][:startDate])
+    @name = event[:attributes][:display_id]
+    @date = Date.parse(event[:attributes][:startDate])
+  end
+
+  def label
+    "TTA Activity: #{name}"
   end
 end

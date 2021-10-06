@@ -5,11 +5,13 @@ RSpec.describe "complaints/show.html.erb", type: :view do
   let(:issue_number) { complaint.id }
   let(:grantee_name) { complaint.grantee }
   let(:summary) { complaint.summary }
+  let(:timeline) { Timeline.new(complaint.attributes, []) }
 
   describe "no TTA reports" do
     before do
       assign(:complaint, complaint)
       assign(:tta_reports, [])
+      assign(:timeline, timeline)
       render
     end
 
