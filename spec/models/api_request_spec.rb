@@ -28,23 +28,29 @@ RSpec.describe ApiRequest do
       end
     end
 
-    describe "without combinations of host, path, and query" do
+    describe "without combinations of configure_auth, host, path, and query" do
       it "returns an error for missing host" do
-        # mock in path and query
         allow_any_instance_of(ApiRequest).to receive(:path).and_return "/path"
         allow_any_instance_of(ApiRequest).to receive(:query).and_return "?some=query"
+        allow_any_instance_of(ApiRequest).to receive(:configure_auth)
         expect { ApiRequest.new.response }.to raise_error(RuntimeError)
       end
       it "returns an error for missing path" do
-        # mock in path and query
         allow_any_instance_of(ApiRequest).to receive(:host).and_return "example.com"
         allow_any_instance_of(ApiRequest).to receive(:query).and_return "?some=query"
+        allow_any_instance_of(ApiRequest).to receive(:configure_auth)
         expect { ApiRequest.new.response }.to raise_error(RuntimeError)
       end
       it "returns an error for missing query" do
-        # mock in path and query
         allow_any_instance_of(ApiRequest).to receive(:host).and_return "example.com"
         allow_any_instance_of(ApiRequest).to receive(:path).and_return "/path"
+        allow_any_instance_of(ApiRequest).to receive(:configure_auth)
+        expect { ApiRequest.new.response }.to raise_error(RuntimeError)
+      end
+      it "returns an error for missing configure_auth" do
+        allow_any_instance_of(ApiRequest).to receive(:host).and_return "example.com"
+        allow_any_instance_of(ApiRequest).to receive(:path).and_return "/path"
+        allow_any_instance_of(ApiRequest).to receive(:query).and_return "?some=query"
         expect { ApiRequest.new.response }.to raise_error(RuntimeError)
       end
     end

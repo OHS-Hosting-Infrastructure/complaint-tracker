@@ -73,7 +73,7 @@ Rails.application.configure do
   config.x.hses.api_password = ENV.fetch("HSES_API_PASSWORD", "test.password")
 
   # TTA Hub API
-  config.x.tta.api_hostname = ENV.fetch("TTA_HUB_API_HOSTNAME", "tta-smarthub-staging.app.cloud.gov")
-  config.x.tta.api_port = Integer(ENV.fetch("TTA_HUB_API_PORT", "443"))
-  config.x.tta.use_ssl = ENV.fetch("TTA_HUB_API_SCHEME", "https") == "https"
+  config.x.tta.api_hostname = ENV.fetch("TTA_HUB_API_HOSTNAME", "localhost")
+  config.x.tta.api_port = Integer(ENV.fetch("TTA_HUB_API_PORT", "3000"))
+  config.x.tta.use_ssl = ENV.fetch("TTA_HUB_API_SCHEME", "http") == "https"
 end
