@@ -26,20 +26,33 @@ end
 namespace :yarn do
   desc "Run yarn audit"
   task :audit do
-    stdout, stderr, status = Open3.capture3("yarn audit")
-    puts stdout
+    stdout, stderr, status = Open3.capture3("yarn audit --json")
     unless status.success?
       puts stderr
+      parsed = JSON.parse("[#{stdout.lines.join(",")}]")
+      puts JSON.pretty_generate(parsed)
       if /503 Service Unavailable/.match?(stderr)
         puts "Ignoring unavailable server"
-      # elsif /advisories\/1548.*1 vulnerabilities found/m.match?(stdout)
-      #   puts "Ignoring serialize-javascript until using libraries updated"
+      elsif all_issues_ignored?(parsed)
+        puts "Ignoring known and accepted yarn audit results"
       else
         exit status.exitstatus
       end
     end
   end
 end
+
+def all_issues_ignored?(issues)
+  summary = issues.find { |json| json["type"] == "auditSummary" }["data"]["vulnerabilities"]
+  # immediately fail if more findings are discovered, even if they have the same advisory ID,
+  # this helps to ensure that we fully evaluate the risk present
+  return false unless (summary["moderate"] <= 11 && summary["high"] == 0 && summary["critical"] <= 4)
+  advisory_ids = issues.select { |json| json["type"] == "auditAdvisory" }.map { |json| json["data"]["advisory"]["id"] }
+  # 1002373 is a withdrawn critical CVE on lodash
+  # 1002401 and 1002423 are moderate findings related to inefficient regexs that we are only using at build time
+  advisory_ids.all? { |id| [1002401, 1002373, 1002423].include? id }
+end
+
 
 task default: "standard"
 task default: "brakeman"
