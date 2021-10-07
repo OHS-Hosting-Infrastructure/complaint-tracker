@@ -84,11 +84,6 @@ RSpec.describe "Complaints", type: :request do
         get complaint_path(id: complaint_id)
         expect(response).to have_http_status(200)
       end
-
-      it "displays issue number" do
-        get complaint_path(id: complaint_id)
-        expect(response.body).to include "<h1>HSES Issue ##{complaint_id}</h1>\n"
-      end
     end
   end
 end
