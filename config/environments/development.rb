@@ -90,6 +90,6 @@ Rails.application.configure do
 
   # TTA Hub API
   config.x.tta.api_hostname = ENV.fetch("TTA_HUB_API_HOSTNAME", "tta-smarthub-staging.app.cloud.gov")
-  config.x.tta.api_port = Integer(ENV.fetch("TTA_HUB_API_PORT", "443"))
-  config.x.tta.use_ssl = ENV.fetch("TTA_HUB_API_SCHEME", "https") == "https"
+  config.x.tta.api_port = Integer(ENV["TTA_HUB_API_PORT"])
+  config.x.tta.use_ssl = ENV["TTA_HUB_API_SCHEME"] == "https"
 end

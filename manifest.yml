@@ -12,6 +12,7 @@ applications:
     HSES_API_HOSTNAME: ((hses_api_hostname))
     HSES_API_USERNAME: ((hses_api_username))
     HSES_API_PASSWORD: ((hses_api_password))
+    TTA_HUB_API_HOSTNAME: ((tta_hub_api_hostname))
   processes:
   - type: web
     instances: ((web_instances))
