@@ -12,7 +12,8 @@ class Api::FakeData::ActivityReport
     @data ||= {
       id: identifier,
       attributes: {
-        display_id: display_id
+        display_id: display_id,
+        startDate: date_string
       },
       links: {
         self: "https://example.com/TODO",

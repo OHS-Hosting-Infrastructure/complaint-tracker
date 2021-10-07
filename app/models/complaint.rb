@@ -22,16 +22,6 @@ class Complaint
     due_date? && due_date < 1.week.from_now
   end
 
-  def event_label(attribute_name)
-    EVENT_LABELS[attribute_name] || "Updated"
-  end
-
-  def events
-    @events ||= mapped_events
-      .sort_by { |events| events[:date] }
-      .reverse
-  end
-
   def grantee
     attributes["grantee"]
   end
@@ -72,22 +62,7 @@ class Complaint
     due_date.strftime("%m/%d/%Y")
   end
 
-  def mapped_events
-    unsorted_needed_events.map do |key, value|
-      {
-        name: key,
-        date: Time.parse(value)
-      }
-    end
-  end
-
   def relative_time_til_due
     (Date.today...due_date).count
-  end
-
-  def unsorted_needed_events
-    attributes.select do |key, value|
-      EVENT_LABELS.key?(key) && value.present?
-    end
   end
 end
