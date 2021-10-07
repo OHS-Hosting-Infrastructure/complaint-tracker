@@ -32,13 +32,13 @@ class ApiRequest
   end
 
   def page_limit
-    "page[limit]=#{PAGE_LIMIT}" if @page
+    "limit=#{PAGE_LIMIT}" if @page
   end
 
   def page_offset
     if @page
       offset = (@page.to_i - 1) * PAGE_LIMIT
-      "page[offset]=#{offset}"
+      "offset=#{offset}"
     end
   end
 

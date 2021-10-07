@@ -70,21 +70,21 @@ RSpec.describe ApiRequest do
       it "returns no offset if no page is set" do
         api.response
         uri = api.instance_variable_get(:@uri)
-        expect(uri.to_s).not_to include("page[offset]")
-        expect(uri.to_s).not_to include("page[limit]")
+        expect(uri.to_s).not_to include("offset")
+        expect(uri.to_s).not_to include("limit")
       end
       it "returns the correct offset and limit if page is set to 1" do
         api.instance_variable_set(:@page, 1)
         api.response
         uri = api.instance_variable_get(:@uri)
-        expect(uri.to_s).to include("page[offset]=0")
-        expect(uri.to_s).to include("page[limit]=25")
+        expect(uri.to_s).to include("offset=0")
+        expect(uri.to_s).to include("limit=25")
       end
       it "returns the correct offset if page is set to 2" do
         api.instance_variable_set(:@page, 2)
         api.response
         uri = api.instance_variable_get(:@uri)
-        expect(uri.to_s).to include("page[offset]=25")
+        expect(uri.to_s).to include("offset=25")
       end
     end
   end
