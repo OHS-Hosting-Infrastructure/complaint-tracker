@@ -27,8 +27,9 @@ end
 
 class Api::Hses::Issues < ApiRequest
   include Api::Hses
-  def initialize(user:)
+  def initialize(user:, page: 1)
     @username = user["uid"]
+    @page = page
   end
 
   def request
@@ -41,7 +42,7 @@ class Api::Hses::Issues < ApiRequest
     "/issues-ws/issues"
   end
 
-  def query
-    "username=#{@username}&types=1"
+  def parameters
+    ["types=1"]
   end
 end
