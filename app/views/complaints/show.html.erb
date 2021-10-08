@@ -24,7 +24,7 @@
             </p>
           </div>
         <% end %>
-        <div <%= flash[:tta_errors].blank? && 'class="display-none"'.html_safe %> id="tta-activity-form">
+        <div class="<%= flash[:tta_errors].blank? ? "display-none" : "" %>" id="tta-activity-form">
           <%= render "tta_create_activity_report" %>
         </div>
         <div class="ct-section-divider display-flex flex-align-center">

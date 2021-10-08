@@ -54,30 +54,25 @@ class ApiRequest
   end
 
   def request_uri
-    @uri ||= if use_ssl?
-      URI::HTTPS.build(
-        host: host,
-        port: port,
-        path: path,
-        query: query
-      )
-    else
-      URI::HTTP.build(
-        host: host,
-        port: port,
-        path: path,
-        query: query
-      )
-    end
+    @request_uri ||= build_uri
   end
 
-  # NOTE: this will need refactoring if we connect to multiple APIs
+  def build_uri
+    uri_params = {
+      host: host,
+      port: port,
+      path: path,
+      query: query
+    }
+    use_ssl? ? URI::HTTPS.build(uri_params) : URI::HTTP.build(uri_params)
+  end
+
   def send_api_request
     req = Net::HTTP::Get.new(request_uri)
 
     configure_auth(req)
 
-    Net::HTTP.start(@uri.hostname, @uri.port, use_ssl: use_ssl?) do |http|
+    Net::HTTP.start(request_uri.hostname, request_uri.port, use_ssl: use_ssl?) do |http|
       http.request(req)
     end
   end

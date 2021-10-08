@@ -76,6 +76,18 @@ RSpec.describe Api::FakeData::Tta do
           })
         end
       end
+
+      context "500 error" do
+        let(:display_id) { "R01-AR-500" }
+
+        it "returns a blank body and metadata" do
+          expect(subject.request).to match({
+            success: false,
+            code: 500,
+            body: {}
+          })
+        end
+      end
     end
   end
 end

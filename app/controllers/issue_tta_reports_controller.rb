@@ -17,7 +17,7 @@ class IssueTtaReportsController < ApplicationController
     else
       flash[:tta_errors] = {
         display_id: tta_report_display_id,
-        message: tta_link_error_message(activity_data)
+        message: tta_link_error_message(activity_data[:code])
       }
     end
     redirect_to complaint_path(issue_id)
@@ -40,7 +40,7 @@ class IssueTtaReportsController < ApplicationController
     else
       flash[:tta_errors] = {
         display_id: tta_report_display_id,
-        message: tta_link_error_message(activity_data)
+        message: tta_link_error_message(activity_data[:code])
       }
     end
     redirect_to complaint_path(issue_id)
@@ -55,14 +55,18 @@ class IssueTtaReportsController < ApplicationController
   private
 
   def activity_data
-    @activity_data ||= ApiDelegator.use(
+    @activity_data ||= api.request
+  end
+
+  def api
+    ApiDelegator.use(
       "tta",
       "activity_report",
       {
         display_id: tta_report_display_id,
         access_token: HsesAccessToken.new(session["hses_access_token"])
       }
-    ).request
+    )
   end
 
   def tta_report_display_id
@@ -73,8 +77,8 @@ class IssueTtaReportsController < ApplicationController
     params[:issue_id]
   end
 
-  def tta_link_error_message(api_response)
-    case api_response[:code]
+  def tta_link_error_message(response_code)
+    case response_code
     when 403
       "You do not have permission to access this activity report."
     when 404

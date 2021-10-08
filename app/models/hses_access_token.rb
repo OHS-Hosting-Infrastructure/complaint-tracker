@@ -11,8 +11,12 @@ class HsesAccessToken
     access_token.token
   end
 
+  private
+
   def access_token
     @access_token ||= OAuth2::AccessToken.from_hash(client, credentials)
+    # always check if the memoized @access_token has expired since we've last used it
+    # and refresh if necessary
     @access_token = @access_token.refresh! if @access_token.expired?
     @access_token
   end

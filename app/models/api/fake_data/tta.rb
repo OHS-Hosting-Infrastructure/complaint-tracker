@@ -9,6 +9,9 @@ class Api::FakeData::Tta
       @display_id = display_id
     end
 
+    # Api::FakeData::Tta::ActivityReport is set up to trigger various error states based on the
+    # requested Display ID. When the last part of the display ID matches a well-known HTTP error code
+    # that error code is returned instead of a successful report.
     def request
       case display_id
       when /-401\z/
@@ -40,6 +43,12 @@ class Api::FakeData::Tta
             title: "Not Found",
             details: "Report #{display_id} could not be found"
           }
+        }
+      when /-500\z/
+        {
+          success: false,
+          code: 500,
+          body: {}
         }
       else
         {

@@ -45,6 +45,9 @@ RSpec.feature "Associating TTA Activity Report", type: :feature do
     end
 
     context "error handling" do
+      # In this context, this shared before block fills in the page and clicks submit.
+      # Each sub-context defines a `test_display_id` that is used to trigger each individual error message
+      # and verifies that it is seen
       before do
         click_button "Link TTA Activity Report"
         fill_in "TTA report display ID", with: test_display_id
