@@ -16,7 +16,7 @@ RSpec.describe "complaints/show.html.erb", type: :view do
     end
 
     it "displays the issue number in an h1" do
-      expect(rendered).to match "<h1>Issue ##{issue_number}</h1>"
+      expect(rendered).to match "<h1>HSES Issue ##{issue_number}</h1>"
     end
 
     it "displays the grantee name" do
