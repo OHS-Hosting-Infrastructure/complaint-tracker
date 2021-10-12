@@ -1,14 +1,15 @@
 require "api_delegator"
 
 class IssueTtaReport < ApplicationRecord
+  before_validation :retrieve_tta_report_id
   validates :issue_id, :tta_report_display_id, presence: true
   validates :tta_report_display_id, uniqueness: {scope: :issue_id}
   validate :api_call_succeeded
+  # tta_report_id presence validation is skipped if any other errors are found
+  # the user cant do much about this anyway since it is derived from the tta_report_display_id
   validates :tta_report_id, presence: true, if: :errors_blank?
 
   attr_accessor :access_token
-
-  before_validation :retrieve_tta_report_id
 
   private
 
