@@ -4,7 +4,7 @@ class ComplaintsController < ApplicationController
   before_action :check_pa11y_id, only: :show, if: -> { Rails.env.ci? }
 
   def index
-    api = ApiDelegator.use("hses", "issues", {user: session["user"], page: params[:page]})
+    api = ApiDelegator.use("hses", "issues", {user: session["user"]})
     @complaints = api.request[:data]
   end
 

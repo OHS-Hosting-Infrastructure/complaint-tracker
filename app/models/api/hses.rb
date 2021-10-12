@@ -27,9 +27,12 @@ end
 
 class Api::Hses::Issues < ApiRequest
   include Api::Hses
-  def initialize(user:, page: 1)
+
+  PAGE_LIMIT = 25
+
+  def initialize(user:, params: {})
     @username = user["uid"]
-    @page = page
+    @page = params[:page] || 1
   end
 
   def request
@@ -38,11 +41,20 @@ class Api::Hses::Issues < ApiRequest
 
   private
 
-  def path
-    "/issues-ws/issues"
+  def page_offset
+    (@page.to_i - 1) * PAGE_LIMIT
   end
 
   def parameters
-    ["types=1"]
+    {
+      types: 1,
+      username: @username,
+      offset: page_offset,
+      limit: PAGE_LIMIT
+    }
+  end
+
+  def path
+    "/issues-ws/issues"
   end
 end

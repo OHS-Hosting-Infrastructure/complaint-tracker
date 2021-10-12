@@ -1,19 +1,9 @@
 class ApiRequest
-  PAGE_LIMIT = 25
-
   def response
     @response ||= get_response
   end
 
   private
-
-  def default_params
-    [
-      "username=#{@username}",
-      page_limit,
-      page_offset
-    ]
-  end
 
   def format_response(res)
     {
@@ -31,30 +21,18 @@ class ApiRequest
     raise "Please define a host method in #{self.class}"
   end
 
-  def page_limit
-    "limit=#{PAGE_LIMIT}" if @page
-  end
-
-  def page_offset
-    if @page
-      offset = (@page.to_i - 1) * PAGE_LIMIT
-      "offset=#{offset}"
-    end
-  end
-
   # Inheriting class defines
   def path
     raise "Please define a path method in #{self.class}"
   end
 
-  # Inheriting class defines
+  # Inheriting class defines, should return hash
   def parameters
     raise "Please define a parameters method in #{self.class}"
   end
 
   def query
-    req_params = default_params + parameters
-    req_params.compact.join("&")
+    URI.encode_www_form(parameters)
   end
 
   def request_uri
