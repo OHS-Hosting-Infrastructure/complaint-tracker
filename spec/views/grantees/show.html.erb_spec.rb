@@ -1,9 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "grantees/show", type: :view do
-  before(:each) do
-    @grantee = assign(:grantee, Grantee.create!)
-  end
+  let(:grantee) { Grantee.new(Api::FakeData::Grantee.new.data) }
 
   it "renders attributes in <p>" do
     render
