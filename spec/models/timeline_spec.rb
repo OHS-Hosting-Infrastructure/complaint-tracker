@@ -155,7 +155,7 @@ RSpec.describe Timeline do
     let(:event_param) do
       {
         attributes: {
-          display_id: display_id,
+          displayId: display_id,
           startDate: date
         }
       }
