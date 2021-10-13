@@ -67,6 +67,7 @@ API data will come from real APIs or the Api::FakeData depending on the value of
 | ci | never connects to real APIs |
 | production | always attempts to connect to real APIs |
 
+Documentation about the API specifications is available in [docs/api_integrations](/doc/api_integrations/README.md).
 
 ### Inline `<script>` and `<style>` security
 
