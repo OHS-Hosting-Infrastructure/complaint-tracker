@@ -46,11 +46,10 @@ def all_issues_ignored?(issues)
   summary = issues.find { |json| json["type"] == "auditSummary" }["data"]["vulnerabilities"]
   # immediately fail if more findings are discovered, even if they have the same advisory ID,
   # this helps to ensure that we fully evaluate the risk present
-  return false unless summary["moderate"] <= 11 && summary["high"] == 0 && summary["critical"] <= 4
+  return false unless summary["moderate"] <= 11 && summary["high"] == 0 && summary["critical"] == 0
   advisory_ids = issues.select { |json| json["type"] == "auditAdvisory" }.map { |json| json["data"]["advisory"]["id"] }
-  # 1002373 is a withdrawn critical CVE on lodash
   # 1002401 and 1002423 are moderate findings related to inefficient regexs that we are only using at build time
-  advisory_ids.all? { |id| [1002401, 1002373, 1002423].include? id }
+  advisory_ids.all? { |id| [1002401, 1002423].include? id }
 end
 
 task default: "standard"

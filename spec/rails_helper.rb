@@ -1,4 +1,14 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
+require "simplecov"
+SimpleCov.start "rails" do
+  add_filter do |source_file|
+    source_file.lines.count < 5
+  end
+  add_filter "/app/jobs/application_job.rb"
+  enable_coverage :branch
+  SimpleCov.minimum_coverage line: 90, branch: 80
+end
+
 require "spec_helper"
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path("../config/environment", __dir__)

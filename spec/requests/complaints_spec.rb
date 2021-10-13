@@ -10,12 +10,13 @@ RSpec.describe "Complaints", type: :request do
   }
 
   describe "GET /complaints" do
-    it "returns a 302 status" do
-      get complaints_path
-      expect(response).to have_http_status(302)
-    end
-
     describe "without an authorized user" do
+      around do |example|
+        Rails.configuration.x.bypass_auth = false
+        example.run
+        Rails.configuration.x.bypass_auth = true
+      end
+
       it "asks the user to log" do
         get complaints_path
         follow_redirect!
@@ -32,12 +33,6 @@ RSpec.describe "Complaints", type: :request do
     end
 
     describe "with an authorized user" do
-      before do
-        # There are some other session requests before getting to session["user"]
-        allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[])
-        allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("user").and_return user
-      end
-
       it "returns a 200 status" do
         get complaints_path
         expect(response).to have_http_status(200)
@@ -45,7 +40,7 @@ RSpec.describe "Complaints", type: :request do
 
       it "includes the user's name" do
         get complaints_path
-        expect(response.body).to include user["name"].to_s
+        expect(response.body).to include "Fake Test-User"
       end
 
       describe "User has a complaint" do
@@ -63,7 +58,6 @@ RSpec.describe "Complaints", type: :request do
         it "includes the alert" do
           allow_any_instance_of(Api::FakeData::Hses::Issues).to receive(:request).and_return data: []
           get complaints_path
-          expect(response.body).to include user["name"].to_s
           expect(response.body).to include '<h3 class="usa-alert__heading">No issues found</h3>'
         end
       end
@@ -71,19 +65,11 @@ RSpec.describe "Complaints", type: :request do
   end
 
   describe "GET /complaint/:id" do
-    context "with an authorized user" do
-      before do
-        # There are some other session requests before getting to session["user"]
-        allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[])
-        allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("user").and_return user
-      end
+    let(:complaint_id) { FakeIssues.instance.json[:data].first[:id] }
 
-      let(:complaint_id) { FakeIssues.instance.json[:data].first[:id] }
-
-      it "returns a 200 status" do
-        get complaint_path(id: complaint_id)
-        expect(response).to have_http_status(200)
-      end
+    it "returns a 200 status" do
+      get complaint_path(id: complaint_id)
+      expect(response).to have_http_status(200)
     end
   end
 end

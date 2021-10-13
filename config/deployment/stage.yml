@@ -5,3 +5,4 @@ hses_auth_base: https://staging.hses.ohs.acf.hhs.gov
 hses_auth_client_id: tta-smarthub
 hses_api_hostname: staging.hses.ohs.acf.hhs.gov
 hses_api_username: complaints-tracker
+tta_hub_api_hostname: tta-smarthub-staging.app.cloud.gov

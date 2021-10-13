@@ -22,6 +22,7 @@ gem "jbuilder", "~> 2.7"
 gem "omniauth", "~> 2.0"
 gem "omniauth-oauth2", "~> 1.7"
 gem "omniauth-rails_csrf_protection", "~> 1.0"
+gem "oauth2", "~> 1.4"
 gem "secure_headers", "~> 6.3"
 
 # Use ffaker for faked connections to HSES data
@@ -54,6 +55,10 @@ group :development do
   gem "listen", "~> 3.3"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "spring"
+end
+
+group :test do
+  gem "simplecov", "~> 0.21", require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

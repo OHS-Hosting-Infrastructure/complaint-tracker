@@ -21,8 +21,16 @@ class ComplaintsController < ApplicationController
 
   def tta_reports
     @issue_tta_reports.pluck(:tta_report_display_id).map do |id|
-      ApiDelegator.use("tta", "activity_report", display_id: id).request[:data]
-    end
+      response = ApiDelegator.use(
+        "tta",
+        "activity_report",
+        {
+          display_id: id,
+          access_token: HsesAccessToken.new(session["hses_access_token"])
+        }
+      ).request
+      response[:success] ? response[:body][:data] : nil
+    end.compact
   end
 
   def check_pa11y_id
