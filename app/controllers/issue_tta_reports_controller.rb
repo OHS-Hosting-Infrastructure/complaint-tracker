@@ -3,22 +3,28 @@ class IssueTtaReportsController < ApplicationController
     @issue_tta_report = IssueTtaReport.new(
       issue_id: issue_id,
       tta_report_display_id: tta_report_display_id,
-      tta_report_id: activity_data[:id]
+      access_token: access_token
     )
 
-    if @issue_tta_report.save
-      redirect_to complaint_path(issue_id)
+    if !@issue_tta_report.save
+      flash[:tta_errors] = {
+        display_id: tta_report_display_id,
+        message: @issue_tta_report.errors.full_messages.join(". ")
+      }
     end
+    redirect_to complaint_path(issue_id)
   end
 
   def update
     report = IssueTtaReport.find(params[:id])
-    if report.update(
-      tta_report_display_id: tta_report_display_id,
-      tta_report_id: activity_data[:id]
-    )
-      redirect_to complaint_path(issue_id)
+
+    if !report.update(tta_report_display_id: tta_report_display_id, access_token: access_token)
+      flash[:tta_errors] = {
+        display_id: tta_report_display_id,
+        message: report.errors.full_messages.join(". ")
+      }
     end
+    redirect_to complaint_path(issue_id)
   end
 
   def unlink
@@ -29,13 +35,8 @@ class IssueTtaReportsController < ApplicationController
 
   private
 
-  def activity_data
-    api = ApiDelegator.use(
-      "tta",
-      "activity_report",
-      {display_id: tta_report_display_id}
-    )
-    api.request[:data]
+  def access_token
+    HsesAccessToken.new(session["hses_access_token"])
   end
 
   def tta_report_display_id

@@ -1,6 +1,6 @@
 <div class="details-header">
   <div class="grid-container">
-    <h1>Issue #<%= @complaint.id %></h1>
+    <h1>HSES Issue #<%= @complaint.id %></h1>
   </div>
 </div>
 <div class="details-body grid-container">
@@ -24,7 +24,7 @@
             </p>
           </div>
         <% end %>
-        <div class="display-none" id="tta-activity-form">
+        <div class="<%= flash[:tta_errors].blank? ? "display-none" : "" %>" id="tta-activity-form">
           <%= render "tta_create_activity_report" %>
         </div>
         <div class="ct-section-divider display-flex flex-align-center">
@@ -51,11 +51,11 @@
           </span>
         </h2>
         <ul class="usa-process-list">
-          <% @complaint.events.each do |event| %>
+          <% @timeline.events.each do |event| %>
             <li class="usa-process-list__item usa-process-list__item-disc">
               <h3 class="usa-process-list__heading ct-timeline__two-part-container">
-                <%= @complaint.event_label(event[:name]) %>
-                <span class="ct-timeline__date"><%= event[:date].strftime("%m/%d/%Y") %></span>
+                <%= event.label %>
+                <span class="ct-timeline__date"><%= event.formatted_date %></span>
               </h3>
             </li>
           <% end %>
@@ -79,7 +79,7 @@
         </h2>
         <div class="usa-prose">
           <p id="unlink-modal-description">
-            This will remove the report from this complaint, but will not delete the report from TTA Hub 
+            This will remove the report from this complaint, but will not delete the report from TTA Hub
           </p>
         </div>
         <div class="usa-modal__footer">

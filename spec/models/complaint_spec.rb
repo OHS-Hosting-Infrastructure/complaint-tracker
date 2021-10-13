@@ -36,29 +36,6 @@ RSpec.describe Complaint do
     end
   end
 
-  describe "#events" do
-    let(:events) do
-      [
-        {
-          name: "issueLastUpdated",
-          date: Time.parse(issue_last_updated)
-        },
-        {
-          name: "creationDate",
-          date: Time.parse(creation_date)
-        },
-        {
-          name: "initialContactDate",
-          date: Time.parse(initial_contact_date)
-        }
-      ]
-    end
-
-    it "returns a sorted array of populated event dates" do
-      expect(subject.events).to eq events
-    end
-  end
-
   describe "#due_date?" do
     context "due date is present" do
       it "returns true" do

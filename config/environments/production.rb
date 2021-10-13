@@ -118,11 +118,6 @@ Rails.application.configure do
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
-  # HSES API
-  config.x.hses.api_hostname = ENV["HSES_API_HOSTNAME"]
-  config.x.hses.api_username = ENV["HSES_API_USERNAME"]
-  config.x.hses.api_password = ENV["HSES_API_PASSWORD"]
-
   # HSES authentication
   config.x.hses.auth_base = ENV["HSES_AUTH_BASE"]
   config.x.hses.client_id = ENV["HSES_AUTH_CLIENT_ID"]
@@ -131,4 +126,14 @@ Rails.application.configure do
 
   # API configuration
   config.x.use_real_api_data = true
+
+  # HSES API
+  config.x.hses.api_hostname = ENV["HSES_API_HOSTNAME"]
+  config.x.hses.api_username = ENV["HSES_API_USERNAME"]
+  config.x.hses.api_password = ENV["HSES_API_PASSWORD"]
+
+  # TTA Hub API
+  config.x.tta.api_hostname = ENV["TTA_HUB_API_HOSTNAME"]
+  config.x.tta.api_port = 443
+  config.x.tta.use_ssl = true
 end
