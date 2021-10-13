@@ -1,7 +1,7 @@
 require "rails_helper"
 require "fake_issues"
 
-RSpec.feature "Grantee Details Page", type: :feature do
+RSpec.feature "Grantee", type: :feature do
   let(:user) {
     {
       name: "Request Spec",
@@ -17,7 +17,7 @@ RSpec.feature "Grantee Details Page", type: :feature do
 
   let!(:grantee) { Grantee.new(FakeIssues.instance.json[:data].first) }
 
-  context "grantee details", js: true do
+  context "details page", js: true do
     before do
       visit "grantees/#{grantee.id}"
     end

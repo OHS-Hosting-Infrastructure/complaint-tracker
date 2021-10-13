@@ -1,0 +1,2 @@
+class Grantee < ApplicationRecord
+end
