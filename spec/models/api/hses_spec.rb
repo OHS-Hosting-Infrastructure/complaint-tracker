@@ -29,15 +29,6 @@ RSpec.describe Api::Hses do
         )
       }
 
-      describe "#initialize" do
-        it "sets @username" do
-          expect(issues.instance_variable_get(:@username)).to eq user["uid"]
-        end
-        it "sets @page" do
-          expect(issues.instance_variable_get(:@page)).to eq "2"
-        end
-      end
-
       describe "#request" do
         it "sends query parameters with correct offset for pagination" do
           # stub the net/http request / response
@@ -61,15 +52,6 @@ RSpec.describe Api::Hses do
     context "without params argument" do
       let(:issues) { Api::Hses::Issues.new(user: user) }
 
-      describe "#initialize" do
-        it "sets @username" do
-          expect(issues.instance_variable_get(:@username)).to eq user["uid"]
-        end
-        it "sets @page to default value" do
-          expect(issues.instance_variable_get(:@page)).to eq 1
-        end
-      end
-
       describe "#host" do
         it "returns the value set in the Api::Hses module" do
           expect(issues.host).to eq Rails.configuration.x.hses.api_hostname
@@ -85,6 +67,7 @@ RSpec.describe Api::Hses do
 
           expect(issues.request).to match({"meta" => {}, "data" => []})
         end
+
         it "sends query parameters for type, username, and pagination" do
           # stub the net/http request / response
           response = Net::HTTPSuccess.new(1.0, "200", "OK")

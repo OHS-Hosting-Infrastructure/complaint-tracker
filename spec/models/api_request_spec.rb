@@ -9,7 +9,7 @@ RSpec.describe ApiRequest do
       expect(api.response).to eq api.response
     end
 
-    describe "with valid host, path, and query" do
+    describe "with valid host, path, and configure_auth" do
       before do
         @api = ApiRequest.new
         # stub the Net::HTTP request / response
@@ -50,26 +50,29 @@ RSpec.describe ApiRequest do
     describe "without combinations of configure_auth, host, path, and parameters" do
       it "returns an error for missing host" do
         allow_any_instance_of(ApiRequest).to receive(:path).and_return "/path"
-        allow_any_instance_of(ApiRequest).to receive(:parameters).and_return []
+        allow_any_instance_of(ApiRequest).to receive(:parameters).and_return({})
         allow_any_instance_of(ApiRequest).to receive(:configure_auth)
         expect { ApiRequest.new.response }.to raise_error(RuntimeError)
       end
+
       it "returns an error for missing path" do
         allow_any_instance_of(ApiRequest).to receive(:host).and_return "example.com"
-        allow_any_instance_of(ApiRequest).to receive(:parameters).and_return []
+        allow_any_instance_of(ApiRequest).to receive(:parameters).and_return({})
         allow_any_instance_of(ApiRequest).to receive(:configure_auth)
         expect { ApiRequest.new.response }.to raise_error(RuntimeError)
       end
+
       it "returns an error for missing parameters" do
         allow_any_instance_of(ApiRequest).to receive(:host).and_return "example.com"
         allow_any_instance_of(ApiRequest).to receive(:path).and_return "/path"
         allow_any_instance_of(ApiRequest).to receive(:configure_auth)
         expect { ApiRequest.new.response }.to raise_error(RuntimeError)
       end
+
       it "returns an error for missing configure_auth" do
         allow_any_instance_of(ApiRequest).to receive(:host).and_return "example.com"
         allow_any_instance_of(ApiRequest).to receive(:path).and_return "/path"
-        allow_any_instance_of(ApiRequest).to receive(:parameters).and_return []
+        allow_any_instance_of(ApiRequest).to receive(:parameters).and_return({})
         expect { ApiRequest.new.response }.to raise_error(RuntimeError)
       end
     end

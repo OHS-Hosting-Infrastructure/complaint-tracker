@@ -45,6 +45,6 @@ class Api::Tta::ActivityReport < ApiRequest
   end
 
   def parameters
-    []
+    {}
   end
 end
