@@ -6,8 +6,10 @@ class Api::FakeData::Grantee
   def data
     @data ||= {
       id: identifier,
+      type: 'grantees',
       attributes: {
-        name: name      },
+        name: name
+      },
       links: {
         self: "https://example.com/TODO",
         html: "https://example.com/TODO"
