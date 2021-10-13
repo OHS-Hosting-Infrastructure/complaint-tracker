@@ -34,5 +34,10 @@ RSpec.describe IssueTtaReport, type: :model do
         tta_report_display_id: "R14-AR-200")
       expect(subject).not_to be_valid
     end
+
+    it "saves the start date" do
+      subject.valid? # trigger the before_validation callback
+      expect(subject.start_date).to be_a(Date)
+    end
   end
 end

@@ -55,9 +55,9 @@ class Timeline::ComplaintEvent < Event
 end
 
 class Timeline::TtaEvent < Event
-  def initialize(event)
-    @name = event[:attributes][:displayId]
-    @date = Date.parse(event[:attributes][:startDate])
+  def initialize(issue_tta_report)
+    @name = issue_tta_report.tta_report_display_id
+    @date = issue_tta_report.start_date
   end
 
   def label
