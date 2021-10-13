@@ -73,6 +73,20 @@ RSpec.describe FfakerWrapper do
     end
   end
 
+  describe "#tta_user_id_and_name_object" do
+    it "returns a random identifier and name" do
+      obj = test_class.tta_user_id_and_name_object
+      expect(obj[:id]).to be_a String
+      expect(obj[:id]).to match /\A\d+\z/
+      expect(obj[:name]).to be_a String
+    end
+
+    it "ends in one of the TTA_ROLES" do
+      _, role = test_class.tta_user_id_and_name_object[:name].split(", ")
+      expect(FfakerWrapper::TTA_ROLE).to include role
+    end
+  end
+
   describe "#random_int" do
     describe "no value passed in" do
       it "returns a random integer between 0 and 3" do

@@ -56,7 +56,7 @@ end
 
 class Timeline::TtaEvent < Event
   def initialize(event)
-    @name = event[:attributes][:display_id]
+    @name = event[:attributes][:displayId]
     @date = Date.parse(event[:attributes][:startDate])
   end
 

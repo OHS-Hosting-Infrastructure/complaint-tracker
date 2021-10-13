@@ -13,7 +13,7 @@ RSpec.describe Api::FakeData::ActivityReport do
 
     describe "data" do
       it "has the display id as an attribute" do
-        expect(report.data[:attributes][:display_id]).to eq display_id
+        expect(report.data[:attributes][:displayId]).to eq display_id
       end
 
       it "is the same every time" do

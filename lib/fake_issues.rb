@@ -8,7 +8,11 @@ class FakeIssues
 
   def json
     @json ||= list_wrapper.merge(
-      data: 25.times.map { |complaint| Api::FakeData::Complaint.new.data }
+      data: 25.times.map { |index|
+        Api::FakeData::Complaint.new.data.tap do |complaint|
+          complaint[:id] = (1500 + index).to_s
+        end
+      }
     )
   end
 end

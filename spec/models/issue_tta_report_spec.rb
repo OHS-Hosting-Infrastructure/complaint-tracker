@@ -3,10 +3,10 @@ require "rails_helper"
 RSpec.describe IssueTtaReport, type: :model do
   describe "validations" do
     subject do
+      # models will retrieve the tta_report_id from FakeData based on the display ID
       described_class.new(
         issue_id: "ISSUE_ID",
-        tta_report_display_id: "ACTIVITY_REPORT_ID",
-        tta_report_id: "12345"
+        tta_report_display_id: "R14-AR-200"
       )
     end
     it "is valid with valid attributes" do
@@ -19,7 +19,8 @@ RSpec.describe IssueTtaReport, type: :model do
     end
 
     it "is not valid without an activity report id" do
-      subject.tta_report_id = nil
+      # This display ID cannot be found in the TTA Hub API, so will not get a tta_report_id
+      subject.tta_report_display_id = "R14-AR-404"
       expect(subject).not_to be_valid
     end
 
@@ -28,15 +29,9 @@ RSpec.describe IssueTtaReport, type: :model do
       expect(subject).not_to be_valid
     end
 
-    it "is not valid if the activity report id has letters" do
-      subject.tta_report_id = "12345a"
-      expect(subject).not_to be_valid
-    end
-
     it "is not valid if an identical report exists already" do
       IssueTtaReport.create(issue_id: "ISSUE_ID",
-        tta_report_display_id: "ACTIVITY_REPORT_ID",
-        tta_report_id: "12345")
+        tta_report_display_id: "R14-AR-200")
       expect(subject).not_to be_valid
     end
   end

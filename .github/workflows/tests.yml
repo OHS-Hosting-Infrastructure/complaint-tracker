@@ -50,6 +50,13 @@ jobs:
           DATABASE_URL: postgres://complaint_tracker:postgres@localhost:5432/complaint_tracker_test
         run: bundle exec rake spec
 
+      - name: Upload coverage information
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: code-coverage
+          path: coverage
+
   standard_ruby:
     name: Standard Ruby Linter
     runs-on: ubuntu-latest
