@@ -18,7 +18,6 @@ RSpec.describe GranteesController, type: :routing do
       expect(get: "/grantees/1/edit").to route_to("grantees#edit", id: "1")
     end
 
-
     it "routes to #create" do
       expect(post: "/grantees").to route_to("grantees#create")
     end

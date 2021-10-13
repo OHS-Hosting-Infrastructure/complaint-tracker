@@ -1,5 +1,5 @@
 class GranteesController < ApplicationController
-  before_action :set_grantee, only: %i[ show edit update destroy ]
+  before_action :set_grantee, only: %i[show edit update destroy]
 
   # GET /grantees or /grantees.json
   def index
@@ -57,13 +57,14 @@ class GranteesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_grantee
-      @grantee = Grantee.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def grantee_params
-      params.fetch(:grantee, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_grantee
+    @grantee = Grantee.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def grantee_params
+    params.fetch(:grantee, {})
+  end
 end

@@ -6,7 +6,7 @@ class Api::FakeData::Grantee
   def data
     @data ||= {
       id: identifier,
-      type: 'grantees',
+      type: "grantees",
       attributes: {
         name: name
       },

@@ -1,14 +1,14 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Grantee, type: :model do
   let(:hses_grantee) { Api::FakeData::Grantee.new.data }
   subject { described_class.new hses_grantee }
 
-  let(:name) { 'Name of the Grantee' }
+  let(:name) { "Name of the Grantee" }
 
   before do
     hses_grantee[:attributes].merge!({
-      name: name,
+      name: name
     })
   end
 

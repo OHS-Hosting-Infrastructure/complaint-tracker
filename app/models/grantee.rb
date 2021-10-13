@@ -2,8 +2,8 @@ class Grantee
   attr_reader :id, :attributes
 
   EVENT_LABELS = {
-    name: 'Name',
-    summary: 'Summary'
+    name: "Name",
+    summary: "Summary"
   }.with_indifferent_access.freeze
 
   def initialize(hses_grantee)
