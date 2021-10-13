@@ -19,14 +19,16 @@ RSpec.describe ApiRequest do
           .and_return(success)
         expect(success).to receive(:body).and_return('{"meta":{},"data":[]}')
 
-        # mock in host, path, and parameters
+        # mock in host, path, and configure auth
         allow(@api).to receive(:host).and_return "example.com"
         allow(@api).to receive(:path).and_return "/path"
+        allow(@api).to receive(:configure_auth)
       end
+
       it "returns an object with a code and a body" do
         allow(@api).to receive(:parameters).and_return []
         res = @api.response
-        expect(res).to match({code: "200", body: {"meta" => {}, "data" => []}})
+        expect(res).to match({success: true, code: 200, body: {"meta" => {}, "data" => []}})
       end
 
       it "correctly encodes the query parameters" do
@@ -38,29 +40,36 @@ RSpec.describe ApiRequest do
           .with({
             host: "example.com",
             path: "/path",
+            port: 443,
             query: "one=1&two=a&two=b"
           }).and_call_original
         @api.response
       end
     end
 
-    describe "without combinations of host, path, and parameters" do
+    describe "without combinations of configure_auth, host, path, and parameters" do
       it "returns an error for missing host" do
-        # mock in path and parameters
         allow_any_instance_of(ApiRequest).to receive(:path).and_return "/path"
         allow_any_instance_of(ApiRequest).to receive(:parameters).and_return []
+        allow_any_instance_of(ApiRequest).to receive(:configure_auth)
         expect { ApiRequest.new.response }.to raise_error(RuntimeError)
       end
       it "returns an error for missing path" do
-        # mock in path and parameters
         allow_any_instance_of(ApiRequest).to receive(:host).and_return "example.com"
         allow_any_instance_of(ApiRequest).to receive(:parameters).and_return []
+        allow_any_instance_of(ApiRequest).to receive(:configure_auth)
         expect { ApiRequest.new.response }.to raise_error(RuntimeError)
       end
-      it "returns an error for missing query" do
-        # mock in path and parameters
+      it "returns an error for missing parameters" do
         allow_any_instance_of(ApiRequest).to receive(:host).and_return "example.com"
         allow_any_instance_of(ApiRequest).to receive(:path).and_return "/path"
+        allow_any_instance_of(ApiRequest).to receive(:configure_auth)
+        expect { ApiRequest.new.response }.to raise_error(RuntimeError)
+      end
+      it "returns an error for missing configure_auth" do
+        allow_any_instance_of(ApiRequest).to receive(:host).and_return "example.com"
+        allow_any_instance_of(ApiRequest).to receive(:path).and_return "/path"
+        allow_any_instance_of(ApiRequest).to receive(:parameters).and_return []
         expect { ApiRequest.new.response }.to raise_error(RuntimeError)
       end
     end

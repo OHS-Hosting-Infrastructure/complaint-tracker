@@ -8,13 +8,15 @@ RSpec.feature "Associating TTA Activity Report", type: :feature do
       uid: "request.spec@test.com"
     }.with_indifferent_access
   }
+  let(:access_token_creds) {
+    {
+      token: "access-token",
+      refresh_token: "refresh-token",
+      expires_at: 1.hour.from_now.to_i,
+      expires: true
+    }
+  }
   let(:test_display_id) { "Test-Display-ID" }
-
-  before do
-    # There are some other session requests before getting to session["user"]
-    allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[])
-    allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("user").and_return user
-  end
 
   let!(:complaint) { Complaint.new(FakeIssues.instance.json[:data].first) }
 
@@ -41,6 +43,41 @@ RSpec.feature "Associating TTA Activity Report", type: :feature do
         expect(page).to_not have_content test_display_id
       end
     end
+
+    context "error handling" do
+      # In this context, this shared before block fills in the page and clicks submit.
+      # Each sub-context defines a `test_display_id` that is used to trigger each individual error message
+      # and verifies that it is seen
+      before do
+        click_button "Link TTA Activity Report"
+        fill_in "TTA report display ID", with: test_display_id
+        click_button "Link"
+      end
+
+      context "unauthorized user" do
+        let(:test_display_id) { "R01-AR-403" }
+
+        it "displays an appropriate error message" do
+          expect(page).to have_content "You do not have permission to access this activity report."
+        end
+      end
+
+      context "missing report" do
+        let(:test_display_id) { "R01-AR-404" }
+
+        it "displays an appropriate error message" do
+          expect(page).to have_content "This number doesn't match any existing activity reports. Please double-check the number."
+        end
+      end
+
+      context "generic connection issue" do
+        let(:test_display_id) { "R01-AR-401" }
+
+        it "displays an appropriate error message" do
+          expect(page).to have_content "We're unable to look up reports in TTA Smart Hub right now. Please try again later."
+        end
+      end
+    end
   end
 
   context "the complaint has an associated TTA report", js: true do
@@ -61,8 +98,8 @@ RSpec.feature "Associating TTA Activity Report", type: :feature do
         expect(page).to have_content "TTA Activity:\n#{test_display_id}\n"
 
         find_button("Edit Display ID").click
-        # fill_in "TTA report display ID", with: "RO2-AR-14532"
-        page.find("##{test_display_id}").fill_in with: "RO2-AR-14532"
+        # fill_in "TTA report display ID", with: "R02-AR-14532"
+        page.find("##{test_display_id}").fill_in with: "R02-AR-14532"
         click_button "Save"
 
         expect(page).to_not have_content "TTA Activity:\n#{test_display_id}\n"

@@ -49,7 +49,7 @@ HSES Authentication can be bypassed depending on the value of `RAILS_ENV`
 
 | Environment | HSES Bypass |
 | ----------- | ----------- |
-| test | set `CT_BYPASS_AUTH` environment variable to `true` |
+| test | always bypassed |
 | development | set `CT_BYPASS_AUTH` environment variable to `true` |
 | ci | always bypassed |
 | production | never bypassed |
