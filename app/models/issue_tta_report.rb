@@ -11,6 +11,14 @@ class IssueTtaReport < ApplicationRecord
 
   attr_accessor :access_token
 
+  def ttahub_url
+    if activity_data[:success]
+      activity_data[:body][:data][:links][:html]
+    else
+      fail Api::Error.new(activity_data)
+    end
+  end
+
   private
 
   def api_call_succeeded

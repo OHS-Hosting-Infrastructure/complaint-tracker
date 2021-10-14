@@ -41,6 +41,10 @@ class Event
   def formatted_date
     date.strftime("%m/%d/%Y")
   end
+
+  def timeline_partial
+    "generic_timeline_event"
+  end
 end
 
 class Timeline::ComplaintEvent < Event
@@ -55,12 +59,22 @@ class Timeline::ComplaintEvent < Event
 end
 
 class Timeline::TtaEvent < Event
+  include ActionView::Helpers::TagHelper
+
   def initialize(issue_tta_report)
     @name = issue_tta_report.tta_report_display_id
     @date = issue_tta_report.start_date
+    @issue_tta_report = issue_tta_report
   end
 
-  def label
-    "TTA Activity: #{name}"
+  def hub_link
+    # using content_tag for the link will properly escape any dangerous characters that sneak into name or ttahub_url
+    content_tag(:a, name, class: "usa-link", href: @issue_tta_report.ttahub_url, target: "_blank")
+  rescue Api::Error
+    name
+  end
+
+  def timeline_partial
+    "tta_timeline_event"
   end
 end

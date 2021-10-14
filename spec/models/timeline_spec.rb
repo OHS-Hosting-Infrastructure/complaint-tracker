@@ -69,7 +69,7 @@ RSpec.describe Timeline do
           second_report = timeline.events.last
 
           expect(timeline.events.count).to be 2
-          expect(first_report.date > second_report.date).to be true
+          expect(first_report.date >= second_report.date).to be true
         end
       end
     end
@@ -120,31 +120,38 @@ RSpec.describe Timeline do
     let(:date) { 1.day.ago.strftime("%F") }
     let(:name) { "reopenedDate" }
     let(:event_param) { [name, date] }
+    subject { Timeline::ComplaintEvent.new(event_param) }
 
     describe "#init" do
-      it "assigns attr_readers" do
-        event = Timeline::ComplaintEvent.new(event_param)
-        expect(event.name).to eq name
-        expect(event.date).to eq Date.parse(date)
+      it "assigns attr_readers inherited from Timeline::Event" do
+        expect(subject.name).to eq name
+        expect(subject.date).to eq Date.parse(date)
       end
     end
 
     describe "#label" do
       it "returns the correct label" do
-        event = Timeline::ComplaintEvent.new(event_param)
-        expect(event.label).to eq "Reopened"
+        expect(subject.label).to eq "Reopened"
       end
 
-      it "falls back to Updated if there is no correct label" do
-        event = Timeline::ComplaintEvent.new(["surpriseEvent", date])
-        expect(event.label).to eq "Updated"
+      context "with missing label" do
+        let(:event_param) { ["surpriseEvent", date] }
+
+        it "falls back to Updated" do
+          expect(subject.label).to eq "Updated"
+        end
+      end
+    end
+
+    describe "#timeline_partial" do
+      it "returns the generic content partial" do
+        expect(subject.timeline_partial).to eq "generic_timeline_event"
       end
     end
 
     describe "#formatted_date" do
       it "returns the date formatted '%m/%d/%Y'" do
-        event = Timeline::ComplaintEvent.new(event_param)
-        expect(event.formatted_date).to eq Date.parse(date).strftime("%m/%d/%Y")
+        expect(subject.formatted_date).to eq Date.parse(date).strftime("%m/%d/%Y")
       end
     end
   end
@@ -154,26 +161,40 @@ RSpec.describe Timeline do
     let(:display_id) { "Test-Display-Name" }
     # just setting the start_date manually because we aren't triggering the before_validation callback
     let(:event_param) { IssueTtaReport.new tta_report_display_id: display_id, start_date: date }
+    subject { Timeline::TtaEvent.new(event_param) }
 
     describe "#init" do
-      it "assigns attr_readers" do
-        event = Timeline::TtaEvent.new(event_param)
-        expect(event.name).to eq display_id
-        expect(event.date).to eq Date.parse(date)
+      it "assigns attr_readers inherited from Timeline::Event" do
+        expect(subject.name).to eq display_id
+        expect(subject.date).to eq Date.parse(date)
       end
     end
 
-    describe "#label" do
-      it "returns the correct label" do
-        event = Timeline::TtaEvent.new(event_param)
-        expect(event.label).to eq "TTA Activity: #{display_id}"
+    describe "#hub_link" do
+      it "returns a link that opens in a new tab" do
+        expect(subject.hub_link).to match /\A<a .*>#{display_id}<\/a>\z/
+        expect(subject.hub_link).to include 'target="_blank"'
+      end
+
+      context "authorization error loading TTA API" do
+        # display id will trigger a 403 error
+        let(:event_param) { IssueTtaReport.new tta_report_display_id: "R01-AR-403" }
+
+        it "returns just the display ID with no link" do
+          expect(subject.hub_link).to eq "R01-AR-403"
+        end
+      end
+    end
+
+    describe "#timeline_partial" do
+      it "returns the tta event timeline partial" do
+        expect(subject.timeline_partial).to eq "tta_timeline_event"
       end
     end
 
     describe "#formatted_date" do
       it "returns the date formatted '%m/%d/%Y'" do
-        event = Timeline::TtaEvent.new(event_param)
-        expect(event.formatted_date).to eq Date.parse(date).strftime("%m/%d/%Y")
+        expect(subject.formatted_date).to eq Date.parse(date).strftime("%m/%d/%Y")
       end
     end
   end

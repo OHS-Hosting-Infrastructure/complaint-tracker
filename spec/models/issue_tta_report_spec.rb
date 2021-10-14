@@ -1,14 +1,15 @@
 require "rails_helper"
 
 RSpec.describe IssueTtaReport, type: :model do
+  subject do
+    # models will retrieve the tta_report_id from FakeData based on the display ID
+    described_class.new(
+      issue_id: "ISSUE_ID",
+      tta_report_display_id: "R14-AR-200"
+    )
+  end
+
   describe "validations" do
-    subject do
-      # models will retrieve the tta_report_id from FakeData based on the display ID
-      described_class.new(
-        issue_id: "ISSUE_ID",
-        tta_report_display_id: "R14-AR-200"
-      )
-    end
     it "is valid with valid attributes" do
       expect(subject).to be_valid
     end
@@ -38,6 +39,18 @@ RSpec.describe IssueTtaReport, type: :model do
     it "saves the start date" do
       subject.valid? # trigger the before_validation callback
       expect(subject.start_date).to be_a(Date)
+    end
+  end
+
+  describe "#ttahub_url" do
+    it "returns the URL to view the report in TTA Hub" do
+      expect(subject.ttahub_url).to match %r{https://ttahub.ohs.acf.hhs.gov/activity-reports/view/\d+}
+    end
+
+    it "raises an error when there is an error with the api" do
+      # This displa ID will trigger a 403 error in the TTA Hub API
+      subject.tta_report_display_id = "R14-AR-403"
+      expect { subject.ttahub_url }.to raise_error(Api::Error)
     end
   end
 end
