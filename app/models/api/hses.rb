@@ -44,7 +44,7 @@ class Api::Hses::Issues < ApiRequest
   end
 
   def request
-    response[:success] ? response[:body] : {}
+    response.body
   end
 
   private
