@@ -42,7 +42,7 @@ class Api::Hses::Issues < ApiRequest
   end
 
   def request
-    response.body
+    response
   end
 
   private
