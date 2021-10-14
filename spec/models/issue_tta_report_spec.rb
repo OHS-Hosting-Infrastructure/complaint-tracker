@@ -53,4 +53,48 @@ RSpec.describe IssueTtaReport, type: :model do
       expect { subject.ttahub_url }.to raise_error(Api::Error)
     end
   end
+
+  describe "#api_call_succeeded?" do
+    context "for an unauthorized report" do
+      subject do
+        # This displa ID will trigger a 403 error in the TTA Hub API
+        described_class.new(
+          issue_id: "ISSUE_ID",
+          tta_report_display_id: "R14-AR-403"
+        )
+      end
+
+      it "returns false" do
+        expect(subject.api_call_succeeded?).to be false
+      end
+    end
+
+    it "returns true" do
+      expect(subject.api_call_succeeded?).to be true
+    end
+  end
+
+  describe "#topics" do
+    it "returns an array of topics" do
+      expect(subject.topics).to be_a(Array)
+    end
+
+    it "raises an error when there is an error with the api" do
+      # This displa ID will trigger a 403 error in the TTA Hub API
+      subject.tta_report_display_id = "R14-AR-403"
+      expect { subject.topics }.to raise_error(Api::Error)
+    end
+  end
+
+  describe "#author_name" do
+    it "returns the author's name" do
+      expect(subject.author_name).to be_a(String)
+    end
+
+    it "raises an error when there is an error with the api" do
+      # This displa ID will trigger a 403 error in the TTA Hub API
+      subject.tta_report_display_id = "R14-AR-403"
+      expect { subject.author_name }.to raise_error(Api::Error)
+    end
+  end
 end

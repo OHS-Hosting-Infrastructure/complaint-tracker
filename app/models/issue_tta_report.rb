@@ -11,20 +11,40 @@ class IssueTtaReport < ApplicationRecord
 
   attr_accessor :access_token
 
+  def api_call_succeeded?
+    activity_data.succeeded?
+  end
+
   def ttahub_url
-    if activity_data[:success]
-      activity_data[:body][:data][:links][:html]
+    get_api_data_field :links, :html
+  end
+
+  def topics
+    get_api_data_field :attributes, :topics
+  end
+
+  def author_name
+    get_api_data_field :attributes, :author, :name
+  end
+
+  def api_error_message
+    tta_link_error_message unless api_call_succeeded?
+  end
+
+  private
+
+  def get_api_data_field(*path)
+    if api_call_succeeded?
+      activity_data.data.dig(*path)
     else
       fail Api::Error.new(activity_data)
     end
   end
 
-  private
-
   def api_call_succeeded
     # do not make the api call here, if @activity_data is nil then we didn't attempt to make a call
     if !@activity_data.nil? && @activity_data.failed?
-      errors.add(:base, tta_link_error_message(@activity_data.code))
+      errors.add(:base, tta_link_error_message)
     end
   end
 
@@ -33,7 +53,7 @@ class IssueTtaReport < ApplicationRecord
   end
 
   def retrieve_tta_report_details
-    if tta_report_display_id_changed? && activity_data.succeeded?
+    if tta_report_display_id_changed? && api_call_succeeded?
       activity_report_details = activity_data.data
       self.tta_report_id = activity_report_details[:id]
       self.start_date = activity_report_details[:attributes][:startDate]
@@ -48,8 +68,8 @@ class IssueTtaReport < ApplicationRecord
     ApiDelegator.use("tta", "activity_report", display_id: tta_report_display_id, access_token: access_token)
   end
 
-  def tta_link_error_message(response_code)
-    case response_code
+  def tta_link_error_message
+    case @activity_data[:code]
     when 403
       "You do not have permission to access this activity report."
     when 404

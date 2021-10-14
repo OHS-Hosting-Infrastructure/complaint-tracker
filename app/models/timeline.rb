@@ -61,6 +61,9 @@ end
 class Timeline::TtaEvent < Event
   include ActionView::Helpers::TagHelper
 
+  attr_reader :issue_tta_report
+  delegate :api_call_succeeded?, :api_error_message, :author_name, to: :issue_tta_report
+
   def initialize(issue_tta_report)
     @name = issue_tta_report.tta_report_display_id
     @date = issue_tta_report.start_date
@@ -69,9 +72,13 @@ class Timeline::TtaEvent < Event
 
   def hub_link
     # using content_tag for the link will properly escape any dangerous characters that sneak into name or ttahub_url
-    content_tag(:a, name, class: "usa-link", href: @issue_tta_report.ttahub_url, target: "_blank")
+    content_tag(:a, name, class: "usa-link", href: issue_tta_report.ttahub_url, target: "_blank")
   rescue Api::Error
     name
+  end
+
+  def topics_string
+    issue_tta_report.topics.join(", ")
   end
 
   def timeline_partial
