@@ -5,14 +5,6 @@ class ApiResponse
     @response_body = response.body
   end
 
-  def succeeded?
-    code == 200
-  end
-
-  def failed?
-    !succeeded?
-  end
-
   def body
     succeeded? ? parse_body : {}
   end
@@ -23,6 +15,14 @@ class ApiResponse
 
   def error_object
     failed? ? parse_body : {}
+  end
+
+  def failed?
+    !succeeded?
+  end
+
+  def succeeded?
+    code == 200
   end
 
   private

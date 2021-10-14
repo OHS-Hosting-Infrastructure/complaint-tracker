@@ -27,18 +27,6 @@ RSpec.describe ApiResponse do
       end
     end
 
-    describe "#succeeded?" do
-      it "returns true" do
-        expect(subject.succeeded?).to be true
-      end
-    end
-
-    describe "#failed?" do
-      it "returns false" do
-        expect(subject.failed?).to be false
-      end
-    end
-
     describe "#body" do
       it "returns the parsed body" do
         expect(subject.body).to eq response_body.with_indifferent_access
@@ -48,6 +36,18 @@ RSpec.describe ApiResponse do
     describe "#data" do
       it "returns just the data part of the body" do
         expect(subject.data).to eq response_body[:data].with_indifferent_access
+      end
+    end
+
+    describe "#failed?" do
+      it "returns false" do
+        expect(subject.failed?).to be false
+      end
+    end
+
+    describe "#succeeded?" do
+      it "returns true" do
+        expect(subject.succeeded?).to be true
       end
     end
   end
@@ -67,18 +67,6 @@ RSpec.describe ApiResponse do
         end
       end
 
-      describe "#succeeded?" do
-        it "returns false" do
-          expect(subject.succeeded?).to be false
-        end
-      end
-
-      describe "#failed?" do
-        it "returns true" do
-          expect(subject.failed?).to be true
-        end
-      end
-
       describe "#body" do
         it "returns an empty hash" do
           expect(subject.body).to eq({})
@@ -88,6 +76,18 @@ RSpec.describe ApiResponse do
       describe "#data" do
         it "returns an empty hash" do
           expect(subject.data).to eq({})
+        end
+      end
+
+      describe "#failed?" do
+        it "returns true" do
+          expect(subject.failed?).to be true
+        end
+      end
+
+      describe "#succeeded?" do
+        it "returns false" do
+          expect(subject.succeeded?).to be false
         end
       end
     end
@@ -106,18 +106,6 @@ RSpec.describe ApiResponse do
         end
       end
 
-      describe "#succeeded?" do
-        it "returns false" do
-          expect(subject.succeeded?).to be false
-        end
-      end
-
-      describe "#failed?" do
-        it "returns true" do
-          expect(subject.failed?).to be true
-        end
-      end
-
       describe "#body" do
         it "returns an empty hash" do
           expect(subject.body).to eq({})
@@ -127,6 +115,18 @@ RSpec.describe ApiResponse do
       describe "#data" do
         it "returns an empty hash" do
           expect(subject.data).to eq({})
+        end
+      end
+
+      describe "#failed?" do
+        it "returns true" do
+          expect(subject.failed?).to be true
+        end
+      end
+
+      describe "#succeeded?" do
+        it "returns false" do
+          expect(subject.succeeded?).to be false
         end
       end
     end
