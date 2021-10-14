@@ -188,7 +188,7 @@ RSpec.describe Timeline do
 
     describe "#topics_string" do
       it "joins the issue topics together with commas" do
-        expect(subject.topics_string.split(", ")).to eq event_param.topics
+        expect(subject.topics_string.split(", ")).to eq event_param.tta_activity_report.topics
       end
     end
 
