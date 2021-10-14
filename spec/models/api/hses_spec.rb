@@ -14,8 +14,8 @@ RSpec.describe Api::Hses do
 
     describe "#request" do
       it "returns a wrapper with data" do
-        expect(issue.request[:data]).to be_a Hash
-        expect(issue.request[:data][:type]).to eq "issues"
+        expect(issue.request.data).to be_a Hash
+        expect(issue.request.data[:type]).to eq "issues"
       end
     end
   end
@@ -65,7 +65,7 @@ RSpec.describe Api::Hses do
           expect_any_instance_of(Net::HTTP).to receive(:start).and_return response
           expect(response).to receive(:body).and_return('{"meta":{},"data":[]}')
 
-          expect(issues.request).to match({"meta" => {}, "data" => []})
+          expect(issues.request.body).to match({"meta" => {}, "data" => []})
         end
 
         it "sends query parameters for type, username, and pagination" do

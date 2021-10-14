@@ -47,7 +47,8 @@ RSpec.describe "Complaints", type: :request do
         let(:complaint) { Api::FakeData::Complaint.new }
 
         it "includes the alert" do
-          allow_any_instance_of(Api::FakeData::Hses::Issues).to receive(:request).and_return data: [complaint.data]
+          allow_any_instance_of(ApiResponse).to receive(:data).and_return [complaint.data]
+
           get complaints_path
 
           expect(response.body).to include '<table class="usa-table" aria-describedby="#caption" >'
@@ -56,7 +57,7 @@ RSpec.describe "Complaints", type: :request do
 
       describe "User has no complaints" do
         it "includes the alert" do
-          allow_any_instance_of(Api::FakeData::Hses::Issues).to receive(:request).and_return data: []
+          allow_any_instance_of(ApiResponse).to receive(:data).and_return []
           get complaints_path
           expect(response.body).to include '<h3 class="usa-alert__heading">No issues found</h3>'
         end
@@ -65,7 +66,7 @@ RSpec.describe "Complaints", type: :request do
   end
 
   describe "GET /complaint/:id" do
-    let(:complaint_id) { FakeIssues.instance.json[:data].first[:id] }
+    let(:complaint_id) { FakeIssues.instance.data.first[:id] }
 
     it "returns a 200 status" do
       get complaint_path(id: complaint_id)
