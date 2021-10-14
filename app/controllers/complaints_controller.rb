@@ -23,8 +23,7 @@ class ComplaintsController < ApplicationController
     if params[:id] == "pa11y-id"
       params[:id] = ApiDelegator
         .use("hses", "issues", {user: session["user"]})
-        .request[:data]
-        .first[:id]
+        .request.data.first[:id]
     end
   end
 end
