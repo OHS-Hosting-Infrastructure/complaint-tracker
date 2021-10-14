@@ -14,7 +14,7 @@ class ApiResponse
   end
 
   def body
-    failed? ? {} : JSON.parse(@response_body).with_indifferent_access
+    succeeded? ? JSON.parse(@response_body).with_indifferent_access : {}
   end
 
   def data

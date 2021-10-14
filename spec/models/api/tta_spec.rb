@@ -47,7 +47,7 @@ RSpec.describe Api::Tta do
           expect(subject.request.body).to eq({})
         end
 
-        it "has a code of 500" do
+        it "has a code of 404" do
           expect(subject.request.code).to eq 404
         end
 

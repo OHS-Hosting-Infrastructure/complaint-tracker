@@ -3,7 +3,9 @@ require "fake_issues"
 
 RSpec.describe ApiResponse do
   context "a successful response" do
-    let(:params) { Net::HTTPSuccess.new(1.1, "200", "OK") }
+    let(:http_obj) { Net::HTTPSuccess.new(1.1, "200", "OK") }
+    subject { ApiResponse.new(http_obj) }
+
     let(:response_body) do
       {
         data: {
@@ -14,10 +16,9 @@ RSpec.describe ApiResponse do
         }
       }
     end
-    let(:subject) { ApiResponse.new(params) }
 
     before do
-      expect(params).to receive(:body).and_return(JSON.generate(response_body))
+      expect(http_obj).to receive(:body).and_return(JSON.generate(response_body))
     end
 
     describe "#initialize" do
@@ -53,11 +54,11 @@ RSpec.describe ApiResponse do
 
   context "an unsuccessful response" do
     context "404 not found" do
-      let(:params) { Net::HTTPNotFound.new(1.1, "404", "Not Found") }
-      let(:subject) { ApiResponse.new(params) }
+      let(:http_obj) { Net::HTTPNotFound.new(1.1, "404", "Not Found") }
+      let(:subject) { ApiResponse.new(http_obj) }
 
       before do
-        expect(params).to receive(:body)
+        expect(http_obj).to receive(:body)
       end
 
       describe "#initialize" do
@@ -92,11 +93,11 @@ RSpec.describe ApiResponse do
     end
 
     context "500 server error" do
-      let(:params) { Net::HTTPNotFound.new(1.1, "500", "Internal Server Error") }
-      let(:subject) { ApiResponse.new(params) }
+      let(:http_obj) { Net::HTTPNotFound.new(1.1, "500", "Internal Server Error") }
+      let(:subject) { ApiResponse.new(http_obj) }
 
       before do
-        expect(params).to receive(:body)
+        expect(http_obj).to receive(:body)
       end
 
       describe "#initialize" do
