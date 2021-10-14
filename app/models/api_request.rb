@@ -33,9 +33,13 @@ class ApiRequest
     raise "Please define a path method in #{self.class}"
   end
 
-  # Inheriting class defines
+  # Inheriting class defines, should return hash
+  def parameters
+    raise "Please define a parameters method in #{self.class}"
+  end
+
   def query
-    raise "Please define a query method in #{self.class}"
+    URI.encode_www_form(parameters)
   end
 
   # Inheriting class defines

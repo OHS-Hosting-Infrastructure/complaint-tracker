@@ -44,7 +44,7 @@ class Api::Tta::ActivityReport < ApiRequest
     "/api/v1/activity-reports/display/#{display_id}"
   end
 
-  def query
-    ""
+  def parameters
+    {}
   end
 end
