@@ -8,6 +8,7 @@ class GranteesController < ApplicationController
 
   # GET /grantees/1 or /grantees/1.json
   def show
+    render layout: "details"
   end
 
   # GET /grantees/new
@@ -60,7 +61,9 @@ class GranteesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_grantee
-    @grantee = Grantee.find(params[:id])
+    @grantee = Grantee.new(
+      ApiDelegator.use("hses", "issue", {id: params[:id]}).request[:data]
+    )
   end
 
   # Only allow a list of trusted parameters through.
