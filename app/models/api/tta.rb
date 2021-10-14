@@ -32,8 +32,8 @@ class Api::Tta::ActivityReport < ApiRequest
       TTAHub #{path}:
       #{JSON.pretty_generate(response)}
     EODM
-    if !response[:success]
-      Rails.logger.error "TTA Hub call to #{path} responded with #{response[:code]}"
+    if response.failed?
+      Rails.logger.error "TTA Hub call to #{path} responded with #{response.code}"
     end
     response
   end

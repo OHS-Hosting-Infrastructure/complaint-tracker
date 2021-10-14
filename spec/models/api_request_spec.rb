@@ -10,8 +10,9 @@ RSpec.describe ApiRequest do
     end
 
     describe "with valid host, path, and configure_auth" do
+      let(:api) { ApiRequest.new }
+
       before do
-        @api = ApiRequest.new
         # stub the Net::HTTP request / response
         success = Net::HTTPSuccess.new(1.0, "200", "OK")
         expect_any_instance_of(Net::HTTP)
@@ -20,19 +21,23 @@ RSpec.describe ApiRequest do
         expect(success).to receive(:body).and_return('{"meta":{},"data":[]}')
 
         # mock in host, path, and configure auth
-        allow(@api).to receive(:host).and_return "example.com"
-        allow(@api).to receive(:path).and_return "/path"
-        allow(@api).to receive(:configure_auth)
+        allow(api).to receive(:host).and_return "example.com"
+        allow(api).to receive(:path).and_return "/path"
+        allow(api).to receive(:configure_auth)
       end
 
       it "returns an object with a code and a body" do
-        allow(@api).to receive(:parameters).and_return []
-        res = @api.response
-        expect(res).to match({success: true, code: 200, body: {"meta" => {}, "data" => []}})
+        allow(api).to receive(:parameters).and_return []
+        res = api.response
+
+        expect(res.code).to eq 200
+        expect(res.body).to eq("data" => [], "meta" => {})
+        expect(res.data).to eq([])
+        expect(res.failed?).to be false
       end
 
       it "correctly encodes the query parameters" do
-        allow(@api)
+        allow(api)
           .to receive(:parameters)
           .and_return({one: 1, two: ["a", "b"]})
         expect(URI::HTTPS)
@@ -43,7 +48,7 @@ RSpec.describe ApiRequest do
             port: 443,
             query: "one=1&two=a&two=b"
           }).and_call_original
-        @api.response
+        api.response
       end
     end
 

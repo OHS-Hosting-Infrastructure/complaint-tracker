@@ -9,19 +9,29 @@ RSpec.describe Api::Tta do
 
     describe "#request" do
       context "successful response" do
+        let(:response_data) do
+          {data: {
+            grantee: "Some Grantee"
+          }}
+        end
+
         before do
           # stub the net/http request / response
           response = Net::HTTPSuccess.new(1.1, "200", "OK")
           expect_any_instance_of(Net::HTTP).to receive(:start).and_return response
-          expect(response).to receive(:body).and_return('{"data":{}}')
+          expect(response).to receive(:body).and_return(JSON.generate(response_data))
         end
 
-        it "returns a Ruby object with success, code, and body keys" do
-          expect(subject.request).to match({
-            success: true,
-            code: 200,
-            body: {data: {}}
-          })
+        it "has a 200 code" do
+          expect(subject.request.code).to be 200
+        end
+
+        it "returns the data" do
+          expect(subject.request.data).to eq response_data[:data].with_indifferent_access
+        end
+
+        it "indicates it has not failed" do
+          expect(subject.request.failed?).to be false
         end
       end
 
@@ -33,16 +43,16 @@ RSpec.describe Api::Tta do
           expect(response).to receive(:body).and_return('{"status":"404", "title":"Not Found", "detail":""}')
         end
 
-        it "returns the error message and metadata" do
-          expect(subject.request).to match({
-            success: false,
-            code: 404,
-            body: {
-              status: "404",
-              title: "Not Found",
-              detail: ""
-            }
-          })
+        it "returns an empty hash as the body" do
+          expect(subject.request.body).to eq({})
+        end
+
+        it "has a code of 500" do
+          expect(subject.request.code).to eq 404
+        end
+
+        it "indicates it is a failure" do
+          expect(subject.request.failed?).to be true
         end
       end
 
@@ -51,15 +61,20 @@ RSpec.describe Api::Tta do
           # stub the net/http request / response
           response = Net::HTTPNotFound.new(1.1, "500", "Internal Server Error")
           expect_any_instance_of(Net::HTTP).to receive(:start).and_return response
-          expect(response).to receive(:body).twice.and_return("")
+          expect(response).to receive(:body).and_return("")
         end
 
-        it "returns the error message and metadata" do
-          expect(subject.request).to match({
-            success: false,
-            code: 500,
-            body: {}
-          })
+        it "returns an empty hash as the body and data" do
+          expect(subject.request.body).to eq({})
+          expect(subject.request.data).to eq({})
+        end
+
+        it "has a code of 500" do
+          expect(subject.request.code).to eq 500
+        end
+
+        it "indicates it is a failure" do
+          expect(subject.request.failed?).to be true
         end
       end
     end
