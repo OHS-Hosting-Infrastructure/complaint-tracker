@@ -5,12 +5,12 @@ class ComplaintsController < ApplicationController
 
   def index
     api = ApiDelegator.use("hses", "issues", {user: session["user"]})
-    @complaints = api.request[:data]
+    @complaints = api.request.data
   end
 
   def show
     @complaint = Complaint.new(
-      ApiDelegator.use("hses", "issue", {id: params[:id]}).request[:data]
+      ApiDelegator.use("hses", "issue", {id: params[:id]}).request.data
     )
     @issue_tta_reports = IssueTtaReport.where(issue_id: params[:id]).order(:start_date)
     @timeline = Timeline.new(@complaint.attributes, @issue_tta_reports)

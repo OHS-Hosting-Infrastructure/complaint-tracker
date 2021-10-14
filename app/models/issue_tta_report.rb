@@ -15,8 +15,8 @@ class IssueTtaReport < ApplicationRecord
 
   def api_call_succeeded
     # do not make the api call here, if @activity_data is nil then we didn't attempt to make a call
-    if !@activity_data.nil? && !@activity_data[:success]
-      errors.add(:base, tta_link_error_message(@activity_data[:code]))
+    if !@activity_data.nil? && @activity_data.failed?
+      errors.add(:base, tta_link_error_message(@activity_data.code))
     end
   end
 
@@ -25,8 +25,8 @@ class IssueTtaReport < ApplicationRecord
   end
 
   def retrieve_tta_report_details
-    if tta_report_display_id_changed? && activity_data[:success]
-      activity_report_details = activity_data[:body][:data]
+    if tta_report_display_id_changed? && activity_data.succeeded?
+      activity_report_details = activity_data.data
       self.tta_report_id = activity_report_details[:id]
       self.start_date = activity_report_details[:attributes][:startDate]
     end

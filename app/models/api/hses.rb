@@ -26,10 +26,8 @@ class Api::Hses::Issue < ApiRequest
 
   # TODO update this with real data once we have /issue endpoint
   def request
-    fake_issue = FakeIssues.instance.json[:data].find { |c| c[:id] == id }
-    details_wrapper.merge(
-      data: (fake_issue || FakeIssues.instance.json[:data].last)
-    )
+    fake_issue = FakeIssues.instance.data.find { |c| c[:id] == id }
+    details_response(fake_issue || FakeIssues.instance.data.last)
   end
 end
 

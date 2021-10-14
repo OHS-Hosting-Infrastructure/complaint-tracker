@@ -10,20 +10,16 @@ RSpec.describe Api::FakeData::Tta do
         let(:display_id) { "RO4-VQ-14661" }
 
         it "returns an activity report with the right display_id" do
-          expect(subject.request[:body][:data][:attributes][:displayId]).to eq display_id
+          expect(subject.request.data[:attributes][:displayId]).to eq display_id
         end
 
         it "wraps the activity report in a detail wrapper" do
-          expect(subject.request).to match({
-            success: true,
-            code: 200,
-            body: {
-              data: {
-                id: String,
-                type: "activityReports",
-                attributes: Hash,
-                links: Hash
-              }
+          expect(subject.request.body).to match({
+            data: {
+              id: String,
+              type: "activityReports",
+              attributes: Hash,
+              links: Hash
             }
           })
         end
@@ -33,14 +29,13 @@ RSpec.describe Api::FakeData::Tta do
         let(:display_id) { "R01-AR-401" }
 
         it "returns the error message and metadata" do
-          expect(subject.request).to match({
-            success: false,
-            code: 401,
-            body: {
-              status: "401",
-              title: "Unauthenticated User",
-              detail: "User token is missing or did not map to a known user"
-            }
+          response = subject.request
+          expect(response).to be_failed
+          expect(response.code).to eq 401
+          expect(response.error_object).to match({
+            status: "401",
+            title: "Unauthenticated User",
+            detail: "User token is missing or did not map to a known user"
           })
         end
       end
@@ -49,14 +44,13 @@ RSpec.describe Api::FakeData::Tta do
         let(:display_id) { "R01-AR-403" }
 
         it "returns the error message and metadata" do
-          expect(subject.request).to match({
-            success: false,
-            code: 403,
-            body: {
-              status: "403",
-              title: "Unauthorized User",
-              details: "User does not have the appropriate permissions to view this resource"
-            }
+          response = subject.request
+          expect(response).to be_failed
+          expect(response.code).to eq 403
+          expect(response.error_object).to match({
+            status: "403",
+            title: "Unauthorized User",
+            details: "User does not have the appropriate permissions to view this resource"
           })
         end
       end
@@ -65,14 +59,13 @@ RSpec.describe Api::FakeData::Tta do
         let(:display_id) { "R01-AR-404" }
 
         it "returns the error message and metadata" do
-          expect(subject.request).to match({
-            success: false,
-            code: 404,
-            body: {
-              status: "404",
-              title: "Not Found",
-              details: "Report #{display_id} could not be found"
-            }
+          response = subject.request
+          expect(response).to be_failed
+          expect(response.code).to eq 404
+          expect(response.error_object).to match({
+            status: "404",
+            title: "Not Found",
+            details: "Report #{display_id} could not be found"
           })
         end
       end
@@ -81,11 +74,10 @@ RSpec.describe Api::FakeData::Tta do
         let(:display_id) { "R01-AR-500" }
 
         it "returns a blank body and metadata" do
-          expect(subject.request).to match({
-            success: false,
-            code: 500,
-            body: {}
-          })
+          response = subject.request
+          expect(response).to be_failed
+          expect(response.code).to eq 500
+          expect(response.error_object).to eq({})
         end
       end
     end

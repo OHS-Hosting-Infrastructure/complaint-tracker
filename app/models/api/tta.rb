@@ -1,5 +1,3 @@
-require "fake_api_response_wrapper"
-
 module Api::Tta
   def host
     Rails.configuration.x.tta.api_hostname
