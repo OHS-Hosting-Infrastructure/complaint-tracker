@@ -21,7 +21,7 @@ class Api::FakeData::Hses
   class Issues
     include FakeApiResponseWrapper
 
-    def initialize(user:)
+    def initialize(user:, params: {})
       @username = user["uid"]
     end
 

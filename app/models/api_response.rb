@@ -34,3 +34,22 @@ class ApiResponse
     {}
   end
 end
+
+class ApiResponseCollection < ApiResponse
+  def initialize(response)
+    super
+    @page_limit = 25.to_f
+  end
+
+  def count
+    body.dig(:meta, :itemTotalCount) || 0
+  end
+
+  def data
+    body[:data] || []
+  end
+
+  def page_total
+    @page_total ||= (count.to_i / @page_limit).ceil
+  end
+end

@@ -45,6 +45,10 @@ class Api::Hses::Issues < ApiRequest
     response
   end
 
+  def response_type
+    ApiResponseCollection
+  end
+
   private
 
   def page_offset
