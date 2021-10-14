@@ -1,13 +1,13 @@
 require "api_delegator"
 
 class IssueTtaReport < ApplicationRecord
-  before_validation :retrieve_tta_report_id
+  before_validation :retrieve_tta_report_details
   validates :issue_id, :tta_report_display_id, presence: true
   validates :tta_report_display_id, uniqueness: {scope: :issue_id}
   validate :api_call_succeeded
   # tta_report_id presence validation is skipped if any other errors are found
   # the user cant do much about this anyway since it is derived from the tta_report_display_id
-  validates :tta_report_id, presence: true, if: :errors_blank?
+  validates :tta_report_id, :start_date, presence: true, if: :errors_blank?
 
   attr_accessor :access_token
 
@@ -24,9 +24,11 @@ class IssueTtaReport < ApplicationRecord
     errors.blank?
   end
 
-  def retrieve_tta_report_id
+  def retrieve_tta_report_details
     if tta_report_display_id_changed? && activity_data[:success]
-      self.tta_report_id = activity_data[:body][:data][:id]
+      activity_report_details = activity_data[:body][:data]
+      self.tta_report_id = activity_report_details[:id]
+      self.start_date = activity_report_details[:attributes][:startDate]
     end
   end
 

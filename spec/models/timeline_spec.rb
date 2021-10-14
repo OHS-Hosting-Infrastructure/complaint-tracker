@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe Timeline do
   let(:display_id) { "First-Display-ID" }
   let(:display_id_2) { "Second-Display-ID" }
-  let(:tta_activity_report) { Api::FakeData::ActivityReport.new(display_id: display_id).data }
-  let(:tta_activity_report_2) { Api::FakeData::ActivityReport.new(display_id: display_id_2).data }
+  let(:tta_activity_report) { IssueTtaReport.create tta_report_display_id: display_id, issue_id: "1" }
+  let(:tta_activity_report_2) { IssueTtaReport.create tta_report_display_id: display_id_2, issue_id: "1" }
 
   describe "#events" do
     describe "no complaint attributes" do
@@ -32,7 +32,7 @@ RSpec.describe Timeline do
           second_report = timeline.events.last
 
           expect(timeline.events.count).to be 2
-          expect(first_report.date > second_report.date).to be true
+          expect(first_report.date >= second_report.date).to be true
         end
       end
     end
@@ -152,14 +152,8 @@ RSpec.describe Timeline do
   describe "TtaEvent" do
     let(:date) { 1.day.ago.strftime("%F") }
     let(:display_id) { "Test-Display-Name" }
-    let(:event_param) do
-      {
-        attributes: {
-          displayId: display_id,
-          startDate: date
-        }
-      }
-    end
+    # just setting the start_date manually because we aren't triggering the before_validation callback
+    let(:event_param) { IssueTtaReport.new tta_report_display_id: display_id, start_date: date }
 
     describe "#init" do
       it "assigns attr_readers" do
