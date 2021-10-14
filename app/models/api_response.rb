@@ -5,8 +5,12 @@ class ApiResponse
     @response_body = response.body
   end
 
+  def succeeded?
+    code == 200
+  end
+
   def failed?
-    code != 200
+    !succeeded?
   end
 
   def body
