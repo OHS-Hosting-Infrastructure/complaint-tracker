@@ -32,10 +32,11 @@ RSpec.describe "/grantees", type: :request do
   # end
 
   describe "GET /show" do
-    it "renders a successful response" do
-      grantee = Grantee.create! valid_attributes
-      get grantee_url(grantee)
-      expect(response).to be_successful
+    let(:grant_id) { FakeIssues.instance.json[:data].first[:id] }
+
+    it "returns a 200 status" do
+      get grantee_path(id: grant_id)
+      expect(response).to have_http_status(200)
     end
   end
 
