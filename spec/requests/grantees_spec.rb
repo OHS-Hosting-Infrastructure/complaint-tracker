@@ -32,7 +32,7 @@ RSpec.describe "/grantees", type: :request do
   # end
 
   describe "GET /show" do
-    let(:grant_id) { FakeIssues.instance.json[:data].first[:id] }
+    let(:grant_id) { FakeIssues.instance.data.first[:id] }
 
     it "returns a 200 status" do
       get grantee_path(id: grant_id)
