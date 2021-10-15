@@ -53,7 +53,7 @@ RSpec.describe Complaint do
   end
 
   describe "#overdue?" do
-    before { subject.attributes[:dueDate] = 1.day.ago.iso8601 }
+    before { subject.attributes[:dueDate] = 1.week.ago.iso8601 }
 
     context "due date in past" do
       it "is overdue" do
