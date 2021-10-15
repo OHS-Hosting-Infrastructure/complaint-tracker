@@ -27,7 +27,7 @@ class Complaint
   end
 
   def overdue?
-    due_date? && due_date.past?
+    due_date? && due_date.before?(Date.today)
   end
 
   def relative_due_date_html
