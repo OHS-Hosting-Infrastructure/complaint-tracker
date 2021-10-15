@@ -1,5 +1,6 @@
 require "fake_api_response_wrapper"
 require "fake_issues"
+
 class Api::FakeData::Hses
   def initalize(**)
   end
@@ -13,19 +14,19 @@ class Api::FakeData::Hses
     end
 
     def request
-      details_wrapper.merge(
-        data: FakeIssues.instance.json[:data].find { |c| c[:id] == @id }
-      )
+      details_response(FakeIssues.instance.data.find { |c| c[:id] == @id })
     end
   end
 
   class Issues
+    include FakeApiResponseWrapper
+
     def initialize(user:)
       @username = user["uid"]
     end
 
     def request
-      @issues ||= FakeIssues.instance.json
+      list_response(FakeIssues.instance.data)
     end
   end
 end

@@ -26,30 +26,41 @@ class Api::Hses::Issue < ApiRequest
 
   # TODO update this with real data once we have /issue endpoint
   def request
-    fake_issue = FakeIssues.instance.json[:data].find { |c| c[:id] == id }
-    details_wrapper.merge(
-      data: (fake_issue || FakeIssues.instance.json[:data].last)
-    )
+    fake_issue = FakeIssues.instance.data.find { |c| c[:id] == id }
+    details_response(fake_issue || FakeIssues.instance.data.last)
   end
 end
 
 class Api::Hses::Issues < ApiRequest
   include Api::Hses
-  def initialize(user:)
+
+  PAGE_LIMIT = 25
+
+  def initialize(user:, params: {})
     @username = user["uid"]
+    @page = params[:page] || 1
   end
 
   def request
-    response[:success] ? response[:body] : {}
+    response
   end
 
   private
 
-  def path
-    "/issues-ws/issues"
+  def page_offset
+    (@page.to_i - 1) * PAGE_LIMIT
   end
 
-  def query
-    "username=#{@username}&types=1"
+  def parameters
+    {
+      types: 1,
+      username: @username,
+      offset: page_offset,
+      limit: PAGE_LIMIT
+    }
+  end
+
+  def path
+    "/issues-ws/issues"
   end
 end

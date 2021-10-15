@@ -3,7 +3,7 @@ require "fake_issues"
 require "api_delegator"
 
 RSpec.describe "IssueTtaReports", type: :request do
-  let(:complaint_id) { FakeIssues.instance.json[:data].first[:id] }
+  let(:complaint_id) { FakeIssues.instance.data.first[:id] }
   let(:tta_display_id) { "RO4-VQ-14661" }
   let(:user) {
     {
@@ -99,7 +99,7 @@ RSpec.describe "IssueTtaReports", type: :request do
   describe "DELETE /issue_tta_report/unlink_report/:issue_id" do
     context "with an authorized user" do
       let(:display_report_id) { "DisplayID " }
-      let(:complaint_id) { FakeIssues.instance.json[:data].first[:id] }
+      let(:complaint_id) { FakeIssues.instance.data.first[:id] }
       let!(:issue_tta_report) do
         IssueTtaReport.create(
           issue_id: complaint_id,

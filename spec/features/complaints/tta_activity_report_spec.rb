@@ -18,7 +18,7 @@ RSpec.feature "Associating TTA Activity Report", type: :feature do
   }
   let(:test_display_id) { "Test-Display-ID" }
 
-  let!(:complaint) { Complaint.new(FakeIssues.instance.json[:data].first) }
+  let!(:complaint) { Complaint.new(FakeIssues.instance.data.first) }
 
   context "the complaint does not have an associated TTA report", js: true do
     before do

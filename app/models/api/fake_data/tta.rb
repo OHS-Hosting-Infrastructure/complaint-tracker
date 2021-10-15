@@ -15,49 +15,27 @@ class Api::FakeData::Tta
     def request
       case display_id
       when /-401\z/
-        {
-          success: false,
-          code: 401,
-          body: {
-            status: "401",
-            title: "Unauthenticated User",
-            detail: "User token is missing or did not map to a known user"
-          }
-        }
+        other_response(401, {
+          status: "401",
+          title: "Unauthenticated User",
+          detail: "User token is missing or did not map to a known user"
+        }.to_json)
       when /-403\z/
-        {
-          success: false,
-          code: 403,
-          body: {
-            status: "403",
-            title: "Unauthorized User",
-            details: "User does not have the appropriate permissions to view this resource"
-          }
-        }
+        other_response(403, {
+          status: "403",
+          title: "Unauthorized User",
+          details: "User does not have the appropriate permissions to view this resource"
+        }.to_json)
       when /-404\z/
-        {
-          success: false,
-          code: 404,
-          body: {
-            status: "404",
-            title: "Not Found",
-            details: "Report #{display_id} could not be found"
-          }
-        }
+        other_response(404, {
+          status: "404",
+          title: "Not Found",
+          details: "Report #{display_id} could not be found"
+        }.to_json)
       when /-500\z/
-        {
-          success: false,
-          code: 500,
-          body: {}
-        }
+        other_response(500, "")
       else
-        {
-          success: true,
-          code: 200,
-          body: details_wrapper.merge(
-            data: Api::FakeData::ActivityReport.new(display_id: display_id).data
-          )
-        }
+        details_response(Api::FakeData::ActivityReport.new(display_id: display_id).data)
       end
     end
   end

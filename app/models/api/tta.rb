@@ -1,5 +1,3 @@
-require "fake_api_response_wrapper"
-
 module Api::Tta
   def host
     Rails.configuration.x.tta.api_hostname
@@ -32,8 +30,8 @@ class Api::Tta::ActivityReport < ApiRequest
       TTAHub #{path}:
       #{JSON.pretty_generate(response)}
     EODM
-    if !response[:success]
-      Rails.logger.error "TTA Hub call to #{path} responded with #{response[:code]}"
+    if response.failed?
+      Rails.logger.error "TTA Hub call to #{path} responded with #{response.code}"
     end
     response
   end
@@ -44,7 +42,7 @@ class Api::Tta::ActivityReport < ApiRequest
     "/api/v1/activity-reports/display/#{display_id}"
   end
 
-  def query
-    ""
+  def parameters
+    {}
   end
 end
