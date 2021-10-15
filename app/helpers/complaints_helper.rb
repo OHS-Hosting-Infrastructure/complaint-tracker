@@ -1,3 +1,5 @@
+require "paginator"
+
 module ComplaintsHelper
   FORMATTED_STATUS = {
     0 => "In Progress",
@@ -15,6 +17,30 @@ module ComplaintsHelper
     "Rec. Closure" => 4,
     "Closed" => 5
   }
+
+  def page_link(link_page, current_page)
+    is_current = link_page == current_page
+
+    options = {
+      class: page_link_class(is_current),
+      "aria-label": page_link_label(link_page)
+    }
+    options["aria-current"] = "page" if is_current
+
+    link_to link_page, complaints_path(page: link_page), options
+  end
+
+  def page_link_class(is_current)
+    is_current ? "usa-pagination__button usa-current" : "usa-pagination__button"
+  end
+
+  def page_link_label(page)
+    page == @page_total ? "Last page, page #{page}" : "Page #{page}"
+  end
+
+  def paginate
+    Paginator.new(params[:page], @page_total).pages
+  end
 
   def status(complaint_attributes)
     formatted_status = FORMATTED_STATUS[complaint_attributes[:status][:id]]

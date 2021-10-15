@@ -5,6 +5,7 @@ RSpec.describe "rendering complaints table" do
 
   it "has a table to display complaints" do
     @complaints = [complaint]
+    @page_total = 1
 
     render partial: "complaints/complaints_table"
 
@@ -14,6 +15,7 @@ RSpec.describe "rendering complaints table" do
 
   it "has the ability to sort by grantee" do
     @complaints = [complaint]
+    @page_total = 1
 
     render partial: "complaints/complaints_table"
 

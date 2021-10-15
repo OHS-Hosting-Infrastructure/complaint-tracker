@@ -1,16 +1,18 @@
+require "api_response"
+
 class ApiRequest
   def response
     @response ||= get_response
   end
 
   def response_type
-    ApiResponse
+    "ApiResponse"
   end
 
   private
 
   def get_response
-    response_type.new(send_api_request)
+    response_type.constantize.new(send_api_request)
   end
 
   # Inheriting class defines

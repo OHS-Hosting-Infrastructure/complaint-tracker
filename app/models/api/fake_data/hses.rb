@@ -1,3 +1,4 @@
+require "api_response"
 require "fake_api_response_wrapper"
 require "fake_issues"
 

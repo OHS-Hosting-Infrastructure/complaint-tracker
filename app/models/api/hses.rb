@@ -46,7 +46,7 @@ class Api::Hses::Issues < ApiRequest
   end
 
   def response_type
-    ApiResponseCollection
+    "ApiResponseCollection"
   end
 
   private
