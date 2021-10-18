@@ -1,5 +1,3 @@
-require "api_response"
-
 class ApiRequest
   def response
     @response ||= get_response
