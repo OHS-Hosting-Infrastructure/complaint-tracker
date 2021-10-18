@@ -15,7 +15,7 @@ class ComplaintsController < ApplicationController
       ApiDelegator.use("hses", "issue", {id: params[:id]}).request.data
     )
     @issue_tta_reports = IssueTtaReport.where(issue_id: params[:id]).order(:start_date).each do |report|
-      # inject the user's HSES access token to be used TtaActivityReport
+      # inject the user's HSES access token to be used by TtaActivityReport
       report.access_token = hses_access_token
     end
     @timeline = Timeline.new(@complaint.attributes, @issue_tta_reports)
