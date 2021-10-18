@@ -27,13 +27,13 @@ class Complaint
   end
 
   def overdue?
-    due_date? && due_date.past?
+    due_date? && due_date.before?(Date.current)
   end
 
   def relative_due_date_html
     if overdue?
       "<span class=\"ct-timeline__overdue\">Overdue (Due #{formatted_due_date})</span>"
-    elsif due_date == Date.today
+    elsif due_date == Date.current
       "<span class=\"ct-timeline__due-soon\">Due today (#{formatted_due_date})</span>"
     elsif due_soon?
       "<span class=\"ct-timeline__due-soon\">Due in #{day_string} (#{formatted_due_date})</span>"
@@ -63,6 +63,6 @@ class Complaint
   end
 
   def relative_time_til_due
-    (Date.today...due_date).count
+    (Date.current...due_date).count
   end
 end
