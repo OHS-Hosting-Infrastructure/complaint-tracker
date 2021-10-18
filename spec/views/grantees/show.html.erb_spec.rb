@@ -4,6 +4,7 @@ RSpec.describe "grantees/show", type: :view do
   let(:grantee) { Grantee.new(Api::FakeData::Grantee.new.data) }
 
   before do
+    assign(:grantee, grantee)
     render
   end
 
