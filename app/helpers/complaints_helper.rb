@@ -1,6 +1,6 @@
-require "paginator"
-
 module ComplaintsHelper
+  include Pagy::Frontend
+
   FORMATTED_STATUS = {
     0 => "In Progress",
     1 => "Closed",
@@ -18,28 +18,22 @@ module ComplaintsHelper
     "Closed" => 5
   }
 
-  def page_link(link_page, current_page)
-    is_current = link_page == current_page
-
+  def page_link(page, current: false)
     options = {
-      class: page_link_class(is_current),
-      "aria-label": page_link_label(link_page)
+      class: page_link_class(current),
+      "aria-label": page_link_label(page)
     }
-    options["aria-current"] = "page" if is_current
+    options["aria-current"] = "page" if current
 
-    link_to link_page, complaints_path(page: link_page), options
+    link_to page, complaints_path(page: page), options
   end
 
-  def page_link_class(is_current)
-    is_current ? "usa-pagination__button usa-current" : "usa-pagination__button"
+  def page_link_class(current)
+    current ? "usa-pagination__button usa-current" : "usa-pagination__button"
   end
 
   def page_link_label(page)
-    page == @page_total ? "Last page, page #{page}" : "Page #{page}"
-  end
-
-  def paginate
-    Paginator.new(params[:page], @page_total).pages
+    page == @pagy.series.last ? "Last page, page #{page}" : "Page #{page}"
   end
 
   def status(complaint_attributes)

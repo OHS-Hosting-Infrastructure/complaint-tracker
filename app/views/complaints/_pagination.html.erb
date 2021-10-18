@@ -1,15 +1,13 @@
-<%# source: https://designsystem.digital.gov/components/pagination/ %>
-<% page_list = paginate %>
-<% current = params[:page].present? ? params[:page].to_i : 1 %>
+<%# USWDS pagination: https://designsystem.digital.gov/components/pagination/ %>
 
-<% if page_list.present? %>
-  <nav aria-label="Pagination" class="usa-pagination">
+<% if pagy.series.length > 1 %>
+  <nav aria-label="pagination" class="usa-pagination">
     <ul class="usa-pagination__list">
 
-      <!-- PREVIOUS -->
-      <% if current > 1 %>
+      <%# previous %>
+      <% if pagy.prev %>
         <li class="usa-pagination__item usa-pagination__arrow">
-          <%= link_to complaints_path(page: current - 1),
+          <%= link_to complaints_path(page: pagy.prev),
             class: "usa-pagination__link usa-pagination__previous-page",
             "aria-label": "Previous page" do
           %>
@@ -22,8 +20,10 @@
         </li>
       <% end %>
 
-      <% page_list.each do |item| %>
-        <% if item == "|" %>
+      <%# pages %>
+      <%# series example: [1, :gap, 7, 8, "9", 10, 11, :gap, 36] %>
+      <% pagy.series.each do |item| %>
+        <% if item == :gap %>
           <li
             class="usa-pagination__item usa-pagination__overflow"
             role="presentation"
@@ -32,23 +32,23 @@
           </li>
         <% else %>
           <li class="usa-pagination__item usa-pagination__page-no">
-            <%= page_link(item, current) %>
+            <%= page_link(item, current: !!item.is_a?(String)) %>
           </li>
         <% end %>
       <% end %>
 
-      <!-- NEXT -->
-      <% if params[:page].present? && current < @page_total %>
+      <%# next %>
+      <% if pagy.next %>
         <li class="usa-pagination__item usa-pagination__arrow">
-          <%= link_to complaints_path(page: current + 1),
+          <%= link_to complaints_path(page: pagy.next),
             class: "usa-pagination__link usa-pagination__next-page",
             "aria-label": "Next page" do
           %>
-            <span class="usa-pagination__link-text"> Next </span>
-
             <svg class="usa-icon" aria-hidden="true" role="img">
               <use xlink:href="/assets/img/sprite.svg#navigate_next"></use>
             </svg>
+
+            <span class="usa-pagination__link-text"> Next </span>
           <% end %>
         </li>
       <% end %>

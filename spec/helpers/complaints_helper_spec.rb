@@ -4,37 +4,23 @@ RSpec.describe ComplaintsHelper, type: :helper do
   describe "#page_link" do
     context "when the link is not the current page" do
       it "returns link without aria-current or usa-current class" do
-        expect(page_link(1, 2)).to eq '<a class="usa-pagination__button" aria-label="Page 1" href="/complaints?page=1">1</a>'
+        @pagy = Pagy.new(count: 26, page: 2)
+        expect(page_link(1)).to eq '<a class="usa-pagination__button" aria-label="Page 1" href="/complaints?page=1">1</a>'
       end
     end
 
-    context "when the link is the same as the current page" do
+    context "when the link is the current page" do
       it "returns link with aria-current and usa-current class" do
-        expect(page_link(1, 1)).to eq '<a class="usa-pagination__button usa-current" aria-label="Page 1" aria-current="page" href="/complaints?page=1">1</a>'
+        @pagy = Pagy.new(count: 26, page: 2)
+        expect(page_link(2, current: true)).to eq '<a class="usa-pagination__button usa-current" aria-label="Page 2" aria-current="page" href="/complaints?page=2">2</a>'
       end
     end
 
     context "when the link is the last page" do
       it "aria-label includes 'Last page'" do
         @page_total = 5
-        expect(page_link(5, 1)).to eq '<a class="usa-pagination__button" aria-label="Last page, page 5" href="/complaints?page=5">5</a>'
-      end
-    end
-  end
-
-  describe "#paginate" do
-    context "with 1 page of results and no page selected" do
-      it "returns empty set" do
-        @page_total = 1
-        expect(paginate).to eq []
-      end
-    end
-
-    context "with 10 pages of results and 10th page selected" do
-      it "returns 1st page, separator, then 8, 9, 10" do
-        controller.params[:page] = 10
-        @page_total = 10
-        expect(paginate).to eq [1, "|", 8, 9, 10]
+        @pagy = Pagy.new(count: 101, page: 1)
+        expect(page_link(5)).to eq '<a class="usa-pagination__button" aria-label="Last page, page 5" href="/complaints?page=5">5</a>'
       end
     end
   end

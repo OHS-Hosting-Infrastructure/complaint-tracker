@@ -24,7 +24,7 @@
   <!-- this content will change when sort changes -->
 </div>
 
-<%= render "complaints/pagination" %>
+<%= render partial: 'complaints/pagination', locals: {pagy: @pagy} %>
 
 <p class="margin-bottom-3" id="caption">Complaints associated with this user. Data for illustration purposes only.</p>
 

@@ -9,6 +9,10 @@ class ApiResponse
     succeeded? ? parse_body : {}
   end
 
+  def count
+    succeeded? ? 1 : 0
+  end
+
   def data
     body[:data] || {}
   end
@@ -32,24 +36,5 @@ class ApiResponse
   rescue JSON::ParserError
     Rails.logger.error("Error parsing response body: \"#{@response_body}\"")
     {}
-  end
-end
-
-class ApiResponseCollection < ApiResponse
-  def initialize(response)
-    super
-    @page_limit = 25.to_f
-  end
-
-  def count
-    body.dig(:meta, :itemTotalCount) || 0
-  end
-
-  def data
-    body[:data] || []
-  end
-
-  def page_total
-    @page_total ||= (count.to_i / @page_limit).ceil
   end
 end

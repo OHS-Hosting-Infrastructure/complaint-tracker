@@ -160,6 +160,7 @@ GEM
     omniauth-rails_csrf_protection (1.0.0)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
+    pagy (5.0.1)
     parallel (1.21.0)
     parser (3.0.2.0)
       ast (~> 2.4.1)
@@ -318,6 +319,7 @@ DEPENDENCIES
   omniauth (~> 2.0)
   omniauth-oauth2 (~> 1.7)
   omniauth-rails_csrf_protection (~> 1.0)
+  pagy (~> 5.0)
   pg (~> 1.1)
   puma (~> 5.5, >= 5.5.1)
   rack-mini-profiler (~> 2.0)
@@ -337,4 +339,4 @@ RUBY VERSION
    ruby 3.0.2p107
 
 BUNDLED WITH
-   2.2.25
+   2.2.29

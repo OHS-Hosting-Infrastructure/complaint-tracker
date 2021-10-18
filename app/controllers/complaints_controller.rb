@@ -1,15 +1,14 @@
 require "api_delegator"
 
 class ComplaintsController < ApplicationController
+  include Pagy::Backend
   before_action :check_pa11y_id, only: :show, if: -> { Rails.env.ci? }
 
   def index
-    options = {user: session["user"], params: params}
-    api = ApiDelegator.use("hses", "issues", options)
-    req = api.request
+    res = ApiDelegator.use("hses", "issues", options_index).request
 
-    @complaints = req.data
-    @page_total = req.page_total
+    @complaints = res.data
+    @pagy = Pagy.new(count: res.count, page: params[:page])
   end
 
   def show
@@ -29,5 +28,9 @@ class ComplaintsController < ApplicationController
         .use("hses", "issues", {user: session["user"]})
         .request.data.first[:id]
     end
+  end
+
+  def options_index
+    {user: session["user"], params: params}
   end
 end

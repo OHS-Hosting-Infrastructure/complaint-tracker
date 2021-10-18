@@ -164,12 +164,6 @@ RSpec.describe ApiResponseCollection do
         expect(subject.data.first).to match({grantee: "Some grantee"})
       end
     end
-
-    describe "#page_total" do
-      it "calculates the total pages of results" do
-        expect(subject.page_total).to eq 4
-      end
-    end
   end
 
   context "an unsuccessful response" do
@@ -192,12 +186,6 @@ RSpec.describe ApiResponseCollection do
           expect(subject.data).to eq([])
         end
       end
-
-      describe "#page_total" do
-        it "returns 0" do
-          expect(subject.page_total).to be 0
-        end
-      end
     end
 
     context "500 server error" do
@@ -217,12 +205,6 @@ RSpec.describe ApiResponseCollection do
       describe "#data" do
         it "returns an empty array" do
           expect(subject.data).to eq([])
-        end
-      end
-
-      describe "#page_total" do
-        it "returns 0" do
-          expect(subject.page_total).to be 0
         end
       end
     end
