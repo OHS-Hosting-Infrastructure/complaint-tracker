@@ -29,7 +29,7 @@ RSpec.describe TtaActivityReport, type: :model do
     end
 
     it "raises an error when there is an error with the api" do
-      # This displa ID will trigger a 403 error in the TTA Hub API
+      # This display ID will trigger a 403 error in the TTA Hub API
       subject.display_id = "R14-AR-403"
       expect { subject.ttahub_url }.to raise_error(Api::Error)
     end
