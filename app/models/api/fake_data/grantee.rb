@@ -8,7 +8,7 @@ class Api::FakeData::Grantee
       id: identifier,
       type: "grantees",
       attributes: {
-        name: name
+        name: grantee_name
       },
       links: {
         self: "https://example.com/TODO",
