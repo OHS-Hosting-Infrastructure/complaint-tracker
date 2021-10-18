@@ -19,4 +19,8 @@ RSpec.describe "grantees/show", type: :view do
   it "displays the summary card" do
     expect(rendered).to match "<h2>Summary</h2>"
   end
+
+  it "displays the complaints list" do
+    expect(rendered).to match '<ul class="usa-process-list">'
+  end
 end
