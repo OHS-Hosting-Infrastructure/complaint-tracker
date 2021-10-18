@@ -20,6 +20,10 @@ RSpec.describe "grantees/show", type: :view do
     expect(rendered).to match "<h2>Summary</h2>"
   end
 
+  it "displays the open issues card" do
+    expect(rendered).to match "<h2>Open Issues</h2>"
+  end
+
   it "displays the complaints list" do
     expect(rendered).to match '<ul class="usa-process-list">'
   end
