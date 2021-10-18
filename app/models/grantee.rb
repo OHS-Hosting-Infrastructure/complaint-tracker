@@ -11,6 +11,10 @@ class Grantee
     @attributes = hses_grantee[:attributes].with_indifferent_access
   end
 
+  def name
+    attributes["name"]
+  end
+
   def name?
     name.present?
   end
