@@ -15,6 +15,10 @@ class Grantee
     attributes["name"]
   end
 
+  def region
+    attributes["region"]
+  end
+
   def name?
     name.present?
   end
