@@ -52,6 +52,12 @@ RSpec.describe TtaActivityReport, type: :model do
       expect(subject.author_name).to be_a(String)
     end
 
+    it "returns nil when the data field is missing" do
+      # This display ID will trigger a successful response but without the author field
+      subject.display_id = "R14-AR-missing-author"
+      expect(subject.author_name).to be nil
+    end
+
     it "raises an error when there is an error with the api" do
       # This display ID will trigger a 403 error in the TTA Hub API
       subject.display_id = "R14-AR-403"

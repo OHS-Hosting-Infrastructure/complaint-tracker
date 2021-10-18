@@ -5,6 +5,7 @@ class TtaActivityReport
   validate :api_call_succeeded
 
   attr_accessor :access_token, :display_id
+
   def initialize(display_id, access_token)
     @display_id = display_id
     @access_token = access_token

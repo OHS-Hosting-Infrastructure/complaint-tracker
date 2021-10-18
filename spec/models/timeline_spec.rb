@@ -161,6 +161,7 @@ RSpec.describe Timeline do
     let(:display_id) { "Test-Display-Name" }
     # just setting the start_date manually because we aren't triggering the before_validation callback
     let(:event_param) { IssueTtaReport.new tta_report_display_id: display_id, start_date: date }
+    let(:tta_activity_report) { event_param.tta_activity_report }
     subject { Timeline::TtaEvent.new(event_param) }
 
     describe "#init" do
@@ -188,7 +189,9 @@ RSpec.describe Timeline do
 
     describe "#topics_string" do
       it "joins the issue topics together with commas" do
-        expect(subject.topics_string.split(", ")).to eq event_param.tta_activity_report.topics
+        tta_activity_report.topics.each do |topic|
+          expect(subject.topics_string).to include topic
+        end
       end
     end
 

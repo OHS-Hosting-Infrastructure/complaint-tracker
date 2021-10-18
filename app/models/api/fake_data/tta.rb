@@ -34,6 +34,10 @@ class Api::FakeData::Tta
         }.to_json)
       when /-500\z/
         other_response(500, "")
+      when /-missing-author\z/
+        report = Api::FakeData::ActivityReport.new(display_id: display_id).data
+        report[:attributes].delete(:author)
+        details_response(report)
       else
         details_response(Api::FakeData::ActivityReport.new(display_id: display_id).data)
       end
