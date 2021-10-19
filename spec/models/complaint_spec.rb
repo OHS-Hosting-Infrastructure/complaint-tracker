@@ -98,11 +98,10 @@ RSpec.describe Complaint do
 
   describe "relative_due_date_html" do
     context "due today" do
-      before { subject.attributes[:dueDate] = Date.today.to_date.iso8601 }
+      before { subject.attributes[:dueDate] = Date.current.to_date.iso8601 }
 
       it "returns the correct html string" do
-        strftime = Date.today.strftime("%m/%d/%Y")
-
+        strftime = Date.current.strftime("%m/%d/%Y")
         expect(subject.relative_due_date_html).to eq(
           "<span class=\"ct-timeline__due-soon\">Due today (#{strftime})</span>"
         )

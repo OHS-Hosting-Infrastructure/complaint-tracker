@@ -1,9 +1,11 @@
 class IssueTtaReportsController < ApplicationController
+  include NeedsHsesAccessToken
+
   def create
     @issue_tta_report = IssueTtaReport.new(
       issue_id: issue_id,
       tta_report_display_id: tta_report_display_id,
-      access_token: access_token
+      access_token: hses_access_token
     )
 
     if !@issue_tta_report.save
@@ -18,7 +20,7 @@ class IssueTtaReportsController < ApplicationController
   def update
     report = IssueTtaReport.find(params[:id])
 
-    if !report.update(tta_report_display_id: tta_report_display_id, access_token: access_token)
+    if !report.update(tta_report_display_id: tta_report_display_id, access_token: hses_access_token)
       flash[:tta_errors] = {
         display_id: tta_report_display_id,
         message: report.errors.full_messages.join(". ")
@@ -34,10 +36,6 @@ class IssueTtaReportsController < ApplicationController
   end
 
   private
-
-  def access_token
-    HsesAccessToken.new(session["hses_access_token"])
-  end
 
   def tta_report_display_id
     params[:tta_report_display_id]
