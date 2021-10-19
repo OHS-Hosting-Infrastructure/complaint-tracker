@@ -1,14 +1,15 @@
 require "rails_helper"
 
 RSpec.describe IssueTtaReport, type: :model do
+  subject do
+    # models will retrieve the tta_report_id from FakeData based on the display ID
+    described_class.new(
+      issue_id: "ISSUE_ID",
+      tta_report_display_id: "R14-AR-200"
+    )
+  end
+
   describe "validations" do
-    subject do
-      # models will retrieve the tta_report_id from FakeData based on the display ID
-      described_class.new(
-        issue_id: "ISSUE_ID",
-        tta_report_display_id: "R14-AR-200"
-      )
-    end
     it "is valid with valid attributes" do
       expect(subject).to be_valid
     end

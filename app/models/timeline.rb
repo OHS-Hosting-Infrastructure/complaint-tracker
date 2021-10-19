@@ -34,33 +34,3 @@ class Timeline
     end
   end
 end
-
-class Event
-  attr_reader :date, :name
-
-  def formatted_date
-    date.strftime("%m/%d/%Y")
-  end
-end
-
-class Timeline::ComplaintEvent < Event
-  def initialize(event)
-    @name = event[0]
-    @date = Date.parse(event[1])
-  end
-
-  def label
-    Timeline::EVENT_LABELS[name] || "Updated"
-  end
-end
-
-class Timeline::TtaEvent < Event
-  def initialize(issue_tta_report)
-    @name = issue_tta_report.tta_report_display_id
-    @date = issue_tta_report.start_date
-  end
-
-  def label
-    "TTA Activity: #{name}"
-  end
-end
