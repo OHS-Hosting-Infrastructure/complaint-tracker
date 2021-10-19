@@ -28,10 +28,6 @@ class Api::Hses::Issue < ApiRequest
     fake_issue = FakeIssues.instance.data.find { |c| c[:id] == id }
     details_response(fake_issue || FakeIssues.instance.data.last)
   end
-
-  def response_type
-    ApiResponseCollection
-  end
 end
 
 class Api::Hses::Issues < ApiRequest
@@ -46,6 +42,10 @@ class Api::Hses::Issues < ApiRequest
 
   def request
     response
+  end
+
+  def response_type
+    ApiResponseCollection
   end
 
   private
