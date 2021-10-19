@@ -2,7 +2,7 @@ require "ostruct"
 
 module FakeApiResponseWrapper
   def list_response(data)
-    ApiResponse.new(
+    ApiResponseCollection.new(
       OpenStruct.new(code: 200, body: list_wrapper.merge(data: data).to_json)
     )
   end

@@ -47,7 +47,7 @@ RSpec.describe "Complaints", type: :request do
         let(:complaint) { Api::FakeData::Complaint.new }
 
         it "includes the alert" do
-          allow_any_instance_of(ApiResponse).to receive(:data).and_return [complaint.data]
+          allow_any_instance_of(ApiResponseCollection).to receive(:data).and_return [complaint.data]
 
           get complaints_path
 
@@ -57,7 +57,7 @@ RSpec.describe "Complaints", type: :request do
 
       describe "User has no complaints" do
         it "includes the alert" do
-          allow_any_instance_of(ApiResponse).to receive(:data).and_return []
+          allow_any_instance_of(ApiResponseCollection).to receive(:data).and_return []
           get complaints_path
           expect(response.body).to include '<h3 class="usa-alert__heading">No issues found</h3>'
         end

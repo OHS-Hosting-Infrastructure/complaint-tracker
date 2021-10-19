@@ -1,3 +1,4 @@
+require "api_response"
 require "fake_api_response_wrapper"
 require "fake_issues"
 
@@ -21,7 +22,7 @@ class Api::FakeData::Hses
   class Issues
     include FakeApiResponseWrapper
 
-    def initialize(user:)
+    def initialize(user:, params: {})
       @username = user["uid"]
     end
 

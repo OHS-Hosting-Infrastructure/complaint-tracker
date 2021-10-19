@@ -28,6 +28,9 @@ gem "secure_headers", "~> 6.3"
 # Use ffaker for faked connections to HSES data
 gem "ffaker", "~> 2.18"
 
+# Backend-agnostic pagination
+gem "pagy", "~> 5.0"
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

@@ -3,10 +3,14 @@ class ApiRequest
     @response ||= get_response
   end
 
+  def response_type
+    ApiResponse
+  end
+
   private
 
   def get_response
-    ApiResponse.new(send_api_request)
+    response_type.new(send_api_request)
   end
 
   # Inheriting class defines

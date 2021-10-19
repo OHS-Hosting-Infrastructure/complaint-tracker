@@ -1,4 +1,3 @@
-require "api_request"
 require "fake_api_response_wrapper"
 require "fake_issues"
 
@@ -43,6 +42,10 @@ class Api::Hses::Issues < ApiRequest
 
   def request
     response
+  end
+
+  def response_type
+    ApiResponseCollection
   end
 
   private
