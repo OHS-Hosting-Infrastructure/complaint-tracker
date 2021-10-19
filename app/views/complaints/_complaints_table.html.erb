@@ -23,5 +23,8 @@
 <div class="usa-sr-only usa-table__announcement-region" aria-live="polite">
   <!-- this content will change when sort changes -->
 </div>
+
+<%= render partial: 'complaints/pagination', locals: {pagy: @pagy} %>
+
 <p class="margin-bottom-3" id="caption">Complaints associated with this user. Data for illustration purposes only.</p>
 

@@ -27,7 +27,7 @@ RSpec.describe ApiRequest do
       end
 
       it "returns an object with a code and a body" do
-        allow(api).to receive(:parameters).and_return []
+        allow(api).to receive(:parameters).and_return({})
         res = api.response
 
         expect(res.code).to eq 200

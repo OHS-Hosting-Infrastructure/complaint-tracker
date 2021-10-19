@@ -53,10 +53,7 @@
         <ul class="usa-process-list">
           <% @timeline.events.each do |event| %>
             <li class="usa-process-list__item usa-process-list__item-disc">
-              <h3 class="usa-process-list__heading ct-timeline__two-part-container">
-                <%= event.label %>
-                <span class="ct-timeline__date"><%= event.formatted_date %></span>
-              </h3>
+              <%= render partial: event.timeline_partial, locals: {event: event} %>
             </li>
           <% end %>
         </ul>

@@ -10,7 +10,7 @@ class Api::FakeData::ActivityReport
 
   def data
     @data ||= {
-      id: identifier,
+      id: id,
       type: "activityReports",
       attributes: {
         author: tta_user_id_and_name_object,
@@ -26,9 +26,15 @@ class Api::FakeData::ActivityReport
         topics: [phrase, phrase]
       },
       links: {
-        self: "https://example.com/TODO",
-        html: "https://example.com/TODO"
+        self: "https://ttahub.ohs.acf.hhs.gov/api/v1/activity-reports/display/#{display_id}",
+        html: "https://ttahub.ohs.acf.hhs.gov/activity-reports/view/#{id}"
       }
     }
+  end
+
+  private
+
+  def id
+    @id ||= identifier
   end
 end

@@ -69,7 +69,7 @@ RSpec.describe Timeline do
           second_report = timeline.events.last
 
           expect(timeline.events.count).to be 2
-          expect(first_report.date > second_report.date).to be true
+          expect(first_report.date >= second_report.date).to be true
         end
       end
     end
@@ -112,68 +112,6 @@ RSpec.describe Timeline do
 
           expect(timeline.events.count).to be 4
         end
-      end
-    end
-  end
-
-  describe "ComplaintEvent" do
-    let(:date) { 1.day.ago.strftime("%F") }
-    let(:name) { "reopenedDate" }
-    let(:event_param) { [name, date] }
-
-    describe "#init" do
-      it "assigns attr_readers" do
-        event = Timeline::ComplaintEvent.new(event_param)
-        expect(event.name).to eq name
-        expect(event.date).to eq Date.parse(date)
-      end
-    end
-
-    describe "#label" do
-      it "returns the correct label" do
-        event = Timeline::ComplaintEvent.new(event_param)
-        expect(event.label).to eq "Reopened"
-      end
-
-      it "falls back to Updated if there is no correct label" do
-        event = Timeline::ComplaintEvent.new(["surpriseEvent", date])
-        expect(event.label).to eq "Updated"
-      end
-    end
-
-    describe "#formatted_date" do
-      it "returns the date formatted '%m/%d/%Y'" do
-        event = Timeline::ComplaintEvent.new(event_param)
-        expect(event.formatted_date).to eq Date.parse(date).strftime("%m/%d/%Y")
-      end
-    end
-  end
-
-  describe "TtaEvent" do
-    let(:date) { 1.day.ago.strftime("%F") }
-    let(:display_id) { "Test-Display-Name" }
-    # just setting the start_date manually because we aren't triggering the before_validation callback
-    let(:event_param) { IssueTtaReport.new tta_report_display_id: display_id, start_date: date }
-
-    describe "#init" do
-      it "assigns attr_readers" do
-        event = Timeline::TtaEvent.new(event_param)
-        expect(event.name).to eq display_id
-        expect(event.date).to eq Date.parse(date)
-      end
-    end
-
-    describe "#label" do
-      it "returns the correct label" do
-        event = Timeline::TtaEvent.new(event_param)
-        expect(event.label).to eq "TTA Activity: #{display_id}"
-      end
-    end
-
-    describe "#formatted_date" do
-      it "returns the date formatted '%m/%d/%Y'" do
-        event = Timeline::TtaEvent.new(event_param)
-        expect(event.formatted_date).to eq Date.parse(date).strftime("%m/%d/%Y")
       end
     end
   end

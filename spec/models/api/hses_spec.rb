@@ -18,6 +18,12 @@ RSpec.describe Api::Hses do
         expect(issue.request.data[:type]).to eq "issues"
       end
     end
+
+    describe "#response_type" do
+      it "returns default api response" do
+        expect(issue.response_type).to be ApiResponse
+      end
+    end
   end
 
   describe "Issues" do
@@ -83,6 +89,12 @@ RSpec.describe Api::Hses do
             }
           )
           issues.request
+        end
+      end
+
+      describe "#response_type" do
+        it "returns api response for collections" do
+          expect(issues.response_type).to be ApiResponseCollection
         end
       end
     end
