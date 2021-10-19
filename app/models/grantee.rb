@@ -6,7 +6,7 @@ class Grantee
     summary: "Summary"
   }.with_indifferent_access.freeze
 
-  def initialize(hses_grantee)
+  def initialize(hses_grantee:)
     @id = hses_grantee[:id]
     @attributes = hses_grantee[:attributes].with_indifferent_access
   end

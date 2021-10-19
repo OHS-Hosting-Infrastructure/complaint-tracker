@@ -3,9 +3,13 @@ require "ffaker_wrapper"
 class Api::FakeData::Grantee
   include FfakerWrapper
 
+  def initialize(id:)
+    @id = id
+  end
+
   def data
     @data ||= {
-      id: identifier,
+      id: @id,
       type: "grantees",
       attributes: {
         name: grantee_name,

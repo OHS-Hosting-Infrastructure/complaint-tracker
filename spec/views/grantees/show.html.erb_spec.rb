@@ -1,7 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "grantees/show", type: :view do
-  let(:grantee) { Grantee.new(Api::FakeData::Grantee.new.data) }
+  let(:id) { "fake-grantee-789" }
+  let(:grantee) { 
+    Grantee.new(hses_grantee: Api::FakeData::Grantee.new(id: id).data)
+  }
 
   before do
     assign(:grantee, grantee)

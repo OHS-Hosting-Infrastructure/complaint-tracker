@@ -1,13 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Grantee, type: :model do
-  let(:hses_grantee) { Api::FakeData::Grantee.new.data }
-  subject { described_class.new hses_grantee }
-
-  before do
-    hses_grantee[:attributes].merge!({
-    })
-  end
+  let(:id) { "fake-grantee-456" }
+  let(:hses_grantee) { Api::FakeData::Grantee.new(id: id).data }
+  subject { described_class.new(hses_grantee: hses_grantee) }
 
   describe "initialize" do
     it "sets @id" do
