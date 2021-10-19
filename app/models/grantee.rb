@@ -19,10 +19,6 @@ class Grantee
     attributes["region"]
   end
 
-  def name?
-    name.present?
-  end
-
   def summary
     attributes["summary"]
   end
