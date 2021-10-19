@@ -15,22 +15,6 @@ require "rails_helper"
 RSpec.describe "/grantees", type: :request do
   # Grantee. As you add validations to Grantee, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
-
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
-
-  # describe "GET /index" do
-  #   it "renders a successful response" do
-  #     Grantee.create! valid_attributes
-  #     get grantees_url
-  #     expect(response).to be_successful
-  #   end
-  # end
-
   describe "GET /show" do
     let(:grant_id) { "fake-grantee-123" }
 
@@ -39,92 +23,4 @@ RSpec.describe "/grantees", type: :request do
       expect(response).to have_http_status(200)
     end
   end
-
-  # describe "GET /new" do
-  #   it "renders a successful response" do
-  #     get new_grantee_url
-  #     expect(response).to be_successful
-  #   end
-  # end
-
-  # describe "GET /edit" do
-  #   it "render a successful response" do
-  #     grantee = Grantee.create! valid_attributes
-  #     get edit_grantee_url(grantee)
-  #     expect(response).to be_successful
-  #   end
-  # end
-
-  # describe "POST /create" do
-  #   context "with valid parameters" do
-  #     it "creates a new Grantee" do
-  #       expect {
-  #         post grantees_url, params: { grantee: valid_attributes }
-  #       }.to change(Grantee, :count).by(1)
-  #     end
-
-  #     it "redirects to the created grantee" do
-  #       post grantees_url, params: { grantee: valid_attributes }
-  #       expect(response).to redirect_to(grantee_url(Grantee.last))
-  #     end
-  #   end
-
-  #   context "with invalid parameters" do
-  #     it "does not create a new Grantee" do
-  #       expect {
-  #         post grantees_url, params: { grantee: invalid_attributes }
-  #       }.to change(Grantee, :count).by(0)
-  #     end
-
-  #     it "renders a successful response (i.e. to display the 'new' template)" do
-  #       post grantees_url, params: { grantee: invalid_attributes }
-  #       expect(response).to be_successful
-  #     end
-  #   end
-  # end
-
-  # describe "PATCH /update" do
-  #   context "with valid parameters" do
-  #     let(:new_attributes) {
-  #       skip("Add a hash of attributes valid for your model")
-  #     }
-
-  #     it "updates the requested grantee" do
-  #       grantee = Grantee.create! valid_attributes
-  #       patch grantee_url(grantee), params: { grantee: new_attributes }
-  #       grantee.reload
-  #       skip("Add assertions for updated state")
-  #     end
-
-  #     it "redirects to the grantee" do
-  #       grantee = Grantee.create! valid_attributes
-  #       patch grantee_url(grantee), params: { grantee: new_attributes }
-  #       grantee.reload
-  #       expect(response).to redirect_to(grantee_url(grantee))
-  #     end
-  #   end
-
-  #   context "with invalid parameters" do
-  #     it "renders a successful response (i.e. to display the 'edit' template)" do
-  #       grantee = Grantee.create! valid_attributes
-  #       patch grantee_url(grantee), params: { grantee: invalid_attributes }
-  #       expect(response).to be_successful
-  #     end
-  #   end
-  # end
-
-  # describe "DELETE /destroy" do
-  #   it "destroys the requested grantee" do
-  #     grantee = Grantee.create! valid_attributes
-  #     expect {
-  #       delete grantee_url(grantee)
-  #     }.to change(Grantee, :count).by(-1)
-  #   end
-
-  #   it "redirects to the grantees list" do
-  #     grantee = Grantee.create! valid_attributes
-  #     delete grantee_url(grantee)
-  #     expect(response).to redirect_to(grantees_url)
-  #   end
-  # end
 end
