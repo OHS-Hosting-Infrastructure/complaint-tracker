@@ -30,8 +30,9 @@ RSpec.describe Complaint do
     end
   end
 
+  # TODO: test for missing attribute
   describe "#grantee" do
-    it "deletages to the attributes" do
+    it "delegates to the attributes" do
       expect(subject.grantee).to eq hses_complaint[:attributes][:grantee]
     end
   end
@@ -145,6 +146,7 @@ RSpec.describe Complaint do
     end
   end
 
+  # TODO: test for missing attribute
   describe "#summary" do
     it "delegates to the attributes" do
       expect(subject.summary).to eq hses_complaint[:attributes][:summary]

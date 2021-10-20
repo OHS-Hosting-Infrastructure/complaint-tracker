@@ -1,0 +1,37 @@
+<div class="details-header">
+  <div class="grid-container">
+    <h1><%= @grantee.name %></h1>
+    <h2>Grantee #<%= @grantee.id %>, Region <%= @grantee.region %></h2>
+  </div>
+</div>
+<div class="details-body grid-container">
+  <div class="grid-row grid-gap">
+    <div class="grid-col-4">
+      <div class="summary-section">
+        <div class="ct-section-divider">
+          <h2>Summary</h2>
+        </div>
+      </div>
+      <div class="summary-section">
+        <div class="ct-section-divider">
+          <h2>Open Issues</h2>
+        </div>
+      </div>
+    </div>
+    <div class="grid-col-8">
+      <ul class="usa-process-list">
+        <% (1..5).each do |index| %>
+          <li>
+            <div class="summary-section">
+              <div class="ct-section-divider">
+                <h2>
+                  <li>Complaint <%= index %></li>
+                </h2>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
