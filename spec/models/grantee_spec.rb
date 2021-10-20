@@ -15,14 +15,16 @@ RSpec.describe Grantee, type: :model do
     end
   end
 
+  # TODO: test for missing attribute
   describe "#name" do
-    it "deletages to the attributes" do
+    it "delegates to the attributes" do
       expect(subject.name).to eq hses_grantee[:attributes][:name]
     end
   end
 
+  # TODO: test for missing attribute
   describe "#region" do
-    it "deletages to the attributes" do
+    it "delegates to the attributes" do
       expect(subject.region).to eq hses_grantee[:attributes][:region]
     end
   end
