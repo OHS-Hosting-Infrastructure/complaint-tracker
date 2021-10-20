@@ -12,22 +12,28 @@
           <h2>Summary</h2>
         </div>
       </div>
+      <div class="grid-col-4">
+        <div class="summary-section">
+          <div class="ct-section-divider">
+            <h2>Open Issues</h2>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="grid-col-8">
       <ul class="usa-process-list">
         <% (1..5).each do |index| %>
-          <li>Complaint <%= index %></li>
+          <li>
+            <div class="summary-section">
+              <div class="ct-section-divider">
+                <h2>
+                  <li>Complaint <%= index %></li>
+                </h2>
+              </div>
+            </div>
+          </li>
         <% end %>
       </ul>
-    </div>
-  </div>
-  <div class="grid-row grid-gap">
-    <div class="grid-col-4">
-      <div class="summary-section">
-        <div class="ct-section-divider">
-          <h2>Open Issues</h2>
-        </div>
-      </div>
     </div>
   </div>
 </div>
