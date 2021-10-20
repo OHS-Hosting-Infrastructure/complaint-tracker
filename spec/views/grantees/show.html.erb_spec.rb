@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "grantees/show", type: :view do
   let(:id) { "fake-grantee-789" }
-  let(:grantee) { 
+  let(:grantee) {
     Grantee.new(hses_grantee: Api::FakeData::Grantee.new(id: id).data)
   }
 
