@@ -13,7 +13,7 @@ class Grantee
   end
 
   def hses_link
-    links["hses"]
+    links["html"]
   end
 
   def name
