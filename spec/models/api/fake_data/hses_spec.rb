@@ -29,4 +29,20 @@ RSpec.describe Api::FakeData::Hses do
       end
     end
   end
+
+  describe "Grantee" do
+    let(:grantee_id) { "fake-grantee-1234" }
+
+    describe "#request" do
+      let(:grantee_endpoint) { Api::FakeData::Hses::Grantee.new(id: grantee_id) }
+
+      it "returns a grantee with the correct id" do
+        expect(grantee_endpoint.request.data["id"]).to eq grantee_id
+      end
+
+      it "wraps the complaint in a detail wrapper" do
+        expect(grantee_endpoint.request.body.keys).to eq ["data"]
+      end
+    end
+  end
 end

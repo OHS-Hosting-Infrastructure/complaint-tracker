@@ -67,3 +67,16 @@ class Api::Hses::Issues < ApiRequest
     "/issues-ws/issues"
   end
 end
+
+class Api::Hses::Grantee
+  include FakeApiResponseWrapper
+  attr_accessor :id
+
+  def initialize(id:)
+    @id = id
+  end
+
+  def request
+    details_response(Api::FakeData::Grantee.new(id: id).data)
+  end
+end

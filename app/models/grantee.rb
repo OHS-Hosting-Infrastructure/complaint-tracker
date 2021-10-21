@@ -16,15 +16,19 @@ class Grantee
     links["html"]
   end
 
+  def centers_total
+    attributes[:numberOfCenters]
+  end
+
+  def complaints_per_fy
+    attributes[:totalComplaintsFiscalYear]
+  end
+
   def name
-    attributes["name"]
+    attributes[:name]
   end
 
   def region
-    attributes["region"]
-  end
-
-  def summary
-    attributes["summary"]
+    attributes[:region]
   end
 end
