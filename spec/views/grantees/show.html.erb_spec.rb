@@ -19,8 +19,15 @@ RSpec.describe "grantees/show", type: :view do
     expect(rendered).to match "<h2>Grantee ##{grantee.id}, Region #{grantee.region}</h2>"
   end
 
-  it "displays the summary card" do
-    expect(rendered).to match "<h2>Summary</h2>"
+  describe "summary card" do
+    it "displays the summary card header" do
+      expect(rendered).to match "<h2>Summary</h2>"
+    end
+
+    it "displays a link to the HSES page" do
+      link_element = "<a>Open in HSES</a>"
+      expect(rendered).to match link_element
+    end
   end
 
   it "displays the open issues card" do
