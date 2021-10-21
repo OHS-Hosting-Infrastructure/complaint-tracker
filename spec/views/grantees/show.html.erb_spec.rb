@@ -25,7 +25,7 @@ RSpec.describe "grantees/show", type: :view do
     end
 
     it "displays a link to the HSES page" do
-      link_element = "<a href=\"#{grantee.hses_link}\">Open in HSES</a>"
+      link_element = "<a href=\"#{grantee.hses_link}\" target=\"_blank\">Open in HSES</a>"
       expect(rendered).to match link_element
     end
   end
