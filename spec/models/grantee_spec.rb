@@ -28,4 +28,11 @@ RSpec.describe Grantee, type: :model do
       expect(subject.region).to eq hses_grantee[:attributes][:region]
     end
   end
+
+  # TODO: test for missing attribute
+  describe "#hses_link" do
+    it "delegates to the attributes" do
+      expect(subject.hses_link).to eq hses_grantee[:links][:hses]
+    end
+  end
 end

@@ -17,6 +17,7 @@ class Api::FakeData::Grantee
       },
       links: {
         self: "https://example.com/TODO",
+        hses: "https://example.com/TODO",
         html: "https://example.com/TODO"
       }
     }

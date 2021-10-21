@@ -1,5 +1,5 @@
 class Grantee
-  attr_reader :id, :attributes
+  attr_reader :id, :attributes, :links
 
   EVENT_LABELS = {
     name: "Name",
@@ -9,6 +9,11 @@ class Grantee
   def initialize(hses_grantee:)
     @id = hses_grantee[:id]
     @attributes = hses_grantee[:attributes].with_indifferent_access
+    @links = hses_grantee[:links].with_indifferent_access
+  end
+
+  def hses_link
+    links["hses"]
   end
 
   def name
