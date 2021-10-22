@@ -23,11 +23,24 @@ class Api::FakeData::Hses
     include FakeApiResponseWrapper
 
     def initialize(user:, params: {})
-      @username = user["uid"]
+      @username = user[:uid]
     end
 
     def request
       list_response(FakeIssues.instance.data)
+    end
+  end
+
+  class Grantee
+    include FakeApiResponseWrapper
+    attr_accessor :id
+
+    def initialize(id:)
+      @id = id
+    end
+
+    def request
+      details_response(Api::FakeData::Grantee.new(id: id).data)
     end
   end
 end

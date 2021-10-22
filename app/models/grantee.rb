@@ -1,30 +1,43 @@
+require "api_delegator"
+
 class Grantee
-  attr_reader :id, :attributes, :links
+  attr_reader :id
 
-  EVENT_LABELS = {
-    name: "Name",
-    summary: "Summary"
-  }.with_indifferent_access.freeze
-
-  def initialize(hses_grantee:)
-    @id = hses_grantee[:id]
-    @attributes = hses_grantee[:attributes].with_indifferent_access
-    @links = hses_grantee[:links].with_indifferent_access
+  def initialize(id)
+    @id = id
   end
 
   def hses_link
-    links["html"]
+    links[:html]
+  end
+
+  def centers_total
+    attributes[:numberOfCenters]
+  end
+
+  def complaints_per_fy
+    attributes[:totalComplaintsFiscalYear]
   end
 
   def name
-    attributes["name"]
+    attributes[:name]
   end
 
   def region
-    attributes["region"]
+    attributes[:region]
   end
 
-  def summary
-    attributes["summary"]
+  private
+
+  def attributes
+    grantee_data[:attributes]
+  end
+
+  def grantee_data
+    @grantee_data ||= ApiDelegator.use("hses", "grantee", {id: id}).request.data
+  end
+
+  def links
+    grantee_data[:links] || {}
   end
 end

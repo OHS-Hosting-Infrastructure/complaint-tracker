@@ -7,6 +7,7 @@
   "urls": [
     "http://localhost:8080",
     "http://localhost:8080/complaints",
-    "http://localhost:8080/complaints/pa11y-id"
+    "http://localhost:8080/complaints/pa11y-id",
+    "http://localhost:8080/grantees/12345"
   ]
 }

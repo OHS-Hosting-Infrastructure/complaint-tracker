@@ -9,7 +9,7 @@
       <div class="grid-row grid-col-6 grid-gap flex-align-center flex-justify-end">
         <% if user_signed_in? %>
           <div class="grid-col-auto">
-            <%= current_user["name"] %>
+            <%= current_user[:name] %>
           </div>
           <div class="grid-col-auto">
             <%= button_to "Log out", logout_path, class: "usa-button usa-button--accent-warm", method: :delete %>

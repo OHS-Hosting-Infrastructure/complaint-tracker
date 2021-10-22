@@ -19,13 +19,29 @@ RSpec.describe Api::FakeData::Hses do
 
   describe "Issues" do
     describe "#request" do
-      let(:issues_endpoint) { Api::FakeData::Hses::Issues.new(user: {"uid" => "test"}) }
+      let(:issues_endpoint) { Api::FakeData::Hses::Issues.new(user: {"uid" => "test"}.with_indifferent_access) }
       it "returns the correct complaint" do
         expect(issues_endpoint.request.data).to eq FakeIssues.instance.data
       end
 
       it "wraps the complaint in a detail wrapper" do
         expect(issues_endpoint.request.body.keys).to eq %w[meta data]
+      end
+    end
+  end
+
+  describe "Grantee" do
+    let(:grantee_id) { "fake-grantee-1234" }
+
+    describe "#request" do
+      let(:grantee_endpoint) { Api::FakeData::Hses::Grantee.new(id: grantee_id) }
+
+      it "returns a grantee with the correct id" do
+        expect(grantee_endpoint.request.data["id"]).to eq grantee_id
+      end
+
+      it "wraps the complaint in a detail wrapper" do
+        expect(grantee_endpoint.request.body.keys).to eq ["data"]
       end
     end
   end

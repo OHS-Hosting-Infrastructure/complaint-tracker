@@ -2,9 +2,7 @@ require "rails_helper"
 
 RSpec.describe "grantees/show", type: :view do
   let(:id) { "fake-grantee-789" }
-  let(:grantee) {
-    Grantee.new(hses_grantee: Api::FakeData::Grantee.new(id: id).data)
-  }
+  let(:grantee) { Grantee.new(id) }
 
   before do
     assign(:grantee, grantee)
@@ -25,7 +23,7 @@ RSpec.describe "grantees/show", type: :view do
     end
 
     it "displays a link to the HSES page" do
-      link_element = "<a href=\"#{grantee.hses_link}\" target=\"_blank\">Open in HSES</a>"
+      link_element = "<a href=\"#{grantee.hses_link}\""
       expect(rendered).to match link_element
     end
   end

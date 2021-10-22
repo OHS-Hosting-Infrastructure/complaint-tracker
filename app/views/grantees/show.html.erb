@@ -10,7 +10,16 @@
       <div class="summary-section">
         <div class="ct-section-divider">
           <h2>Summary</h2>
-          <a href="<%= @grantee.hses_link %>" target="_blank">Open in HSES</a>
+          <p class="display-flex flex-justify">
+            <span> Total Centers:</span> 
+            <span><%= @grantee.centers_total %> </span>
+          </p>
+          <p class="display-flex flex-justify">
+            <span> FY21 Complaints:</span> 
+            <span><%= @grantee.complaints_per_fy %> </span>
+          </p>
+          <a href="<%= @grantee.hses_link %>" 
+          class="usa-button width-full" target="_blank">Open in HSES</a>
         </div>
       </div>
       <div class="summary-section">
@@ -21,13 +30,11 @@
     </div>
     <div class="grid-col-8">
       <ul class="usa-process-list">
-        <% (1..5).each do |index| %>
+        <% (1..@grantee.complaints_per_fy).each do |index| %>
           <li>
             <div class="summary-section">
               <div class="ct-section-divider">
-                <h2>
-                  <li>Complaint <%= index %></li>
-                </h2>
+                <h2> Complaint <%= index %> </h2>
               </div>
             </div>
           </li>
