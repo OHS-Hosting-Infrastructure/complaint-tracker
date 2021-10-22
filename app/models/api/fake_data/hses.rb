@@ -23,7 +23,7 @@ class Api::FakeData::Hses
     include FakeApiResponseWrapper
 
     def initialize(user:, params: {})
-      @username = user["uid"]
+      @username = user[:uid]
     end
 
     def request

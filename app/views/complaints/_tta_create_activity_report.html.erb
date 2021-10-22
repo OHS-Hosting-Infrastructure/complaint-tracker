@@ -7,11 +7,11 @@
     <div>
       <%= form_with url: issue_tta_reports_path, method: "post", class: "usa-search display-flex", id: "tta-report-form"  do %>
         <%= hidden_field_tag(:issue_id, @complaint.id) %>
-        <% if flash["tta_errors"].present? %>
+        <% if flash[:tta_errors].present? %>
           <div class="usa-form-group usa-form-group--error">
             <%= label_tag "tta-report-display-id", "TTA report display ID", class: "usa-sr-only", id: "tta-report-label" %>
-            <span class="usa-error-message" id="input-error-message"><%= flash["tta_errors"]["message"] %></span>
-            <%= text_field_tag :tta_report_display_id, flash["tta_errors"]["display_id"], id: "tta-report-display-id", "aria-describedBy": "tta-report-label" %>
+            <span class="usa-error-message" id="input-error-message"><%= flash[:tta_errors][:message] %></span>
+            <%= text_field_tag :tta_report_display_id, flash[:tta_errors][:display_id], id: "tta-report-display-id", "aria-describedBy": "tta-report-label" %>
             <%= submit_tag "Link", class: "usa-button usa-search__submit-text" %>
           </div>
         <% else %>

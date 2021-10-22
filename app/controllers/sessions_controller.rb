@@ -2,11 +2,11 @@ class SessionsController < ApplicationController
   skip_before_action :require_user!
 
   def create
-    session["user"] = {
+    session[:user] = {
       uid: auth_info["uid"],
       name: auth_info["info"]["name"]
     }.with_indifferent_access
-    session["hses_access_token"] = auth_info["credentials"]
+    session[:hses_access_token] = auth_info["credentials"]
     Rails.logger.debug { "Got auth_info: #{JSON.pretty_generate(auth_info)}" }
     redirect_to user_root_path
   end

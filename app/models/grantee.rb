@@ -13,7 +13,7 @@ class Grantee
   end
 
   def hses_link
-    links["html"]
+    links[:html]
   end
 
   def centers_total
