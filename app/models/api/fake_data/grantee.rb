@@ -16,8 +16,8 @@ class Api::FakeData::Grantee
         region: identifier
       },
       links: {
-        self: "https://example.com/TODO",
-        html: "https://example.com/TODO"
+        self: "https://example.com/self/TODO",
+        html: "https://example.com/html/TODO"
       }
     }
   end
