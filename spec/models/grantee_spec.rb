@@ -4,28 +4,32 @@ RSpec.describe Grantee, type: :model do
   let(:id) { "fake-grantee-456" }
   let(:hses_link) { "https://example.com/html/TODO" }
   let(:hses_grantee) { Api::FakeData::Grantee.new(id: id).data }
+  let(:delegator) { double ApiDelegator }
+  let(:response) { double ApiResponse }
 
   describe "initialize" do
-    subject { described_class.new(hses_grantee: hses_grantee) }
+    subject { described_class.new(id) }
+
     it "sets @id" do
       expect(subject.id).to eq hses_grantee[:id]
     end
-
-    it "sets @attributes" do
-      expect(subject.attributes).to eq hses_grantee[:attributes].with_indifferent_access
-    end
   end
 
-  # TODO: test for missing attribute
   context "with all the attributes" do
-    subject { described_class.new(hses_grantee: hses_grantee) }
+    subject { described_class.new(id) }
+
+    before do
+      expect(ApiDelegator).to receive(:use).with("hses", "grantee", {id: id}).and_return delegator
+      expect(delegator).to receive(:request).and_return response
+      expect(response).to receive(:data).and_return hses_grantee
+    end
+
     describe "#name" do
       it "delegates to the attributes" do
         expect(subject.name).to eq hses_grantee[:attributes][:name]
       end
     end
 
-    # TODO: test for missing attribute
     describe "#region" do
       it "delegates to the attributes" do
         expect(subject.region).to eq hses_grantee[:attributes][:region]
@@ -43,16 +47,29 @@ RSpec.describe Grantee, type: :model do
         expect(subject.complaints_per_fy).to eq hses_grantee[:attributes][:totalComplaintsFiscalYear]
       end
     end
+
+    describe "#hses_link" do
+      it "delegates to the attributes" do
+        expect(subject.hses_link).to eq hses_link
+      end
+    end
   end
 
   context "with missing attributes" do
+    subject { described_class.new(id) }
+
     let(:grantee_hash) do
       {
-        id: "fake-grantee-1243",
+        id: id,
         attributes: {}
       }
     end
-    subject { described_class.new(hses_grantee: grantee_hash) }
+
+    before do
+      expect(ApiDelegator).to receive(:use).with("hses", "grantee", {id: id}).and_return delegator
+      expect(delegator).to receive(:request).and_return response
+      expect(response).to receive(:data).and_return grantee_hash
+    end
 
     describe "#name" do
       it "delegates to the attributes" do
@@ -60,7 +77,6 @@ RSpec.describe Grantee, type: :model do
       end
     end
 
-    # TODO: test for missing attribute
     describe "#region" do
       it "delegates to the attributes" do
         expect(subject.region).to be nil
@@ -78,12 +94,11 @@ RSpec.describe Grantee, type: :model do
         expect(subject.complaints_per_fy).to be nil
       end
     end
-  end
 
-  # TODO: test for missing attribute
-  describe "#hses_link" do
-    it "delegates to the attributes" do
-      expect(subject.hses_link).to eq hses_link
+    describe "#hses_link" do
+      it "delegates to the attributes" do
+        expect(subject.hses_link).to be nil
+      end
     end
   end
 end
