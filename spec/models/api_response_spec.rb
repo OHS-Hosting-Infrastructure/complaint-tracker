@@ -58,7 +58,7 @@ RSpec.describe ApiResponse do
       let(:subject) { ApiResponse.new(http_obj) }
 
       before do
-        expect(http_obj).to receive(:body)
+        expect(http_obj).to receive(:body).and_return('{"sample":"body"}')
       end
 
       describe "#initialize" do
@@ -68,8 +68,8 @@ RSpec.describe ApiResponse do
       end
 
       describe "#body" do
-        it "returns an empty hash" do
-          expect(subject.body).to eq({})
+        it "returns the parsed body" do
+          expect(subject.body).to match({sample: "body"})
         end
       end
 
@@ -97,7 +97,7 @@ RSpec.describe ApiResponse do
       let(:subject) { ApiResponse.new(http_obj) }
 
       before do
-        expect(http_obj).to receive(:body)
+        expect(http_obj).to receive(:body).and_return('{"sample":"body"}')
       end
 
       describe "#initialize" do
@@ -107,8 +107,8 @@ RSpec.describe ApiResponse do
       end
 
       describe "#body" do
-        it "returns an empty hash" do
-          expect(subject.body).to eq({})
+        it "returns the parsed body" do
+          expect(subject.body).to match({sample: "body"})
         end
       end
 

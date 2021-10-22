@@ -1,12 +1,16 @@
 class ApiResponse
   attr_reader :code
+  attr_accessor :error
+
   def initialize(response)
+    @response = response
     @code = response.code.to_i
     @response_body = response.body
+    @error = Api::Error.new(@code, body: body) if failed?
   end
 
   def body
-    succeeded? ? parse_body : {}
+    @body ||= parse_body
   end
 
   def count
@@ -14,11 +18,7 @@ class ApiResponse
   end
 
   def data
-    body[:data] || {}
-  end
-
-  def error_object
-    failed? ? parse_body : {}
+    succeeded? ? body[:data] : {}
   end
 
   def failed?
