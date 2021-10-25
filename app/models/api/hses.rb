@@ -2,15 +2,19 @@ require "fake_api_response_wrapper"
 require "fake_issues"
 
 module Api::Hses
-  def host
-    Rails.configuration.x.hses.api_hostname
-  end
-
   def configure_auth(request)
     request.basic_auth(
       Rails.configuration.x.hses.api_username,
       Rails.configuration.x.hses.api_password
     )
+  end
+
+  def error_type
+    Api::HsesError
+  end
+
+  def host
+    Rails.configuration.x.hses.api_hostname
   end
 end
 
@@ -46,7 +50,6 @@ class Api::Hses::Issues < ApiRequest
       #{JSON.pretty_generate(response)}
     EODM
     if response.failed?
-      response.error = Api::HsesError.new(response.code, response.body)
       Rails.logger.error "HSES call to #{path} responded with #{response.code}"
     end
     response

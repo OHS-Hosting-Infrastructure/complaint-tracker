@@ -39,6 +39,12 @@ RSpec.describe ApiResponse do
       end
     end
 
+    describe "#error" do
+      it "returns nil" do
+        expect(subject.error).to be nil
+      end
+    end
+
     describe "#failed?" do
       it "returns false" do
         expect(subject.failed?).to be false
@@ -79,6 +85,13 @@ RSpec.describe ApiResponse do
         end
       end
 
+      describe "#error" do
+        it "returns an Api::Error object" do
+          expect(subject.error).to be_instance_of Api::Error
+          expect(subject.error.code).to eq 404
+        end
+      end
+
       describe "#failed?" do
         it "returns true" do
           expect(subject.failed?).to be true
@@ -115,6 +128,13 @@ RSpec.describe ApiResponse do
       describe "#data" do
         it "returns an empty hash" do
           expect(subject.data).to eq({})
+        end
+      end
+
+      describe "#error" do
+        it "returns an Api::Error object" do
+          expect(subject.error).to be_instance_of Api::Error
+          expect(subject.error.code).to eq 500
         end
       end
 
