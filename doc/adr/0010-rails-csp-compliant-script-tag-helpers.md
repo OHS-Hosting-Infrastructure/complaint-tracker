@@ -12,6 +12,9 @@ Supercedes [8. CSP compliant script tag helpers](0008-csp-compliant-script-tag-h
 
 The CSP controls and helpers used previously do not work when utilizing Rails UJS Ajax forms.
 
+Rails UJS AJAX forms will be used by the TTA Activity Report linking code in order
+to improve the error reporting experience.
+
 ## Decision
 
 Using Rails built-in CSP controls while keeping SecureHeaders in place for other headers results
