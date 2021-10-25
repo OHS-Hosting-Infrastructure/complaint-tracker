@@ -8,25 +8,25 @@ class IssueTtaReportsController < ApplicationController
       access_token: hses_access_token
     )
 
-    if !@issue_tta_report.save
-      flash[:tta_errors] = {
-        display_id: tta_report_display_id,
-        message: @issue_tta_report.errors.full_messages.join(". ")
-      }
+    respond_to do |format|
+      if @issue_tta_report.save
+        format.js { render inline: "location.reload(true);" }
+      else
+        format.js { render "create_errors" }
+      end
     end
-    redirect_to complaint_path(issue_id)
   end
 
   def update
-    report = IssueTtaReport.find(params[:id])
+    @issue_tta_report = IssueTtaReport.find(params[:id])
 
-    if !report.update(tta_report_display_id: tta_report_display_id, access_token: hses_access_token)
-      flash[:tta_errors] = {
-        display_id: tta_report_display_id,
-        message: report.errors.full_messages.join(". ")
-      }
+    respond_to do |format|
+      if @issue_tta_report.update(tta_report_display_id: tta_report_display_id, access_token: hses_access_token)
+        format.js { render inline: "location.reload(true);" }
+      else
+        format.js { render "update_errors" }
+      end
     end
-    redirect_to complaint_path(issue_id)
   end
 
   def unlink

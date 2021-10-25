@@ -109,7 +109,7 @@ RSpec.feature "Associating TTA Activity Report", type: :feature do
         expect(page).to have_content "TTA Activity:\n#{test_display_id}\n"
         find_button("Edit Display ID").click
         page.find("##{test_display_id}").fill_in with: "RO2-AR-14532"
-        page.find("#edit-tta-activity-#{test_display_id} .js-close-edit-tta").click
+        page.find("#edit-tta-activity-#{issue_tta_report.id} .js-close-edit-tta").click
 
         expect(page).to have_content "TTA Activity:\n#{test_display_id}\n"
       end
@@ -117,7 +117,7 @@ RSpec.feature "Associating TTA Activity Report", type: :feature do
 
     it "can unlink a TTA activity report display id" do
       expect(page).to have_content "TTA Activity:\n#{test_display_id}\n"
-      page.find("#tta-activity-show-#{test_display_id} .js-open-unlink-modal").click
+      page.find("#tta-activity-show-#{issue_tta_report.id} .js-open-unlink-modal").click
       click_button "Yes, remove the link"
 
       expect(page).to_not have_content "TTA Activity:\n#{test_display_id}\n"
