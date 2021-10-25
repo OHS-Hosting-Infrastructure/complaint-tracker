@@ -4,11 +4,14 @@ const openForm = function () {
   document.querySelector("#tta-report-display-id").focus()
 }
 
-const closeForm = function () {
-  const input = document.querySelector("#tta-report-display-id")
-  input.value = ""
-  const form = document.querySelector("#tta-activity-form")
-  form.classList.add("display-none")
+const closeForm = function (containerId = "#tta-activity-form") {
+  const formContainer = document.querySelector(containerId)
+  formContainer.classList.add("display-none")
+
+  const groupContainer = formContainer.querySelector(".usa-form-group")
+  groupContainer.classList.remove("usa-form-group--error")
+  const errorMessage = groupContainer.querySelector("span.usa-error-message")
+  errorMessage.innerText = ""
 }
 
 document.querySelector("#js-add-tta-report").addEventListener('click', event => {
@@ -23,6 +26,8 @@ document.querySelector("#tta-report-icon").addEventListener('click', event => {
 document.querySelector("#js-close-tta-form").addEventListener('click', event => {
   event.preventDefault()
   closeForm()
+  const input = document.querySelector("#tta-report-display-id")
+  input.value = ""
 })
 
 document.querySelectorAll(".js-edit-tta").forEach((el) => {
@@ -30,10 +35,10 @@ document.querySelectorAll(".js-edit-tta").forEach((el) => {
     event.preventDefault()
 
     // hide details
-    const displayId = event.currentTarget.dataset.displayId
-    document.querySelector("#tta-activity-show-" + displayId).classList.add("display-none")
+    const id = event.currentTarget.dataset.id
+    document.querySelector(`#tta-activity-show-${id}`).classList.add("display-none")
     // show form
-    const form = document.querySelector("#edit-tta-activity-" + displayId)
+    const form = document.querySelector(`#edit-tta-activity-${id}`)
     form.classList.remove("display-none")
     form.querySelector("input[type='text']").focus()
   })
@@ -43,12 +48,11 @@ document.querySelectorAll(".js-close-edit-tta").forEach((el) => {
   el.addEventListener('click', event => {
     event.preventDefault()
 
-    const displayId = event.currentTarget.dataset.displayId
+    const id = event.currentTarget.dataset.id
     // hide form
-    const form = document.querySelector("#edit-tta-activity-" + displayId)
-    form.classList.add("display-none")
+    closeForm(`#edit-tta-activity-${id}`)
     // show detail
-    document.querySelector("#tta-activity-show-" + displayId).classList.remove("display-none")
+    document.querySelector(`#tta-activity-show-${id}`).classList.remove("display-none")
   })
 })
 
