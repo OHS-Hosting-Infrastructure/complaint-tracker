@@ -36,7 +36,7 @@ class Api::Hses::Issues < ApiRequest
   PAGE_LIMIT = 25
 
   def initialize(user:, params: {})
-    @username = user["uid"]
+    @username = user[:uid]
     @page = params[:page] || 1
   end
 
@@ -72,5 +72,18 @@ class Api::Hses::Issues < ApiRequest
 
   def path
     "/issues-ws/issues"
+  end
+end
+
+class Api::Hses::Grantee
+  include FakeApiResponseWrapper
+  attr_accessor :id
+
+  def initialize(id:)
+    @id = id
+  end
+
+  def request
+    details_response(Api::FakeData::Grantee.new(id: id).data)
   end
 end

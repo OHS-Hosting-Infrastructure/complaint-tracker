@@ -23,7 +23,7 @@ class Complaint
   end
 
   def grantee
-    attributes["grantee"]
+    attributes[:grantee]
   end
 
   def overdue?
@@ -43,7 +43,7 @@ class Complaint
   end
 
   def summary
-    attributes["summary"]
+    attributes[:summary]
   end
 
   private

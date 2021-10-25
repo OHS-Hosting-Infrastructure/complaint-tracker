@@ -18,9 +18,9 @@ RSpec.describe "Pages", type: :request do
       }
 
       before do
-        # There are some other session requests before getting to session["user"]
+        # There are some other session requests before getting to session[:user]
         allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[])
-        allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with("user").and_return user
+        allow_any_instance_of(ActionDispatch::Request::Session).to receive(:[]).with(:user).and_return user
       end
 
       it "redirects to the complaints list" do

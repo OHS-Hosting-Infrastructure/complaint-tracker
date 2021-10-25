@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Api::Hses do
-  let(:user) { {"uid" => "test.uid"} }
+  let(:user) { {"uid" => "test.uid"}.with_indifferent_access }
 
   describe "Issue" do
     let(:issue) { Api::Hses::Issue.new(id: 1) }

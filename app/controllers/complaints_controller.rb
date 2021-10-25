@@ -31,12 +31,12 @@ class ComplaintsController < ApplicationController
   def check_pa11y_id
     if params[:id] == "pa11y-id"
       params[:id] = ApiDelegator
-        .use("hses", "issues", {user: session["user"]})
+        .use("hses", "issues", {user: session[:user]})
         .request.data.first[:id]
     end
   end
 
   def options_index
-    {user: session["user"], params: params}
+    {user: session[:user], params: params}
   end
 end

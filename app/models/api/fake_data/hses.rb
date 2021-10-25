@@ -23,9 +23,9 @@ class Api::FakeData::Hses
     include FakeApiResponseWrapper
 
     def initialize(user:, params: {})
-      @username = user["uid"]
-      # note: this parameter is only used for testing with fake data
-      @error_code = params["error"]
+      @username = user[:uid]
+      # note: this parameter is used for viewing possible errors with responses
+      @error_code = params[:error]
     end
 
     def request
@@ -59,6 +59,19 @@ class Api::FakeData::Hses
       else
         list_response(FakeIssues.instance.data)
       end
+    end
+  end
+
+  class Grantee
+    include FakeApiResponseWrapper
+    attr_accessor :id
+
+    def initialize(id:)
+      @id = id
+    end
+
+    def request
+      details_response(Api::FakeData::Grantee.new(id: id).data)
     end
   end
 end
