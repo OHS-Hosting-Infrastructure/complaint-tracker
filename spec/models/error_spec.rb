@@ -11,7 +11,7 @@ RSpec.describe Api::Error do
   end
 
   context "bad request" do
-    context "HSES style response" do
+    context "essentially an HSES style response" do
       it "returns code, title, and details" do
         fake_api_res = {status: 400, error: "HSES Bad Request", message: "HSES message"}
         error = Api::Error.new(400, body: fake_api_res)
@@ -53,6 +53,28 @@ RSpec.describe Api::TtaError do
       expect(error.code).to eq 400
       expect(error.title).to eq "TTA Bad Request"
       expect(error.details).to eq "TTA message"
+    end
+  end
+end
+
+RSpec.describe Api::HsesError do
+  context "HSES style response" do
+    it "400 returns the overriding message correctly" do
+      fake_api_res = {status: 400, error: "HSES Bad Request", message: "HSES message"}
+      error = Api::HsesError.new(400, body: fake_api_res)
+
+      expect(error.code).to eq 400
+      expect(error.title).to eq "HSES Bad Request"
+      expect(error.details).to eq "We're currently unable to access complaint data. Please refresh the page, and if you still see a problem, check back again later."
+    end
+
+    it "403 returns the overriding message correctly" do
+      fake_api_res = {status: 403, error: "HSES Bad Request", message: "HSES message"}
+      error = Api::HsesError.new(403, body: fake_api_res)
+
+      expect(error.code).to eq 403
+      expect(error.title).to eq "HSES Bad Request"
+      expect(error.details).to eq "You do not have permission to view these complaints. Please contact your administrator for assistance."
     end
   end
 end

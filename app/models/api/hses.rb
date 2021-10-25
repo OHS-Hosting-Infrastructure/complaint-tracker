@@ -46,6 +46,7 @@ class Api::Hses::Issues < ApiRequest
       #{JSON.pretty_generate(response)}
     EODM
     if response.failed?
+      response.error = Api::HsesError.new(response.code, response.body)
       Rails.logger.error "HSES call to #{path} responded with #{response.code}"
     end
     response

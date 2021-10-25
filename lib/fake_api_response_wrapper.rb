@@ -28,9 +28,11 @@ module FakeApiResponseWrapper
     }
   end
 
-  def other_response(code, body)
-    ApiResponse.new(
+  def other_response(code, body, error_type: nil)
+    res = ApiResponse.new(
       OpenStruct.new(code: code, body: body)
     )
+    res.error = error_type.new(res.code, body: res.body) if error_type
+    res
   end
 end
