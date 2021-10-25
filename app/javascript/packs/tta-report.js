@@ -7,6 +7,7 @@ const openForm = function () {
 const closeForm = function (containerId = "#tta-activity-form") {
   const formContainer = document.querySelector(containerId)
   formContainer.classList.add("display-none")
+
   const groupContainer = formContainer.querySelector(".usa-form-group")
   groupContainer.classList.remove("usa-form-group--error")
   const errorMessage = groupContainer.querySelector("span.usa-error-message")
