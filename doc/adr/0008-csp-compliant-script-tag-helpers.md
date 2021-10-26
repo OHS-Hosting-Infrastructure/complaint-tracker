@@ -4,7 +4,7 @@ Date: 2021-08-27
 
 ## Status
 
-Accepted
+Superceded by [10. Rails CSP compliant script tag helpers](0010-rails-csp-compliant-script-tag-helpers.md)
 
 ## Context
 
