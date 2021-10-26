@@ -40,11 +40,13 @@ RSpec.describe Api::Tta do
           # stub the net/http request / response
           response = Net::HTTPNotFound.new(1.1, "404", "Not Found")
           expect_any_instance_of(Net::HTTP).to receive(:start).and_return response
-          expect(response).to receive(:body).and_return('{"status":"404", "title":"Not Found", "detail":""}')
+          expect(response)
+            .to receive(:body)
+            .and_return('{"status": "404", "title": "Not Found", "detail": ""}')
         end
 
-        it "returns an empty hash as the body" do
-          expect(subject.request.body).to eq({})
+        it "returns a parsed body" do
+          expect(subject.request.body).to match({status: "404", title: "Not Found", detail: ""})
         end
 
         it "has a code of 404" do

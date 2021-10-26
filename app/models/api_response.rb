@@ -1,24 +1,26 @@
 class ApiResponse
   attr_reader :code
-  def initialize(response)
+
+  def initialize(response, error_type: Api::Error)
     @code = response.code.to_i
     @response_body = response.body
+    @error_type = error_type
   end
 
   def body
-    succeeded? ? parse_body : {}
+    @body ||= parse_body
   end
 
   def count
     succeeded? ? 1 : 0
   end
 
-  def data
-    body[:data] || {}
+  def error
+    @error ||= create_error
   end
 
-  def error_object
-    failed? ? parse_body : {}
+  def data
+    succeeded? ? body[:data] : {}
   end
 
   def failed?
@@ -30,6 +32,10 @@ class ApiResponse
   end
 
   private
+
+  def create_error
+    @error_type.new(@code, body) if failed?
+  end
 
   def parse_body
     JSON.parse(@response_body).with_indifferent_access

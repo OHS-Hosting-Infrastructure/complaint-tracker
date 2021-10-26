@@ -9,8 +9,12 @@ class ApiRequest
 
   private
 
+  def error_type
+    Api::Error
+  end
+
   def get_response
-    response_type.new(send_api_request)
+    response_type.new(send_api_request, error_type: error_type)
   end
 
   # Inheriting class defines

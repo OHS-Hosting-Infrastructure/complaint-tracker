@@ -32,7 +32,7 @@ RSpec.describe Api::FakeData::Tta do
           response = subject.request
           expect(response).to be_failed
           expect(response.code).to eq 401
-          expect(response.error_object).to match({
+          expect(response.body).to match({
             status: "401",
             title: "Unauthenticated User",
             detail: "User token is missing or did not map to a known user"
@@ -47,7 +47,7 @@ RSpec.describe Api::FakeData::Tta do
           response = subject.request
           expect(response).to be_failed
           expect(response.code).to eq 403
-          expect(response.error_object).to match({
+          expect(response.body).to match({
             status: "403",
             title: "Unauthorized User",
             details: "User does not have the appropriate permissions to view this resource"
@@ -62,7 +62,7 @@ RSpec.describe Api::FakeData::Tta do
           response = subject.request
           expect(response).to be_failed
           expect(response.code).to eq 404
-          expect(response.error_object).to match({
+          expect(response.body).to match({
             status: "404",
             title: "Not Found",
             details: "Report #{display_id} could not be found"
@@ -77,7 +77,7 @@ RSpec.describe Api::FakeData::Tta do
           response = subject.request
           expect(response).to be_failed
           expect(response.code).to eq 500
-          expect(response.error_object).to eq({})
+          expect(response.body).to eq({})
         end
       end
     end

@@ -40,7 +40,7 @@ RSpec.describe ApiResponseCollection do
       let(:subject) { ApiResponseCollection.new(http_obj) }
 
       before do
-        expect(http_obj).to receive(:body)
+        expect(http_obj).to receive(:body).and_return('{"status":200, "message":"some error"}')
       end
 
       describe "#count" do
@@ -61,7 +61,7 @@ RSpec.describe ApiResponseCollection do
       let(:subject) { ApiResponseCollection.new(http_obj) }
 
       before do
-        expect(http_obj).to receive(:body)
+        expect(http_obj).to receive(:body).and_return('{"status":200, "message":"some error"}')
       end
 
       describe "#count" do

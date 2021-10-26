@@ -4,6 +4,6 @@ class ApiResponseCollection < ApiResponse
   end
 
   def data
-    body[:data] || []
+    succeeded? ? body[:data] : []
   end
 end

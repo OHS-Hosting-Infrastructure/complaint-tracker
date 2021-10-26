@@ -39,6 +39,12 @@ RSpec.describe ApiResponse do
       end
     end
 
+    describe "#error" do
+      it "returns nil" do
+        expect(subject.error).to be nil
+      end
+    end
+
     describe "#failed?" do
       it "returns false" do
         expect(subject.failed?).to be false
@@ -58,7 +64,7 @@ RSpec.describe ApiResponse do
       let(:subject) { ApiResponse.new(http_obj) }
 
       before do
-        expect(http_obj).to receive(:body)
+        expect(http_obj).to receive(:body).and_return('{"sample":"body"}')
       end
 
       describe "#initialize" do
@@ -68,14 +74,21 @@ RSpec.describe ApiResponse do
       end
 
       describe "#body" do
-        it "returns an empty hash" do
-          expect(subject.body).to eq({})
+        it "returns the parsed body" do
+          expect(subject.body).to match({sample: "body"})
         end
       end
 
       describe "#data" do
         it "returns an empty hash" do
           expect(subject.data).to eq({})
+        end
+      end
+
+      describe "#error" do
+        it "returns an Api::Error object" do
+          expect(subject.error).to be_instance_of Api::Error
+          expect(subject.error.code).to eq 404
         end
       end
 
@@ -97,7 +110,7 @@ RSpec.describe ApiResponse do
       let(:subject) { ApiResponse.new(http_obj) }
 
       before do
-        expect(http_obj).to receive(:body)
+        expect(http_obj).to receive(:body).and_return('{"sample":"body"}')
       end
 
       describe "#initialize" do
@@ -107,14 +120,21 @@ RSpec.describe ApiResponse do
       end
 
       describe "#body" do
-        it "returns an empty hash" do
-          expect(subject.body).to eq({})
+        it "returns the parsed body" do
+          expect(subject.body).to match({sample: "body"})
         end
       end
 
       describe "#data" do
         it "returns an empty hash" do
           expect(subject.data).to eq({})
+        end
+      end
+
+      describe "#error" do
+        it "returns an Api::Error object" do
+          expect(subject.error).to be_instance_of Api::Error
+          expect(subject.error.code).to eq 500
         end
       end
 

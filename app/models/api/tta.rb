@@ -1,4 +1,8 @@
 module Api::Tta
+  def error_type
+    Api::ErrorTta
+  end
+
   def host
     Rails.configuration.x.tta.api_hostname
   end
