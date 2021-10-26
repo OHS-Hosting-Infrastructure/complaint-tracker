@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "rendering complaints list" do
   let(:complaint) { Api::FakeData::Complaint.new.data }
 
-  describe "a complaint card" do
+  it "displays a complaint card" do
     complaint[:id] = "12345"
 
     render partial: "complaints/complaints_list_detail", locals: {complaint: complaint}
