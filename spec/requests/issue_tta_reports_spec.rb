@@ -43,13 +43,13 @@ RSpec.describe "IssueTtaReports", type: :request do
           .with("tta", "activity_report", {display_id: tta_display_id, access_token: kind_of(HsesAccessToken)})
           .and_return activity_report
         post issue_tta_reports_path,
-          params: {tta_report_display_id: tta_display_id, issue_id: complaint_id}
+          params: {tta_report_display_id: tta_display_id, issue_id: complaint_id, format: :js}
       end
 
       it "adds an IssueTtaReport object" do
         expect {
           post issue_tta_reports_path,
-            params: {tta_report_display_id: tta_display_id, issue_id: complaint_id}
+            params: {tta_report_display_id: tta_display_id, issue_id: complaint_id, format: :js}
         }.to change { IssueTtaReport.count }.by 1
       end
     end
@@ -83,12 +83,12 @@ RSpec.describe "IssueTtaReports", type: :request do
         expect(ApiDelegator).to receive(:use)
           .with("tta", "activity_report", {display_id: tta_display_id, access_token: kind_of(HsesAccessToken)})
           .and_return activity_report
-        post issue_tta_reports_path, params: {tta_report_display_id: tta_display_id, issue_id: complaint_id}
+        post issue_tta_reports_path, params: {tta_report_display_id: tta_display_id, issue_id: complaint_id, format: :js}
       end
 
       it "updates the IssueTtaReport object" do
         put issue_tta_report_path(issue_tta_report),
-          params: {tta_report_display_id: "new_display_id", issue_id: complaint_id}
+          params: {tta_report_display_id: "new_display_id", issue_id: complaint_id, format: :js}
 
         updated_report = IssueTtaReport.find(issue_tta_report.id)
         expect(updated_report.tta_report_display_id).to eq "new_display_id"
@@ -123,7 +123,7 @@ RSpec.describe "IssueTtaReports", type: :request do
 
         before do
           post issue_tta_reports_path,
-            params: {tta_report_display_id: second_display_id, issue_id: complaint_id}
+            params: {tta_report_display_id: second_display_id, issue_id: complaint_id, format: :js}
         end
 
         it "only deletes the specified tta_activity_report" do

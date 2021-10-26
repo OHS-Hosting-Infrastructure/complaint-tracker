@@ -1,20 +1,22 @@
 <div class="ct-section-divider">
   <% tta_report_display_id = issue_tta_report.tta_report_display_id %>
   <p>
-    <div class="display-flex flex-justify margin-bottom-2"> 
+    <div class="display-flex flex-justify margin-bottom-2">
       <span> Activity Report ID</span>
       <%= button_to "Cancel", ".js-add-tta-report",
         class: "usa-link usa-button--unstyled js-close-edit-tta",
-        "data-display-id": tta_report_display_id
+        "data-id": issue_tta_report.id
       %>
     </div>
     <div>
-      <%= form_with url: issue_tta_report_path(issue_tta_report), method: "put", class: "usa-search display-flex"  do %>
-        <%= label_tag "tta-edit-report-id", "TTA report display ID", class: "usa-sr-only tta-edit-report-label" %>
-        <%= text_field_tag :tta_report_display_id, tta_report_display_id, id: tta_report_display_id, "aria-describedBy": "tta-edit-report-label" %>
+      <%= form_with url: issue_tta_report_path(issue_tta_report), local: false, method: "put", class: "usa-search display-flex" do %>
         <%= hidden_field_tag(:issue_id, @complaint.id) %>
-        <%= hidden_field_tag(:original_display_id, tta_report_display_id) %>
-        <%= submit_tag "Save", class: "usa-button usa-search__submit-text" %>
+        <div class="usa-form-group">
+          <%= label_tag "tta-edit-report-id", "TTA report display ID", class: "usa-sr-only tta-edit-report-label" %>
+          <span class="usa-error-message"></span>
+          <%= text_field_tag :tta_report_display_id, tta_report_display_id, id: tta_report_display_id, "aria-describedBy": "tta-edit-report-label" %>
+          <%= submit_tag "Save", class: "usa-button usa-search__submit-text" %>
+        </div>
       <% end %>
     </div>
   </p>

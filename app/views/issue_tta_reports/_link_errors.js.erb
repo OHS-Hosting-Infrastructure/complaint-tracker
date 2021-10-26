@@ -1,0 +1,4 @@
+var container = document.querySelector("<%= form_container_css_selector %> .usa-form-group");
+container.classList.add("usa-form-group--error");
+var messageSpan = container.querySelector("span.usa-error-message");
+messageSpan.innerText = "<%= sanitize @issue_tta_report.errors.full_messages.join(". ") %>";

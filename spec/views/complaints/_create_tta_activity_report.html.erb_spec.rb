@@ -9,7 +9,7 @@ RSpec.describe "complaints/_tta_create_activity_report.html.erb", type: :view do
   end
 
   it "is a form" do
-    expect(rendered).to match "<form id=\"tta-report-form\" class=\"usa-search display-flex\" action=\"/issue_tta_reports\" accept-charset=\"UTF-8\" method=\"post\">"
+    expect(rendered).to match "<form id=\"tta-report-form\" class=\"usa-search display-flex\" action=\"/issue_tta_reports\" accept-charset=\"UTF-8\" data-remote=\"true\" method=\"post\">"
   end
 
   it "has a hidden field with the issue id" do

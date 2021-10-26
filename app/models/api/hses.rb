@@ -40,7 +40,7 @@ class Api::Hses::Issues < ApiRequest
   PAGE_LIMIT = 25
 
   def initialize(user:, params: {})
-    @username = user[:uid]
+    @username = user["uid"]
     @page = params[:page] || 1
   end
 
