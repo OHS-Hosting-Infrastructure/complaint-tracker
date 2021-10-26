@@ -9,7 +9,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
     it "returns the username" do
       session["user"] = session_user
-      expect(helper.current_user).to eq session_user
+      expect(helper.current_user).to eq session_user.with_indifferent_access
     end
   end
 
