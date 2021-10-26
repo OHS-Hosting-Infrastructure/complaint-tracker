@@ -27,6 +27,10 @@ class Grantee
     attributes[:region]
   end
 
+  def complaints
+    relationships[:issues]
+  end
+
   private
 
   def attributes
@@ -39,5 +43,9 @@ class Grantee
 
   def links
     grantee_data[:links] || {}
+  end
+
+  def relationships
+    grantee_data[:relationships] || {}
   end
 end

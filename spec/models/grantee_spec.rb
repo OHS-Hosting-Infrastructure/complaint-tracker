@@ -101,4 +101,14 @@ RSpec.describe Grantee, type: :model do
       end
     end
   end
+
+  context "with associations" do
+    subject { described_class.new(id) }
+
+    describe "complaints" do
+      it "delegates to the relationships" do
+        expect(subject.complaints.size).to eq 2
+      end
+    end
+  end
 end

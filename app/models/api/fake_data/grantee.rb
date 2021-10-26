@@ -24,6 +24,12 @@ class Api::FakeData::Grantee
       links: {
         self: "https://example.com/self/TODO",
         html: "https://example.com/html/TODO"
+      },
+      relationships: {
+        issues: [
+          { id: identifier },
+          { id: identifier }          
+        ]
       }
     }
   end
