@@ -38,7 +38,7 @@ RSpec.describe "grantees/show", type: :view do
     end
 
     it "displays the complaint list item" do
-      expect(rendered).to match '<li>'
+      expect(rendered).to match "<li>"
     end
   end
 end
