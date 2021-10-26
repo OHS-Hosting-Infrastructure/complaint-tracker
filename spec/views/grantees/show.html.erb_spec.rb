@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe "grantees/show", type: :view do
   let(:id) { "fake-grantee-789" }
   let(:grantee) { Grantee.new(id) }
+  let(:complaint) { grantee.complaints.first }
 
   before do
     assign(:grantee, grantee)
@@ -38,7 +39,8 @@ RSpec.describe "grantees/show", type: :view do
     end
 
     it "displays the complaint list item" do
-      expect(rendered).to match "<li>"
+      complaint_header = "<h2>Complaint ##{complaint[:id]}</h2>"
+      expect(rendered).to match complaint_header
     end
   end
 end
