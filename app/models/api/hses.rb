@@ -10,7 +10,7 @@ module Api::Hses
   end
 
   def error_type
-    Api::HsesError
+    Api::ErrorHses
   end
 
   def host

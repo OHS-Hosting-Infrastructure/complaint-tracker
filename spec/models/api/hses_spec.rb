@@ -12,6 +12,12 @@ RSpec.describe Api::Hses do
       end
     end
 
+    describe "#error_type" do
+      it "should be HsesError" do
+        expect(issue.error_type).to eq Api::ErrorHses
+      end
+    end
+
     describe "#request" do
       it "returns a wrapper with data" do
         expect(issue.request.data).to be_a Hash

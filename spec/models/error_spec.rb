@@ -39,7 +39,7 @@ RSpec.describe Api::Error do
   end
 end
 
-RSpec.describe Api::TtaError do
+RSpec.describe Api::ErrorTta do
   describe "initialize" do
     it "sets code and title" do
       error = Api::Error.new(400, {})
@@ -56,7 +56,7 @@ RSpec.describe Api::TtaError do
         title: "TTA Bad Request",
         details: "TTA message"
       }
-      error = Api::TtaError.new(403, fake_api_res)
+      error = Api::ErrorTta.new(403, fake_api_res)
 
       expect(error.code).to eq 403
       expect(error.title).to eq "TTA Bad Request"
@@ -65,11 +65,11 @@ RSpec.describe Api::TtaError do
   end
 end
 
-RSpec.describe Api::HsesError do
+RSpec.describe Api::ErrorHses do
   context "HSES style response" do
     it "400 returns the overriding message correctly" do
       fake_api_res = {status: 400, error: "HSES Bad Request", message: "HSES message"}
-      error = Api::HsesError.new(400, fake_api_res)
+      error = Api::ErrorHses.new(400, fake_api_res)
 
       expect(error.code).to eq 400
       expect(error.title).to eq "HSES Bad Request"
@@ -78,7 +78,7 @@ RSpec.describe Api::HsesError do
 
     it "403 returns the overriding message correctly" do
       fake_api_res = {status: 403, error: "HSES Bad Request", message: "HSES message"}
-      error = Api::HsesError.new(403, fake_api_res)
+      error = Api::ErrorHses.new(403, fake_api_res)
 
       expect(error.code).to eq 403
       expect(error.title).to eq "HSES Bad Request"

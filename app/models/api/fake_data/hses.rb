@@ -1,7 +1,6 @@
 require "api_response"
 require "fake_api_response_wrapper"
 require "fake_issues"
-require "api/error"
 
 class Api::FakeData::Hses
   def initalize(**)
@@ -39,28 +38,28 @@ class Api::FakeData::Hses
           "error": "Bad Request",
           "message": "HSES error message saying bad request"
         }',
-          error_type: Api::HsesError)
+          error_type: Api::ErrorHses)
       when "401"
         other_response(401, '{
           "status": "401",
           "error": "Unauthorized",
           "message": "HSES error message saying user is unauthorized"
         }',
-          error_type: Api::HsesError)
+          error_type: Api::ErrorHses)
       when "403"
         other_response(403, '{
           "status": "403",
           "error": "Remote IP is not allowed",
           "message": "HSES error message saying remote IP not allowed"
         }',
-          error_type: Api::HsesError)
+          error_type: Api::ErrorHses)
       when "500"
         other_response(500, '{
           "status": "500",
           "error": "Unexpected error",
           "message": "HSES unexpected error message"
         }',
-          error_type: Api::HsesError)
+          error_type: Api::ErrorHses)
       else
         list_response(FakeIssues.instance.data)
       end

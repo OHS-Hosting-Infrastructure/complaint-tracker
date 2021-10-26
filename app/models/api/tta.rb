@@ -1,6 +1,6 @@
 module Api::Tta
   def error_type
-    Api::TtaError
+    Api::ErrorTta
   end
 
   def host
