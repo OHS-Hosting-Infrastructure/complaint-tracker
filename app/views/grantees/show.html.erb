@@ -30,13 +30,9 @@
     </div>
     <div class="grid-col-8">
       <ul class="usa-process-list">
-        <% (1..@grantee.complaints_per_fy).each do |index| %>
+        <% @grantee.complaints.each do |complaint| %>
           <li>
-            <div class="summary-section">
-              <div class="ct-section-divider">
-                <h2> Complaint <%= index %> </h2>
-              </div>
-            </div>
+            <%= render 'complaints/complaints_list_detail', complaint: complaint %>
           </li>
         <% end %>
       </ul>
