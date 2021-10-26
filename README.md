@@ -75,7 +75,9 @@ The system's Content-Security-Policy header prevents `<script>` and `<style>` ta
 configuration. See the [CSP compliant script tag helpers](./doc/adr/0008-csp-compliant-script-tag-helpers.md) ADR for
 more information on setting these up successfully.
 
-### Running Tests
+### Testing
+
+#### Running tests
 
 * Tests: `bundle exec rake spec`
 * Ruby linter: `bundle exec rake standard`
@@ -84,6 +86,13 @@ more information on setting these up successfully.
 * Ruby static security scan: `bundle exec rake brakeman`
 
 Run everything: `bundle exec rake`
+
+#### Manual tests
+
+If you are testing manually, there are a couple features built into the fake data behavior to help you imitate errors.
+
+- `/complaints?error=400` : Set the error parameter for the list of complaints to see how the app displays 400, 401, 403, and 500 errors
+- TTA Activity Reports : Add an id ending with `-401`, `-403`, `-404`, or `-500` to a complaint to test these errors
 
 ### Set up automatic linting and testing
 
