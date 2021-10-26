@@ -45,7 +45,7 @@ class TtaActivityReport
     if valid?
       activity_data.data.dig(*path)
     else
-      fail Api::TtaError.new(activity_data.code, body: activity_data.body)
+      fail Api::TtaError.new(activity_data.code, activity_data.body)
     end
   end
 

@@ -1,11 +1,10 @@
 module Api
   class Error < StandardError
-    attr_reader :code, :title
+    attr_reader :code
 
-    def initialize(code, body: {})
+    def initialize(code, body = {})
       @body = body
       @code = code
-      @title = get_title
       # pass detailed message to StandardError initialize
       super details
     end
@@ -14,8 +13,8 @@ module Api
       @body[:message] || title
     end
 
-    def get_title
-      @body[:error] || default_title
+    def title
+      @title ||= @body[:error] || default_title
     end
 
     private
@@ -39,8 +38,8 @@ module Api
       end
     end
 
-    def get_title
-      @body[:title] || default_title
+    def title
+      @title ||= @body[:title] || default_title
     end
   end
 

@@ -2,7 +2,6 @@ class ApiResponse
   attr_reader :code
 
   def initialize(response, error_type: Api::Error)
-    @response = response
     @code = response.code.to_i
     @response_body = response.body
     @error_type = error_type
@@ -35,7 +34,7 @@ class ApiResponse
   private
 
   def create_error
-    @error_type.new(@code, body: body) if failed?
+    @error_type.new(@code, body) if failed?
   end
 
   def parse_body
