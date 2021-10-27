@@ -27,6 +27,24 @@ module FfakerWrapper
     "DRS"
   ]
 
+  REVIEW_OUTCOME = [
+    "Compliant",
+    "Concern",
+    "Noncompliant",
+    "Deficient"
+  ]
+
+  REVIEW_STATUS = [
+    "Requested",
+    "In Progress",
+    "Complete"
+  ]
+
+  REVIEW_TYPE = [
+    "RAN",
+    "Follow-up"
+  ]
+
   TTA_ROLE = [
     "GS",
     "ECS",
@@ -99,6 +117,18 @@ module FfakerWrapper
 
   def regarding
     REGARDING.sample
+  end
+
+  def review_outcome
+    REVIEW_OUTCOME.sample
+  end
+
+  def review_status
+    REVIEW_STATUS.sample
+  end
+
+  def review_type
+    REVIEW_TYPE.sample
   end
 
   def status_object
