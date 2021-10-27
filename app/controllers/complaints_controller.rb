@@ -10,6 +10,7 @@ class ComplaintsController < ApplicationController
     res = ApiDelegator.use("hses", "issues", options_index).request
 
     @complaints = res.data
+    @error = res.error
     @pagy = Pagy.new(count: res.count, page: params[:page])
   end
 

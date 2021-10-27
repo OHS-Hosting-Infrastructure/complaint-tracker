@@ -62,6 +62,39 @@ RSpec.describe "Complaints", type: :request do
           expect(response.body).to include '<h3 class="usa-alert__heading">No issues found</h3>'
         end
       end
+
+      describe "Error returned by HSES" do
+        before do
+          allow_any_instance_of(ApiResponseCollection).to receive(:data).and_return []
+        end
+
+        context "400 error" do
+          it "includes the error but not the no complaints alert" do
+            get complaints_path(error: "400")
+            expect(response.body).to include '<h4 class="usa-alert__heading">Bad Request</h4>'
+            expect(response.body).to include '<p class="usa-alert__text">We&#39;re currently unable to access complaint data. Please refresh the page, and if you still see a problem, check back again later.</p>'
+            expect(response.body).not_to include '<h3 class="usa-alert__heading">No issues found</h3>'
+          end
+        end
+
+        context "403 error" do
+          it "includes the error but not the no complaints alert" do
+            get complaints_path(error: "403")
+            expect(response.body).to include '<h4 class="usa-alert__heading">Remote IP is not allowed</h4>'
+            expect(response.body).to include '<p class="usa-alert__text">You do not have permission to view these complaints. Please contact your administrator for assistance.</p>'
+            expect(response.body).not_to include '<h3 class="usa-alert__heading">No issues found</h3>'
+          end
+        end
+
+        context "500 error" do
+          it "includes the error but not the no complaints alert" do
+            get complaints_path(error: "500")
+            expect(response.body).to include '<h4 class="usa-alert__heading">Unexpected error</h4>'
+            expect(response.body).to include '<p class="usa-alert__text">We&#39;re currently unable to access complaint data. Please refresh the page, and if you still see a problem, check back again later.</p>'
+            expect(response.body).not_to include '<h3 class="usa-alert__heading">No issues found</h3>'
+          end
+        end
+      end
     end
   end
 

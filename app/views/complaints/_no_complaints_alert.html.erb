@@ -1,10 +1,20 @@
-<section class="usa-site-alert usa-site-alert--info" aria-label="Site alert">
-  <div class="usa-alert">
+<% if @error.present? %>
+ <section aria-label="Site alert">
+  <div class="usa-alert usa-alert--error" role="alert">
     <div class="usa-alert__body">
-      <h3 class="usa-alert__heading">No issues found</h3>
-      <p class="usa-alert__text">
-        Placeholder text for the message, including any mitigation steps we need to share. 
-      </p>
+      <h4 class="usa-alert__heading"><%= @error.title %></h4>
+      <p class="usa-alert__text"><%= @error.details %></p>
     </div>
   </div>
-</section>
+ </section>
+
+<% elsif @complaints.blank? %>
+  <section aria-label="Site alert">
+    <div class="usa-alert usa-alert--info" role="alert">
+      <div class="usa-alert__body">
+        <h3 class="usa-alert__heading">No issues found</h3>
+        <p class="usa-alert__text">No complaints match the current filters.</p>
+      </div>
+    </div>
+  </section>
+<% end %>
