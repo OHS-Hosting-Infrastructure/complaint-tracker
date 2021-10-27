@@ -27,8 +27,8 @@ class Api::FakeData::Grantee
       },
       relationships: {
         issues: [
-          { id: identifier },
-          { id: identifier }          
+          {id: identifier},
+          {id: identifier}
         ]
       }
     }
