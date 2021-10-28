@@ -25,8 +25,8 @@ class Api::FakeData::Complaint
         reopenedDate: datetime_string
       },
       links: {
-        self: "https://example.com/TODO",
-        html: "https://example.com/TODO"
+        self: "https://example.com/complaint/self/TODO",
+        html: "https://example.com/complaint/html/TODO"
       }
     }
   end
