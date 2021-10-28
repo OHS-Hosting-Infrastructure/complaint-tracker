@@ -108,6 +108,24 @@ RSpec.describe FfakerWrapper do
     end
   end
 
+  describe "#review_outcome" do
+    it "returns a string" do
+      expect(test_class.review_outcome).to be_a String
+    end
+  end
+
+  describe "#review_status" do
+    it "returns a string" do
+      expect(test_class.review_status).to be_a String
+    end
+  end
+
+  describe "#review_type" do
+    it "returns a string" do
+      expect(test_class.review_type).to be_a String
+    end
+  end
+
   describe "#status_object" do
     it "returns a status object with an id and label" do
       obj = test_class.status_object
