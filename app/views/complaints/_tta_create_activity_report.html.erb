@@ -1,30 +1,19 @@
 <div class="display-none" id="tta-activity-form">
   <div class="ct-section-divider">
-    <p>
-      <div class="display-flex flex-justify margin-bottom-2">
-        <span> Activity Report ID</span>
-        <%= button_to "Cancel", "#js-add-tta-report", class: "usa-link usa-button--unstyled", id: "js-close-tta-form" %>
-      </div>
-      <div>
-        <%= form_with url: issue_tta_reports_path, local: false, method: "post", class: "usa-search display-flex", id: "tta-report-form"  do %>
-          <%= hidden_field_tag(:issue_id, @complaint.id) %>
-          <div class="usa-form-group">
-            <%= label_tag "tta-report-display-id", "TTA report display ID", class: "usa-sr-only", id: "tta-report-label" %>
-            <span class="usa-error-message"></span>
-            <%= text_field_tag :tta_report_display_id, nil, id: "tta-report-display-id", "aria-describedBy": "tta-report-label" %>
-            <%= submit_tag "Link", class: "usa-button usa-search__submit-text", id: "tta-report-create-link" %>
-          </div>
-        <% end %>
-      </div>
-    </p>
+    <div class="display-flex flex-justify margin-bottom-2">
+      <span> Activity Report ID</span>
+      <%= button_to "Cancel", "#js-add-tta-report", class: "usa-link usa-button--unstyled", id: "js-close-tta-form" %>
+    </div>
+    <div>
+      <%= form_with url: issue_tta_reports_path, local: false, method: "post", class: "usa-search display-flex", id: "tta-report-form"  do %>
+        <%= hidden_field_tag(:issue_id, @complaint.id) %>
+        <div class="usa-form-group">
+          <%= label_tag "tta-report-display-id", "TTA report display ID", class: "usa-sr-only", id: "tta-report-label" %>
+          <span class="usa-error-message"></span>
+          <%= text_field_tag :tta_report_display_id, nil, id: "tta-report-display-id", "aria-describedBy": "tta-report-label" %>
+          <%= submit_tag "Link", class: "usa-button usa-search__submit-text", id: "tta-report-create-link" %>
+        </div>
+      <% end %>
+    </div>
   </div>
-</div>
-<div class="display-flex flex-align-center">
-  <%= image_pack_tag "media/usa-icons/link.svg", class: "ct-link-icon", id: "tta-report-icon", "aria-hidden": true %>
-  <%= button_to "Link TTA Activity Report", "#tta-report-id", {
-    class: "usa-link usa-button--unstyled ct-add-report-link",
-    id: "js-add-tta-report",
-    role: "button"
-    }
-  %>
 </div>

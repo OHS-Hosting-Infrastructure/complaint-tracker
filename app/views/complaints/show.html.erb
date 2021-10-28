@@ -40,6 +40,17 @@
 
         <%= render "tta_create_activity_report" %>
         <%= render "itams_create_review" %>
+
+        <%= render partial: "complaints_open_new_linked_item",
+          locals: {
+            label: "Link TTA Activity Report",
+            type: "tta-report" }
+          %>
+        <%= render partial: "complaints_open_new_linked_item",
+          locals: {
+            label: "Link RAN Review",
+            type: "itams-review" }
+        %>
       </div>
     </div>
 
