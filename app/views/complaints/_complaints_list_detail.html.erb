@@ -1,3 +1,36 @@
 <div class="summary-section">
-  <h2>Complaint #<%= complaint[:id] %></h2>
+  <div class="grid-row grid-gap">
+    <div class="grid-col-4">
+      <h2>Complaint #<%= complaint[:id] %></h2>
+    </div>
+    <div class="grid-col-4">
+      <a href="<%= complaint[:hses_link] %>" target="_blank">Open in HSES</a>
+    </div>
+  </div>
+  <div class="grid-row grid-gap">
+    <div class="grid-col-4">
+      <p class="display-flex flex-justify">
+        <span> Priority:</span> 
+        <span><%= complaint[:priority] %> </span>
+      </p>
+      <p class="display-flex flex-justify">
+        <span> Status:</span> 
+        <span><%= complaint[:status] %> </span>
+      </p>
+      <p class="display-flex flex-justify">
+        <span> Summary:</span> 
+        <span><%= complaint[:summary] %> </span>
+      </p>
+    </div>
+    <div class="grid-col-4">
+      <p class="display-flex flex-justify">
+        <strong> Opened:</strong> 
+        <span><%= complaint[:creationDate] %> </span>
+      </p>
+      <p class="display-flex flex-justify">
+        <strong> Last Updated:</strong> 
+        <span><%= complaint[:issueLastUpdated] %> </span>
+      </p>
+    </div>
+  </div>
 </div>
