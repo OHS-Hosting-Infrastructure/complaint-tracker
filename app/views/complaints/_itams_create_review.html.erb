@@ -1,0 +1,26 @@
+<div class="display-none" id="itams-activity-form">
+  <div class="ct-itams-divider display-flex flex-justify margin-bottom-2">
+    <span> RAN ID</span>
+    <%= button_to "Cancel", "#js-add-itams-review", class: "usa-link usa-button--unstyled", id: "js-close-itams-form" %>
+  </div>
+  <div>
+    <%= form_with url: issue_itams_reviews_path, local: false, method: "post", class: "usa-search display-flex", id: "itams-review-form"  do %>
+      <%= hidden_field_tag(:issue_id, @complaint.id) %>
+      <div class="usa-form-group">
+        <%= label_tag "itams-review-id", "RAN ID", class: "usa-sr-only", id: "itams-review-label" %>
+        <span class="usa-error-message"></span>
+        <%= text_field_tag :itams_review_id, nil, id: "itams-review-id", "aria-describedBy": "itams-review-label" %>
+        <%= submit_tag "Link", class: "usa-button usa-search__submit-text" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="display-flex flex-align-center">
+  <%= image_pack_tag "media/usa-icons/link.svg", class: "ct-link-icon", id: "itams-review-icon", "aria-hidden": true %>
+  <%= button_to "Link RAN Review", "#itams-review-id", {
+    class: "usa-link usa-button--unstyled ct-add-report-link",
+    id: "js-add-itams-review",
+    role: "button"
+    }
+  %>
+</div>
