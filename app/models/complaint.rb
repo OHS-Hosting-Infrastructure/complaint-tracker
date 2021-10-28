@@ -1,5 +1,5 @@
 class Complaint
-  attr_reader :id, :attributes
+  attr_reader :id, :attributes, :links
 
   EVENT_LABELS = {
     issueLastUpdated: "Updated",
@@ -12,6 +12,7 @@ class Complaint
   def initialize(hses_complaint)
     @id = hses_complaint[:id]
     @attributes = hses_complaint[:attributes].with_indifferent_access
+    @links = hses_complaint[:links].with_indifferent_access
   end
 
   def due_date?
@@ -40,6 +41,26 @@ class Complaint
     else
       "<span>Due in #{day_string} (#{formatted_due_date})</span>"
     end
+  end
+
+  def creation_date
+    attributes[:creationDate]
+  end
+
+  def hses_link
+    links[:html]
+  end
+
+  def issue_last_updated
+    attributes[:issueLastUpdated]
+  end
+
+  def priority
+    attributes[:priority]
+  end
+
+  def status
+    attributes[:status]
   end
 
   def summary
