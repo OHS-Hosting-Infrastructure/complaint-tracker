@@ -26,10 +26,12 @@ class Api::FakeData::Grantee
         html: "https://example.com/html/TODO"
       },
       relationships: {
-        issues: [
-          {id: identifier},
-          {id: identifier}
-        ]
+        issues: {
+          data: [
+            {id: identifier},
+            {id: identifier}
+          ]
+        }
       }
     }
   end

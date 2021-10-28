@@ -28,7 +28,7 @@ class Grantee
   end
 
   def complaints
-    relationships[:issues]
+    relationships[:issues][:data]
   end
 
   private
