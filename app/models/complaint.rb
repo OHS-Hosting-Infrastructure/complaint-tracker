@@ -15,6 +15,14 @@ class Complaint
     @links = hses_complaint[:links].with_indifferent_access
   end
 
+  def formatted_creation_date
+    creation_date.strftime("%m/%d/%Y")
+  end
+
+  def formatted_issue_last_updated
+    issue_last_updated.strftime("%m/%d/%Y")
+  end
+
   def due_date?
     due_date.present?
   end
@@ -43,16 +51,8 @@ class Complaint
     end
   end
 
-  def creation_date
-    attributes[:creationDate]
-  end
-
   def hses_link
     links[:html]
-  end
-
-  def issue_last_updated
-    attributes[:issueLastUpdated]
   end
 
   def priority
@@ -81,6 +81,18 @@ class Complaint
 
   def formatted_due_date
     due_date.strftime("%m/%d/%Y")
+  end
+
+  def creation_date
+    Date.parse(attributes[:creationDate])
+  rescue
+    nil
+  end
+
+  def issue_last_updated
+    Date.parse(attributes[:issueLastUpdated])
+  rescue
+    nil
   end
 
   def relative_time_til_due
