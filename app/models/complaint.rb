@@ -56,11 +56,11 @@ class Complaint
   end
 
   def priority
-    attributes[:priority]
+    attributes[:priority][:label]
   end
 
   def status
-    attributes[:status]
+    attributes[:status][:label]
   end
 
   def summary
