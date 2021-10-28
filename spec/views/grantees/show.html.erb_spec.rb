@@ -39,7 +39,7 @@ RSpec.describe "grantees/show", type: :view do
     end
 
     it "displays the complaint list item" do
-      complaint_header = "<h2>Complaint ##{complaint[:id]}</h2>"
+      complaint_header = "<h2>Complaint ##{complaint.id}</h2>"
       expect(rendered).to match complaint_header
     end
   end

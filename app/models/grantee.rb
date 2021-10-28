@@ -28,7 +28,9 @@ class Grantee
   end
 
   def complaints
-    relationships[:issues][:data]
+    relationships[:issues][:data].inject([]) do |complaints, complaint_hash|
+      complaints << Complaint.new(complaint_hash)
+    end
   end
 
   private

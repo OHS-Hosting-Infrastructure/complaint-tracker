@@ -28,8 +28,8 @@ class Api::FakeData::Grantee
       relationships: {
         issues: {
           data: [
-            {id: identifier},
-            {id: identifier}
+            Api::FakeData::Complaint.new.data,
+            Api::FakeData::Complaint.new.data
           ]
         }
       }

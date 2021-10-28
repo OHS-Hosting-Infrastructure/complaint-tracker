@@ -105,6 +105,12 @@ RSpec.describe Grantee, type: :model do
   context "with associations" do
     subject { described_class.new(id) }
 
+    before do
+      expect(ApiDelegator).to receive(:use).with("hses", "grantee", {id: id}).and_return delegator
+      expect(delegator).to receive(:request).and_return response
+      expect(response).to receive(:data).and_return hses_grantee
+    end
+
     describe "complaints" do
       it "delegates to the relationships" do
         expect(subject.complaints.size).to eq 2
