@@ -16,21 +16,35 @@ module Api::Hses
   def host
     Rails.configuration.x.hses.api_hostname
   end
+
+  def request
+    Rails.logger.debug <<~EODM
+      HSES #{path}:
+      #{response.inspect}
+    EODM
+    if response.failed?
+      Rails.logger.error "HSES call to #{path} responded with #{response.code}"
+    end
+    response
+  end
 end
 
 class Api::Hses::Issue < ApiRequest
   include Api::Hses
-  include FakeApiResponseWrapper
   attr_accessor :id
 
   def initialize(id:)
     @id = id
   end
 
-  # TODO update this with real data once we have /issue endpoint
-  def request
-    fake_issue = FakeIssues.instance.data.find { |c| c[:id] == id }
-    details_response(fake_issue || FakeIssues.instance.data.last)
+  private
+
+  def path
+    "/issues-ws/issue/#{id}"
+  end
+
+  def parameters
+    {}
   end
 end
 
@@ -42,17 +56,6 @@ class Api::Hses::Issues < ApiRequest
   def initialize(user:, params: {})
     @username = user["uid"]
     @page = params[:page] || 1
-  end
-
-  def request
-    Rails.logger.debug <<~EODM
-      HSES #{path}:
-      #{JSON.pretty_generate(response)}
-    EODM
-    if response.failed?
-      Rails.logger.error "HSES call to #{path} responded with #{response.code}"
-    end
-    response
   end
 
   def response_type
