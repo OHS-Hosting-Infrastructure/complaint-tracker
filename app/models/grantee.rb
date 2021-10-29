@@ -27,6 +27,12 @@ class Grantee
     attributes[:region]
   end
 
+  def complaints
+    relationships[:issues][:data].map do |complaint_hash|
+      Complaint.new(complaint_hash)
+    end
+  end
+
   private
 
   def attributes
@@ -39,5 +45,9 @@ class Grantee
 
   def links
     grantee_data[:links] || {}
+  end
+
+  def relationships
+    grantee_data[:relationships] || {}
   end
 end

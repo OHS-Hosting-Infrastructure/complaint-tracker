@@ -1,5 +1,5 @@
 class Complaint
-  attr_reader :id, :attributes
+  attr_reader :id, :attributes, :links
 
   EVENT_LABELS = {
     issueLastUpdated: "Updated",
@@ -12,6 +12,15 @@ class Complaint
   def initialize(hses_complaint)
     @id = hses_complaint[:id]
     @attributes = hses_complaint[:attributes].with_indifferent_access
+    @links = hses_complaint[:links].with_indifferent_access
+  end
+
+  def formatted_creation_date
+    creation_date&.strftime("%m/%d/%Y")
+  end
+
+  def formatted_issue_last_updated
+    issue_last_updated&.strftime("%m/%d/%Y")
   end
 
   def due_date?
@@ -42,6 +51,18 @@ class Complaint
     end
   end
 
+  def hses_link
+    links[:html]
+  end
+
+  def priority
+    attributes[:priority][:label]
+  end
+
+  def status
+    attributes[:status][:label]
+  end
+
   def summary
     attributes[:summary]
   end
@@ -59,7 +80,19 @@ class Complaint
   end
 
   def formatted_due_date
-    due_date.strftime("%m/%d/%Y")
+    due_date&.strftime("%m/%d/%Y")
+  end
+
+  def creation_date
+    Date.parse(attributes[:creationDate])
+  rescue
+    nil
+  end
+
+  def issue_last_updated
+    Date.parse(attributes[:issueLastUpdated])
+  rescue
+    nil
   end
 
   def relative_time_til_due

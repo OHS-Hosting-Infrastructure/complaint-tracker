@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe "rendering complaints table" do
   let(:complaint) { Api::FakeData::Complaint.new.data }
+
   describe "a new complaint" do
     it "has a bold id" do
       complaint[:attributes][:creationDate] = 1.day.ago.strftime("%FT%TZ")

@@ -2,6 +2,19 @@
   background-color: #fff;
   border: 2px solid #dfe1e2;
   border-radius: 5px;
+}
+
+.summary-header {
+  background-color: #f0f0f0;
+  margin-bottom: 1rem;
+  a {
+    color: #2b6289;
+    text-decoration: none;
+    padding: 0 1rem;
+  }
+}
+
+.summary-body {
   padding: 0 1rem;
 }
 
