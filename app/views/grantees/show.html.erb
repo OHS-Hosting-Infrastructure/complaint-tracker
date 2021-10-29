@@ -32,7 +32,7 @@
       <ul class="usa-process-list">
         <% @grantee.complaints.each do |complaint| %>
           <li>
-            <%= render 'complaints/complaints_list_detail', complaint: complaint %>
+            <%= render "complaints_list_detail", complaint: complaint %>
           </li>
         <% end %>
       </ul>
