@@ -16,11 +16,11 @@ class Complaint
   end
 
   def formatted_creation_date
-    creation_date.strftime("%m/%d/%Y")
+    creation_date&.strftime("%m/%d/%Y")
   end
 
   def formatted_issue_last_updated
-    issue_last_updated.strftime("%m/%d/%Y")
+    issue_last_updated&.strftime("%m/%d/%Y")
   end
 
   def due_date?
@@ -80,7 +80,7 @@ class Complaint
   end
 
   def formatted_due_date
-    due_date.strftime("%m/%d/%Y")
+    due_date&.strftime("%m/%d/%Y")
   end
 
   def creation_date
