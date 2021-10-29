@@ -32,13 +32,13 @@ document.querySelector("#tta-report-icon").addEventListener('click', event => {
 
 // ITAMS open form
 
-document.querySelector("#js-add-itams-review").addEventListener('click', event => {
+document.querySelector("#js-add-monitoring-review").addEventListener('click', event => {
   event.preventDefault()
-  openForm("#itams-activity-form", "#itams-review-id")
+  openForm("#monitoring-activity-form", "#monitoring-review-id")
 })
 
-document.querySelector("#itams-review-icon").addEventListener('click', event => {
-  openForm("#itams-activity-form", "#itams-review-id")
+document.querySelector("#monitoring-review-icon").addEventListener('click', event => {
+  openForm("#monitoring-activity-form", "#monitoring-review-id")
 })
 
 // Close form
@@ -49,10 +49,10 @@ document.querySelector("#js-close-tta-form").addEventListener('click', event => 
   clearFormValue("#tta-report-display-id")
 })
 
-document.querySelector("#js-close-itams-form").addEventListener('click', event => {
+document.querySelector("#js-close-monitoring-form").addEventListener('click', event => {
   event.preventDefault()
-  closeForm("#itams-activity-form")
-  clearFormValue("#itams-review-id")
+  closeForm("#monitoring-activity-form")
+  clearFormValue("#monitoring-review-id")
 })
 
 

@@ -1,11 +1,12 @@
 require "rails_helper"
 
-RSpec.describe Api::FakeData::Itams do
+RSpec.describe Api::FakeData::Monitoring do
   describe "Review" do
-    subject { Api::FakeData::Itams::Review.new(id: id) }
+    subject { Api::FakeData::Monitoring::Review.new(id: id, access_token: access_token) }
 
     describe "#request" do
       let(:id) { "1234" }
+      let(:access_token) { HsesAccessToken.new }
 
       it "returns a review with the correct id" do
         expect(subject.request.data[:id]).to eq id

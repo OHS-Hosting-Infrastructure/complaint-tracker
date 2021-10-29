@@ -27,19 +27,17 @@
           </div>
         <% end %>
 
-        <% if @issue_itams_reviews.present? %>
-          <div class="ct-section-divider">
+        <% if @issue_monitoring_reviews.present? %>
+          <div>
+            <h3>RAN activity:</h3>
             <div>
-              <h3>RAN activity:</h3>
-              <div>
-                <%= render partial: "issue_itams_review", collection: @issue_itams_reviews %>
-              </div>
+              <%= render partial: "issue_monitoring_review", collection: @issue_monitoring_reviews %>
             </div>
           </div>
         <% end %>
 
         <%= render "tta_create_activity_report" %>
-        <%= render "itams_create_review" %>
+        <%= render "monitoring_create_review" %>
 
         <%= render partial: "complaints_open_new_linked_item",
           locals: {
@@ -49,7 +47,7 @@
         <%= render partial: "complaints_open_new_linked_item",
           locals: {
             label: "Link RAN Review",
-            type: "itams-review" }
+            type: "monitoring-review" }
         %>
       </div>
     </div>
@@ -129,4 +127,4 @@
     </div>
   </div>
 </div>
-<%= javascript_pack_tag 'tta-report' %>
+<%= javascript_pack_tag 'complaint-links' %>

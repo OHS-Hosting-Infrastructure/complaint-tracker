@@ -1,7 +1,7 @@
 require "rails_helper"
 require "fake_issues"
 
-RSpec.feature "Associating IT-AMS Review", type: :feature do
+RSpec.feature "Associating monitoring review", type: :feature do
   let(:user) {
     {
       name: "Request Spec",
@@ -17,21 +17,21 @@ RSpec.feature "Associating IT-AMS Review", type: :feature do
       visit "complaints/#{complaint.id}"
     end
 
-    xit "can link an IT-AMS review" do
+    xit "can link a monitoring review" do
       click_button "Link RAN Review"
-      fill_in "itams-review-id", with: test_id
-      click_button "itams-review-create-link"
+      fill_in "monitoring-review-id", with: test_id
+      click_button "monitoring-review-create-link"
 
       expect(page).to have_content test_id
     end
 
-    context "cancel linking an ITAMS review" do
+    context "cancel linking a monitoring review" do
       it "the assocation will not be created" do
         click_button "Link RAN Review"
         fill_in "RAN ID", with: test_id
-        click_button "js-close-itams-form"
+        click_button "js-close-monitoring-form"
 
-        page.find("#itams-activity-form.display-none")
+        page.find("#monitoring-activity-form.display-none")
         expect(page).to_not have_content test_id
       end
     end
