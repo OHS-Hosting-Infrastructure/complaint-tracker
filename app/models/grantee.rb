@@ -28,8 +28,8 @@ class Grantee
   end
 
   def complaints
-    relationships[:issues][:data].inject([]) do |complaints, complaint_hash|
-      complaints << Complaint.new(complaint_hash)
+    relationships[:issues][:data].map do |complaint_hash|
+      Complaint.new(complaint_hash)
     end
   end
 
