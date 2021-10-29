@@ -12,6 +12,8 @@ class IssueMonitoringReview < ApplicationRecord
   private
 
   def retrieve_monitoring_review_details
-    self.start_date = monitoring_review.start_date
+    if monitoring_review.valid?
+      self.start_date = monitoring_review.start_date
+    end
   end
 end

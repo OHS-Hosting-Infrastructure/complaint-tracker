@@ -4,7 +4,8 @@ RSpec.describe IssueMonitoringReview, type: :model do
   subject do
     described_class.new(
       issue_id: "ISSUE_ID",
-      review_id: "IT-AMS-ID"
+      review_id: "IT-AMS-ID",
+      start_date: 1.day.ago
     )
   end
 
@@ -23,8 +24,9 @@ RSpec.describe IssueMonitoringReview, type: :model do
       expect(subject).not_to be_valid
     end
 
-    xit "is not valid without a start date" do
+    it "is not valid without a start date" do
       subject.start_date = nil
+      allow(subject.monitoring_review).to receive(:valid?).and_return(false)
       expect(subject).not_to be_valid
     end
 
