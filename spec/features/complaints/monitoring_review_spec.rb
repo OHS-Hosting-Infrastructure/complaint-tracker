@@ -17,7 +17,7 @@ RSpec.feature "Associating monitoring review", type: :feature do
       visit "complaints/#{complaint.id}"
     end
 
-    xit "can link a monitoring review" do
+    it "can link a monitoring review" do
       click_button "Link RAN Review"
       fill_in "monitoring-review-id", with: test_id
       click_button "monitoring-review-create-link"
