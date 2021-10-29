@@ -6,7 +6,7 @@
     </div>
     <div>
       <%= form_with url: issue_monitoring_reviews_path, local: false, method: "post", class: "usa-search display-flex", id: "monitoring-review-form"  do %>
-        <%= hidden_field_tag(:issue_id, @complaint.id) %>
+        <%= hidden_field_tag(:issue_id_monitoring, @complaint.id) %>
         <div class="usa-form-group">
           <%= label_tag "monitoring-review-id", "RAN ID", class: "usa-sr-only", id: "monitoring-review-label" %>
           <span class="usa-error-message"></span>

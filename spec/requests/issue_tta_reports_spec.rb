@@ -43,13 +43,13 @@ RSpec.describe "IssueTtaReports", type: :request do
           .with("tta", "activity_report", {display_id: tta_display_id, access_token: kind_of(HsesAccessToken)})
           .and_return activity_report
         post issue_tta_reports_path,
-          params: {tta_report_display_id: tta_display_id, issue_id: complaint_id, format: :js}
+          params: {tta_report_display_id: tta_display_id, issue_id_tta: complaint_id, format: :js}
       end
 
       it "adds an IssueTtaReport object" do
         expect {
           post issue_tta_reports_path,
-            params: {tta_report_display_id: tta_display_id, issue_id: complaint_id, format: :js}
+            params: {tta_report_display_id: tta_display_id, issue_id_tta: complaint_id, format: :js}
         }.to change { IssueTtaReport.count }.by 1
       end
     end
@@ -83,12 +83,12 @@ RSpec.describe "IssueTtaReports", type: :request do
         expect(ApiDelegator).to receive(:use)
           .with("tta", "activity_report", {display_id: tta_display_id, access_token: kind_of(HsesAccessToken)})
           .and_return activity_report
-        post issue_tta_reports_path, params: {tta_report_display_id: tta_display_id, issue_id: complaint_id, format: :js}
+        post issue_tta_reports_path, params: {tta_report_display_id: tta_display_id, issue_id_tta: complaint_id, format: :js}
       end
 
       it "updates the IssueTtaReport object" do
         put issue_tta_report_path(issue_tta_report),
-          params: {tta_report_display_id: "new_display_id", issue_id: complaint_id, format: :js}
+          params: {tta_report_display_id: "new_display_id", issue_id_tta: complaint_id, format: :js}
 
         updated_report = IssueTtaReport.find(issue_tta_report.id)
         expect(updated_report.tta_report_display_id).to eq "new_display_id"
@@ -109,12 +109,12 @@ RSpec.describe "IssueTtaReports", type: :request do
       end
 
       it "redirects to the complaint path" do
-        delete unlink_tta_report_path(issue_id: complaint_id, tta_report_display_id: display_report_id)
+        delete unlink_tta_report_path(issue_id_tta: complaint_id, tta_report_display_id: display_report_id)
         expect(response).to redirect_to complaint_path(complaint_id)
       end
 
       it "deletes the link" do
-        delete unlink_tta_report_path(issue_id: complaint_id, tta_report_display_id: display_report_id)
+        delete unlink_tta_report_path(issue_id_tta: complaint_id, tta_report_display_id: display_report_id)
         expect { IssueTtaReport.find(issue_tta_report.id) }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
@@ -123,11 +123,11 @@ RSpec.describe "IssueTtaReports", type: :request do
 
         before do
           post issue_tta_reports_path,
-            params: {tta_report_display_id: second_display_id, issue_id: complaint_id, format: :js}
+            params: {tta_report_display_id: second_display_id, issue_id_tta: complaint_id, format: :js}
         end
 
         it "only deletes the specified tta_activity_report" do
-          delete unlink_tta_report_path(issue_id: complaint_id, tta_report_display_id: display_report_id)
+          delete unlink_tta_report_path(issue_id_tta: complaint_id, tta_report_display_id: display_report_id)
           expect(IssueTtaReport.where(issue_id: complaint_id).count).to eq 1
         end
       end

@@ -42,6 +42,6 @@ class IssueTtaReportsController < ApplicationController
   end
 
   def issue_id
-    params[:issue_id]
+    params[:issue_id_tta]
   end
 end

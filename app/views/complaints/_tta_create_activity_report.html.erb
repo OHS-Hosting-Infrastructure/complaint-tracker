@@ -6,7 +6,7 @@
     </div>
     <div>
       <%= form_with url: issue_tta_reports_path, local: false, method: "post", class: "usa-search display-flex", id: "tta-report-form"  do %>
-        <%= hidden_field_tag(:issue_id, @complaint.id) %>
+        <%= hidden_field_tag(:issue_id_tta, @complaint.id) %>
         <div class="usa-form-group">
           <%= label_tag "tta-report-display-id", "TTA report display ID", class: "usa-sr-only", id: "tta-report-label" %>
           <span class="usa-error-message"></span>

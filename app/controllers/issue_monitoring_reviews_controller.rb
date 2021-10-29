@@ -22,7 +22,7 @@ class IssueMonitoringReviewsController < ApplicationController
   private
 
   def issue_id
-    params[:issue_id]
+    params[:issue_id_monitoring]
   end
 
   def review_id
