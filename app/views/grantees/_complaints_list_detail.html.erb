@@ -8,29 +8,24 @@
     </div>
   </div>
   <div class="grid-row grid-gap">
-    <div class="grid-col-4">
-      <p class="display-flex flex-justify">
-        <span> Priority:</span> 
-        <span><%= complaint.priority %> </span>
-      </p>
-      <p class="display-flex flex-justify">
-        <span> Status:</span> 
-        <span><%= complaint.status %> </span>
-      </p>
-      <p class="display-flex flex-justify">
-        <span> Summary:</span> 
-        <span><%= complaint.summary %> </span>
+    <div class="grid-col-7">
+      <div>
+        <span class="usa-tag"><%= complaint.priority %> </span>
+        <span class="usa-tag"><%= complaint.status %> </span>
+      </div>
+      <p class="usa-prose">
+        <%= complaint.summary %>
       </p>
     </div>
-    <div class="grid-col-4">
-      <p class="display-flex flex-justify">
+    <div class="grid-col-5">
+      <div class="display-flex flex-justify">
         <strong> Opened:</strong> 
         <span><%= complaint.formatted_creation_date %> </span>
-      </p>
-      <p class="display-flex flex-justify">
+      </div>
+      <div class="display-flex flex-justify">
         <strong> Last Updated:</strong> 
         <span><%= complaint.formatted_issue_last_updated %> </span>
-      </p>
+      </div>
     </div>
   </div>
 </div>
