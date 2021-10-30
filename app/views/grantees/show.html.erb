@@ -8,30 +8,26 @@
   <div class="grid-row grid-gap">
     <div class="grid-col-4">
       <div class="summary-section summary-body">
-        <div class="ct-section-divider">
-          <h2>Summary</h2>
-          <p class="display-flex flex-justify">
-            <span> Total Centers:</span> 
-            <span><%= @grantee.centers_total %> </span>
-          </p>
-          <p class="display-flex flex-justify">
-            <span> FY21 Complaints:</span> 
-            <span><%= @grantee.complaints_per_fy %> </span>
-          </p>
-          <a href="<%= @grantee.hses_link %>" 
-          class="usa-button width-full" target="_blank">Open in HSES</a>
-        </div>
+        <h2>Summary</h2>
+        <p class="display-flex flex-justify">
+          <span> Total Centers:</span> 
+          <span><%= @grantee.centers_total %> </span>
+        </p>
+        <p class="display-flex flex-justify">
+          <span> FY21 Complaints:</span> 
+          <span><%= @grantee.complaints_per_fy %> </span>
+        </p>
+        <a href="<%= @grantee.hses_link %>" 
+        class="usa-button width-full" target="_blank">Open in HSES</a>
       </div>
       <div class="summary-section summary-body">
-        <div class="ct-section-divider">
-          <h2>Open Issues</h2>
-        </div>
+        <h2>Open Issues</h2>
       </div>
     </div>
     <div class="grid-col-8">
-      <ul class="usa-process-list">
+      <ul class="usa-process-list" style="padding-top: 0rem;">
         <% @grantee.complaints.each do |complaint| %>
-          <li>
+          <li style="padding-bottom: 20px;">
             <%= render "complaints_list_detail", complaint: complaint %>
           </li>
         <% end %>
