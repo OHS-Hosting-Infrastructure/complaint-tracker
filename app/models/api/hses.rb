@@ -55,7 +55,8 @@ class Api::Hses::Issues < ApiRequest
 
   def initialize(user:, params: {})
     @username = user["uid"]
-    @page = params[:page] || 1
+    @page = params.fetch(:page, 1)
+    @sort = params.fetch(:sort, "-creationDate")
   end
 
   def response_type
@@ -73,7 +74,8 @@ class Api::Hses::Issues < ApiRequest
       types: 1,
       username: @username,
       offset: page_offset,
-      limit: PAGE_LIMIT
+      limit: PAGE_LIMIT,
+      sort: @sort
     }
   end
 
