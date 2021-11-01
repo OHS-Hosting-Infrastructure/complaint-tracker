@@ -1,0 +1,35 @@
+<div class="summary-section">
+  <div class="summary-header complaints-list-detail-header">
+    <a href="<%= complaint.hses_link %>" target="_blank" class="display-flex flex-justify flex-align-center">
+      <h2>Complaint #<%= complaint.id %></h2>
+      <div>
+        <svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
+          <use xlink:href="/assets/img/sprite.svg#arrow_forward"></use>
+        </svg>
+      </div>
+    </a>
+  </div>
+  <div class="summary-body">
+    <div class="grid-row grid-gap">
+      <div class="grid-col-7">
+        <div>
+          <span class="usa-tag"><%= complaint.priority %> </span>
+          <span class="usa-tag"><%= complaint.status %> </span>
+        </div>
+        <p class="usa-prose">
+          <%= complaint.summary %>
+        </p>
+      </div>
+      <div class="grid-col-5">
+        <div class="display-flex flex-justify">
+          <strong> Opened:</strong> 
+          <span><%= complaint.formatted_creation_date %> </span>
+        </div>
+        <div class="display-flex flex-justify">
+          <strong> Last Updated:</strong> 
+          <span><%= complaint.formatted_issue_last_updated %> </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
