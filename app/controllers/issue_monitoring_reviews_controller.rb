@@ -12,7 +12,7 @@ class IssueMonitoringReviewsController < ApplicationController
       if @issue_monitoring_review.save
         format.js { render inline: "location.reload(true);" }
       else
-        Rails.logger.error("Problem saving the link to RAN review: " + @issue_monitoring_review.errors.full_messages.join("; "))
+        format.js { render inline: "alert('there was an error linking to a RAN review');" }
         # TODO implement when working on error handling
         # format.js { render "create_errors" }
       end
