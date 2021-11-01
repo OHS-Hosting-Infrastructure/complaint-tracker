@@ -21,7 +21,11 @@ class ComplaintsController < ApplicationController
     @issue_tta_reports = inject_access_token(IssueTtaReport)
     @issue_monitoring_reviews = inject_access_token(IssueMonitoringReview)
 
-    @timeline = Timeline.new(@complaint.attributes, @issue_tta_reports)
+    @timeline = Timeline.new(
+      @complaint.attributes,
+      @issue_tta_reports,
+      @issue_monitoring_reviews
+    )
     render layout: "details"
   end
 

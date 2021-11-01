@@ -8,9 +8,27 @@ RSpec.describe MonitoringReview, type: :model do
     described_class.new id, access_token
   end
 
+  describe "#itams_url" do
+    it "returns a URL" do
+      expect(subject.start_date).to be_a(String)
+    end
+  end
+
+  describe "#review_type" do
+    it "returns the URL to view the report in IT-AMS" do
+      expect(subject.itams_url).to eq "https://example.com/TODO"
+    end
+  end
+
   describe "#start_date" do
     it "returns a start date" do
       expect(subject.start_date).to be_a(String)
+    end
+  end
+
+  describe "#status" do
+    it "returns a status" do
+      expect(subject.status).to be_a(String)
     end
   end
 

@@ -9,8 +9,20 @@ class MonitoringReview
     @errors = []
   end
 
+  def itams_url
+    get_api_data_field :links, :html
+  end
+
+  def review_type
+    get_api_data_field :attributes, :reviewType
+  end
+
   def start_date
     get_api_data_field :attributes, :reviewStartDate
+  end
+
+  def status
+    get_api_data_field :attributes, :status
   end
 
   def valid?

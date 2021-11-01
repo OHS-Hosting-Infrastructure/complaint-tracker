@@ -1,0 +1,18 @@
+<h3 class="usa-process-list__heading ct-timeline__two-part-container">
+  <span>Monitoring Activity: <%= event.review_link %></span>
+  <span class="ct-timeline__date"><%= event.formatted_date %></span>
+</h3>
+<% if event.api_call_succeeded? %>
+  <div>
+    <ul class="usa-list usa-list--unstyled">
+      <li><strong>Status:</strong> <%= event.status %></li>
+      <li><strong>Type:</strong> <%= event.review_type %></li>
+    </ul>
+  </div>
+<% else %>
+  <div class="usa-alert usa-alert--error">
+    <div class="usa-alert__body">
+      <p class="usa-alert__text"><%= event.api_error_message %></p>
+    </div>
+  </div>
+<% end %>
