@@ -48,10 +48,6 @@ class Api::Hses::Issue < ApiRequest
   def path
     "/issues-ws/issue/#{id}"
   end
-
-  def parameters
-    {}
-  end
 end
 
 class Api::Hses::Issues < ApiRequest
