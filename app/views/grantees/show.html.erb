@@ -1,7 +1,7 @@
 <div class="details-header">
   <div class="grid-container">
     <h1><%= @grantee.name %></h1>
-    <h2>Grantee #<%= @grantee.id %>, Region <%= @grantee.region %></h2>
+    <h2>Grantee #<%= @grantee.id %>, Region <%= @grantee.region %>, Current Grant #<%= @grantee.current_grant.id %></h2>
   </div>
 </div>
 <div class="details-body grid-container">
@@ -12,11 +12,15 @@
           <h2>Summary</h2>
           <p class="display-flex flex-justify">
             <span> Total Centers:</span> 
-            <span><%= @grantee.centers_total %> </span>
+            <span><%= @grantee.centers %> </span>
           </p>
-          <p class="display-flex flex-justify">
-            <span> FY21 Complaints:</span> 
-            <span><%= @grantee.complaints_per_fy %> </span>
+          <p>
+            <% @grantee.complaints_per_fy.each do |year, count| %>
+              <span class="display-flex flex-justify">
+                <span> FY<%= year %> Complaints:</span> 
+                <span><%= count %></span>
+              </span>
+            <% end %>
           </p>
           <a href="<%= @grantee.hses_link %>" 
           class="usa-button width-full" target="_blank">Open in HSES</a>

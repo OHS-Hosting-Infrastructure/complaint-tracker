@@ -15,7 +15,7 @@ RSpec.describe "grantees/show", type: :view do
   end
 
   it "displays the grantee number and region in an h2" do
-    expect(rendered).to match "<h2>Grantee ##{grantee.id}, Region #{grantee.region}</h2>"
+    expect(rendered).to match "<h2>Grantee ##{grantee.id}, Region #{grantee.region}, Current Grant ##{grantee.current_grant.id}</h2>"
   end
 
   describe "summary card" do

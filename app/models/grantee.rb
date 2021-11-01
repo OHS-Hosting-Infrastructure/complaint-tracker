@@ -11,43 +11,56 @@ class Grantee
     links[:html]
   end
 
-  def centers_total
-    attributes[:numberOfCenters]
+  def centers
+    current_grant&.centers
   end
 
   def complaints_per_fy
-    attributes[:totalComplaintsFiscalYear]
+    grants.map(&:complaints_per_fiscal_year).each_with_object({}) do |count, obj|
+      obj.merge!(count) { |k, v1, v2| v1 + v2 }
+    end.sort.reverse.to_h
+  end
+
+  def current_grant
+    grants.first
   end
 
   def name
-    attributes[:name]
+    attributes[:granteeName]
   end
 
   def region
-    attributes[:region]
+    current_grant&.region
   end
 
   def complaints
-    relationships[:issues][:data].map do |complaint_hash|
-      Complaint.new(complaint_hash)
+    relationships[:issues][:data].map do |complaint_data|
+      Complaint.new(complaint_data)
     end
   end
 
   private
 
-  def attributes
-    grantee_data[:attributes]
+  def grants
+    @grants ||= data[:attributes][:grants]
+      .map { |grant| Grant.new(grant) }
+      .sort_by(&:start_date)
+      .reverse
   end
 
-  def grantee_data
-    @grantee_data ||= ApiDelegator.use("hses", "grantee", {id: id}).request.data
+  def attributes
+    data[:attributes]
+  end
+
+  def data
+    @data ||= ApiDelegator.use("hses", "grantee", {id: id}).request.data
   end
 
   def links
-    grantee_data[:links] || {}
+    data[:links] || {}
   end
 
   def relationships
-    grantee_data[:relationships] || {}
+    data[:relationships] || {issues: {data: []}}
   end
 end
