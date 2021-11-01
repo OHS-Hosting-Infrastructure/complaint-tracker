@@ -19,9 +19,23 @@ RSpec.describe Api::Hses do
     end
 
     describe "#request" do
-      it "returns a wrapper with data" do
-        expect(issue.request.data).to be_a Hash
-        expect(issue.request.data[:type]).to eq "issues"
+      it "returns a Ruby object with meta and data keys" do
+        # stub the net/http request / response
+        response = Net::HTTPSuccess.new(1.0, "200", "OK")
+        expect_any_instance_of(Net::HTTP).to receive(:start).and_return response
+        expect(response).to receive(:body).and_return('{"meta":{},"data":[]}')
+
+        expect(issue.request.body).to match({"meta" => {}, "data" => []})
+      end
+
+      it "sends query parameters for type, username, and pagination" do
+        # stub the net/http request / response
+        response = Net::HTTPSuccess.new(1.0, "200", "OK")
+        expect_any_instance_of(Net::HTTP).to receive(:start).and_return response
+        expect(response).to receive(:body).and_return('{"meta":{},"data":[]}')
+
+        expect(URI).to receive(:encode_www_form).with({})
+        issue.request
       end
     end
 
