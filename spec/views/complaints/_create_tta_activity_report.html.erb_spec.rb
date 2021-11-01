@@ -13,6 +13,6 @@ RSpec.describe "complaints/_tta_create_activity_report.html.erb", type: :view do
   end
 
   it "has a hidden field with the issue id" do
-    expect(rendered).to match "<input type=\"hidden\" name=\"issue_id\" id=\"issue_id\" value=\"#{complaint.id}\" />"
+    expect(rendered).to match "<input type=\"hidden\" name=\"issue_id_tta\" id=\"issue_id_tta\" value=\"#{complaint.id}\" />"
   end
 end

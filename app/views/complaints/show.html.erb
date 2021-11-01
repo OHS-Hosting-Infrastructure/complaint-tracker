@@ -5,6 +5,9 @@
 </div>
 <div class="details-body grid-container">
   <div class="grid-row grid-gap">
+
+    <%# SUMMARY %>
+
     <div class="grid-col-4">
       <div class="summary-section summary-body">
         <div class="ct-section-divider">
@@ -14,30 +17,43 @@
             <%= @complaint.summary %>
           </p>
         </div>
+
         <% if @issue_tta_reports.present? %>
-           <div>
-            <p>
-              TTA Activity:
-                <div>
-                  <%= render partial: "issue_tta_report", collection: @issue_tta_reports %>
-                </div>
-            </p>
+          <div>
+            <h3>TTA Activity:</h3>
+            <div>
+              <%= render partial: "issue_tta_report", collection: @issue_tta_reports %>
+            </div>
           </div>
         <% end %>
-        <div class="display-none" id="tta-activity-form">
-          <%= render "tta_create_activity_report" %>
-        </div>
-        <div class="ct-section-divider display-flex flex-align-center">
-          <%= image_pack_tag "media/usa-icons/link.svg", class: "ct-link-icon", id: "tta-report-icon", "aria-hidden": true %>
-          <%= button_to "Link TTA Activity Report", "#tta-report-id", {
-            class: "usa-link usa-button--unstyled ct-add-report-link",
-            id: "js-add-tta-report",
-            role: "button"
-            }
+
+        <% if @issue_monitoring_reviews.present? %>
+          <div>
+            <h3>RAN activity:</h3>
+            <div>
+              <%= render partial: "issue_monitoring_review", collection: @issue_monitoring_reviews %>
+            </div>
+          </div>
+        <% end %>
+
+        <%= render "tta_create_activity_report" %>
+        <%= render "monitoring_create_review" %>
+
+        <%= render partial: "complaints_open_new_linked_item",
+          locals: {
+            label: "Link TTA Activity Report",
+            type: "tta-report" }
           %>
-        </div>
+        <%= render partial: "complaints_open_new_linked_item",
+          locals: {
+            label: "Link RAN Review",
+            type: "monitoring-review" }
+        %>
       </div>
     </div>
+
+    <%# STATUS AND TIMELINE %>
+
     <div class="grid-col-8">
       <div class="summary-section summary-body">
         <h2 class="ct-section-divider ct-timeline__two-part-container">
@@ -61,6 +77,8 @@
     </div>
   </div>
 </div>
+
+<%# MODAL %>
 
 <div class="margin-y-3">
   <div
@@ -109,4 +127,4 @@
     </div>
   </div>
 </div>
-<%= javascript_pack_tag 'tta-report' %>
+<%= javascript_pack_tag 'complaint-links' %>

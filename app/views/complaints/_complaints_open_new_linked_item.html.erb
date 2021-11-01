@@ -1,0 +1,13 @@
+<div class="display-flex flex-align-center">
+  <%= image_pack_tag "media/usa-icons/link.svg",
+    class: "ct-link-icon",
+    id: "#{type}-icon",
+    "aria-hidden": true
+  %>
+  <%= button_to label, "##{type}-id", {
+    class: "usa-link usa-button--unstyled ct-add-report-link",
+    id: "js-add-#{type}",
+    role: "button"
+    }
+  %>
+</div>

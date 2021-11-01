@@ -2,6 +2,7 @@
   background-color: #fff;
   border: 2px solid #dfe1e2;
   border-radius: 5px;
+  padding: 0 1rem 1rem;
 }
 
 .summary-header {
@@ -36,6 +37,12 @@
 .ct-tta-divider {
   margin-bottom: 1rem;
   border-bottom: 1px solid #DFE1E2;
+}
+
+.ct-monitoring-divider {
+  border-top: 1px solid #DFE1E2;
+  padding-top: 1rem;
+  margin-top: 1rem;
 }
 
 .ct-timeline__two-part-container {

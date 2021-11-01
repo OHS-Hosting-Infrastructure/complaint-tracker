@@ -28,7 +28,7 @@ RSpec.feature "Associating TTA Activity Report", type: :feature do
     it "can link a TTA activity report" do
       click_button "Link TTA Activity Report"
       fill_in "TTA report display ID", with: test_display_id
-      click_button "Link"
+      click_button "tta-report-create-link"
 
       expect(page).to have_content test_display_id
     end
@@ -37,7 +37,7 @@ RSpec.feature "Associating TTA Activity Report", type: :feature do
       it "the assocation will not be created" do
         click_button "Link TTA Activity Report"
         fill_in "TTA report display ID", with: test_display_id
-        click_button "Cancel"
+        click_button "js-close-tta-form"
 
         page.find("#tta-activity-form.display-none")
         expect(page).to_not have_content test_display_id
@@ -51,7 +51,7 @@ RSpec.feature "Associating TTA Activity Report", type: :feature do
       before do
         click_button "Link TTA Activity Report"
         fill_in "TTA report display ID", with: test_display_id
-        click_button "Link"
+        click_button "tta-report-create-link"
       end
 
       context "unauthorized user" do
