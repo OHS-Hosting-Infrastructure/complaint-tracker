@@ -10,7 +10,7 @@
     </div>
     <div>
       <%= form_with url: issue_tta_report_path(issue_tta_report), local: false, method: "put", class: "usa-search display-flex" do %>
-        <%= hidden_field_tag(:issue_id, @complaint.id) %>
+        <%= hidden_field_tag(:issue_id_tta, @complaint.id) %>
         <div class="usa-form-group">
           <%= label_tag "tta-edit-report-id", "TTA report display ID", class: "usa-sr-only tta-edit-report-label" %>
           <span class="usa-error-message"></span>

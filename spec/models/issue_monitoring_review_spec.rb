@@ -26,6 +26,7 @@ RSpec.describe IssueMonitoringReview, type: :model do
 
     it "is not valid without a start date" do
       subject.start_date = nil
+      allow(subject.monitoring_review).to receive(:valid?).and_return(false)
       expect(subject).not_to be_valid
     end
 

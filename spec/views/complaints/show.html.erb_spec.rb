@@ -7,10 +7,11 @@ RSpec.describe "complaints/show.html.erb", type: :view do
   let(:summary) { complaint.summary }
   let(:timeline) { Timeline.new(complaint.attributes, []) }
 
-  describe "no TTA reports" do
+  describe "no linked TTA reports nor monitoring reviews" do
     before do
       assign(:complaint, complaint)
-      assign(:tta_reports, [])
+      assign(:issue_tta_reports, [])
+      assign(:issue_monitoring_reviews, [])
       assign(:timeline, timeline)
       render
     end
