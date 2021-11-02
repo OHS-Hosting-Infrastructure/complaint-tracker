@@ -12,7 +12,7 @@ class Grantee
   end
 
   def centers
-    current_grant&.centers
+    grants.sum(&:centers)
   end
 
   def complaints_per_fy
@@ -23,16 +23,12 @@ class Grantee
     end.sort.reverse.to_h
   end
 
-  def current_grant
-    grants.first
-  end
-
   def name
     attributes[:granteeName]
   end
 
   def region
-    current_grant&.region
+    grants.first&.region
   end
 
   def complaints
@@ -41,13 +37,15 @@ class Grantee
     end
   end
 
+  def formatted_grant_ids
+    grants.map(&:id).join(", ")
+  end
+
   private
 
   def grants
     @grants ||= data[:attributes][:grants]
       .map { |grant| Grant.new(grant) }
-      .sort_by(&:start_date)
-      .reverse
   end
 
   def attributes

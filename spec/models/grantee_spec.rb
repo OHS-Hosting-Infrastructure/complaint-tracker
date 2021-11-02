@@ -38,10 +38,11 @@ RSpec.describe Grantee, type: :model do
 
     describe "#centers" do
       it "adds up all the numberOfCenters in the grants" do
-        most_recent_grant = hses_grantee[:attributes][:grants]
-          .max_by { |grant| grant[:attributes][:grantProgramStartDate] }
+        count = hses_grantee[:attributes][:grants].sum do |grant|
+          grant[:attributes][:numberOfCenters]
+        end
 
-        expect(subject.centers).to eq most_recent_grant[:attributes][:numberOfCenters]
+        expect(subject.centers).to eq count
       end
     end
 
@@ -63,12 +64,12 @@ RSpec.describe Grantee, type: :model do
       end
     end
 
-    describe "#current_grant" do
-      it "returns the first grant in the sorted grants list" do
-        most_recent_grant = hses_grantee[:attributes][:grants]
-          .max_by { |grant| grant[:attributes][:grantProgramStartDate] }
-
-        expect(subject.current_grant.id).to eq most_recent_grant[:id]
+    describe "#formatted_grant_ids" do
+      it "returns a list of grant ids with a comma in between" do
+        formatted_string = hses_grantee[:attributes][:grants]
+          .map { |grant| grant[:id] }
+          .join(", ")
+        expect(subject.formatted_grant_ids).to eq formatted_string
       end
     end
 
@@ -111,7 +112,7 @@ RSpec.describe Grantee, type: :model do
 
     describe "#centers" do
       it "delegates to the attributes" do
-        expect(subject.centers).to be nil
+        expect(subject.centers).to be 0
       end
     end
 
