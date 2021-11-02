@@ -35,7 +35,7 @@ RSpec.describe "grantees/show", type: :view do
 
   describe "complaints list" do
     it "displays the list" do
-      expect(rendered).to match '<ul class="usa-process-list">'
+      expect(rendered).to match '<ul class="usa-process-list" style="padding-top: 0rem;">'
     end
 
     it "displays the complaint list item" do
