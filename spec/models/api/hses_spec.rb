@@ -67,7 +67,8 @@ RSpec.describe Api::Hses do
               types: 1,
               username: "test.uid",
               offset: 25,
-              limit: 25
+              limit: 25,
+              sort: "-creationDate"
             }
           )
           issues.request
@@ -94,7 +95,7 @@ RSpec.describe Api::Hses do
           expect(issues.request.body).to match({"meta" => {}, "data" => []})
         end
 
-        it "sends query parameters for type, username, and pagination" do
+        it "sends query parameters for type, username, sort, and pagination" do
           # stub the net/http request / response
           response = Net::HTTPSuccess.new(1.0, "200", "OK")
           expect_any_instance_of(Net::HTTP).to receive(:start).and_return response
@@ -105,7 +106,8 @@ RSpec.describe Api::Hses do
               types: 1,
               username: "test.uid",
               offset: 0,
-              limit: 25
+              limit: 25,
+              sort: "-creationDate"
             }
           )
           issues.request
