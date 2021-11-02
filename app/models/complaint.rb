@@ -15,7 +15,7 @@ class Complaint
     2 => "Rec. Closure",
     3 => "Rec. Reopening",
     4 => "Reopened"
-  }.with_indifferent_access.freeze
+  }.freeze
 
   def initialize(hses_complaint)
     @id = hses_complaint[:id]

@@ -36,6 +36,7 @@ RSpec.describe Complaint do
         expect(subject.creation_date).to be_a Date
       end
     end
+
     context "when no date provided" do
       before { subject.attributes[:creationDate] = nil }
       it "returns nil" do
@@ -113,6 +114,7 @@ RSpec.describe Complaint do
     context "complaint is less than a week old" do
       context "an open complaint" do
         before { subject.attributes[:status][:id] = 0 }
+
         it "is new" do
           expect(subject.new?).to be true
         end
@@ -120,6 +122,7 @@ RSpec.describe Complaint do
 
       context "a complaint that is not open" do
         before { subject.attributes[:status][:id] = 5 }
+
         it "is not new" do
           expect(subject.new?).to be false
         end
@@ -129,6 +132,7 @@ RSpec.describe Complaint do
     context "complaint is more than a week old" do
       before { subject.attributes[:creationDate] = 8.days.before.to_date.iso8601 }
       before { subject.attributes[:status][:id] = 0 }
+
       context "an open complaint" do
         it "is not new" do
           expect(subject.new?).to be false
@@ -137,6 +141,7 @@ RSpec.describe Complaint do
 
       context "a complaint that is not open" do
         before { subject.attributes[:status][:id] = 5 }
+
         it "is not new" do
           expect(subject.new?).to be false
         end
@@ -241,6 +246,7 @@ RSpec.describe Complaint do
     context "a complaint that is less than a week old and open" do
       before { subject.attributes[:creationDate] = 5.days.before.to_date.iso8601 }
       before { subject.attributes[:status][:id] = 0 }
+
       it "returns 'New'" do
         expect(subject.status).to eq "New"
       end
@@ -249,6 +255,7 @@ RSpec.describe Complaint do
     context "a complaint that is more than a week old and open" do
       before { subject.attributes[:creationDate] = 8.days.before.to_date.iso8601 }
       before { subject.attributes[:status][:id] = 0 }
+
       it "returns 'In Progress'" do
         expect(subject.status).to eq "In Progress"
       end
@@ -256,6 +263,7 @@ RSpec.describe Complaint do
 
     context "a complaint that is not open" do
       before { subject.attributes[:status][:id] = 1 }
+
       it "returns 'Closed'" do
         expect(subject.status).to eq "Closed"
       end
@@ -263,6 +271,7 @@ RSpec.describe Complaint do
 
     context "a complaint that is recommended for closure" do
       before { subject.attributes[:status][:id] = 2 }
+
       it "returns 'Rec. Closure'" do
         expect(subject.status).to eq "Rec. Closure"
       end
