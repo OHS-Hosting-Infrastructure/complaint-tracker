@@ -1,22 +1,23 @@
+<% complaint = Complaint.new(complaint_data) %>
+
 <tr>
-  <% formatted_status = status(complaint[:attributes]) %>
   <th scope="row" role="rowheader">
-    <span class="<%= formatted_status == "New" ? "text-bold" : "" %>">
-      <%= link_to complaint[:id], complaint_path(complaint[:id]), class: "usa-link" %>
+    <span class="<%= complaint.new? ? "text-bold" : "" %>">
+      <%= link_to complaint.id, complaint_path(complaint.id), class: "usa-link" %>
     </span>
   </th>
   <td
-    data-sort-value="<%= DateTime.parse(complaint[:attributes][:creationDate]).to_i %>"
+    data-sort-value="<%= sort_date(complaint.creation_date) %>"
   >
-    <%= DateTime.parse(complaint[:attributes][:creationDate]).strftime("%m/%d/%Y") %>
+    <%= complaint.formatted_creation_date %>
   </td>
   <td
-    data-sort-value="<%= ComplaintsHelper::STATUS_SORT_ORDER[formatted_status] %>"
+    data-sort-value="<%= sort_status(complaint.status) %>"
   >
-    <%= formatted_status %>
+    <%= complaint.status %>
   </td>
-  <td><%= complaint[:attributes][:grantee] %></td>
-  <td><%= truncate(complaint[:attributes][:summary]) %></td>
-  <td> TBD </td>
-  <td> TBD </td>
+  <td><%= complaint.grantee %></td>
+  <td><%= truncate(complaint.summary) %></td>
+  <td><%= "Yes" if complaint.has_tta_report? %></td>
+  <td><%= "Yes" if complaint.has_monitoring_review?%></td>
 </tr>

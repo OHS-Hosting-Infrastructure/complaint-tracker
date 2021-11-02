@@ -30,6 +30,33 @@ RSpec.describe Complaint do
     end
   end
 
+  describe "#creation_date" do
+    context "when provided string with valid date" do
+      it "returns date object" do
+        expect(subject.creation_date).to be_a Date
+      end
+    end
+
+    context "when no date provided" do
+      before { subject.attributes[:creationDate] = nil }
+      it "returns nil" do
+        expect(subject.creation_date).to be_nil
+      end
+    end
+  end
+
+  describe "#formatted_creation_date" do
+    it "returns mm/dd/yyyy" do
+      expect(subject.formatted_creation_date).to match(/\d{2}\/\d{2}\/\d{4}/)
+    end
+  end
+
+  describe "#formatted_issue_last_updated" do
+    it "returns mm/dd/yyyy" do
+      expect(subject.formatted_creation_date).to match(/\d{2}\/\d{2}\/\d{4}/)
+    end
+  end
+
   # TODO: test for missing attribute
   describe "#grantee" do
     it "delegates to the attributes" do
@@ -49,6 +76,75 @@ RSpec.describe Complaint do
 
       it "returns false" do
         expect(subject.due_date?).to be false
+      end
+    end
+  end
+
+  describe "#has_monitoring_review?" do
+    context "has associated review" do
+      it "returns true" do
+        allow(IssueMonitoringReview).to receive(:where).and_return([1])
+        expect(subject.has_monitoring_review?).to be true
+      end
+    end
+
+    context "does not have associated review" do
+      it "returns false" do
+        expect(subject.has_monitoring_review?).to be false
+      end
+    end
+  end
+
+  describe "#has_tta_report?" do
+    context "has associated report" do
+      it "returns true" do
+        allow(IssueTtaReport).to receive(:where).and_return([1])
+        expect(subject.has_tta_report?).to be true
+      end
+    end
+
+    context "does not have associated report" do
+      it "returns false" do
+        expect(subject.has_tta_report?).to be false
+      end
+    end
+  end
+
+  describe "#new?" do
+    context "complaint is less than a week old" do
+      context "an open complaint" do
+        before { subject.attributes[:status][:id] = 0 }
+
+        it "is new" do
+          expect(subject.new?).to be true
+        end
+      end
+
+      context "a complaint that is not open" do
+        before { subject.attributes[:status][:id] = 5 }
+
+        it "is not new" do
+          expect(subject.new?).to be false
+        end
+      end
+    end
+
+    context "complaint is more than a week old" do
+      before { subject.attributes[:creationDate] = 8.days.before.to_date.iso8601 }
+      before { subject.attributes[:status][:id] = 0 }
+
+      context "an open complaint" do
+        it "is not new" do
+          expect(subject.new?).to be false
+        end
+      end
+
+      context "a complaint that is not open" do
+        before { subject.attributes[:status][:id] = 5 }
+
+        it "is not new" do
+          expect(subject.new?).to be false
+        end
       end
     end
   end
@@ -142,6 +238,42 @@ RSpec.describe Complaint do
         expect(subject.relative_due_date_html).to eq(
           "<span>Due in 12 days (#{strftime})</span>"
         )
+      end
+    end
+  end
+
+  describe "#status" do
+    context "a complaint that is less than a week old and open" do
+      before { subject.attributes[:creationDate] = 5.days.before.to_date.iso8601 }
+      before { subject.attributes[:status][:id] = 0 }
+
+      it "returns 'New'" do
+        expect(subject.status).to eq "New"
+      end
+    end
+
+    context "a complaint that is more than a week old and open" do
+      before { subject.attributes[:creationDate] = 8.days.before.to_date.iso8601 }
+      before { subject.attributes[:status][:id] = 0 }
+
+      it "returns 'In Progress'" do
+        expect(subject.status).to eq "In Progress"
+      end
+    end
+
+    context "a complaint that is not open" do
+      before { subject.attributes[:status][:id] = 1 }
+
+      it "returns 'Closed'" do
+        expect(subject.status).to eq "Closed"
+      end
+    end
+
+    context "a complaint that is recommended for closure" do
+      before { subject.attributes[:status][:id] = 2 }
+
+      it "returns 'Rec. Closure'" do
+        expect(subject.status).to eq "Rec. Closure"
       end
     end
   end

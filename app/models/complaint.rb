@@ -9,10 +9,24 @@ class Complaint
     initialContactDate: "Initial contact from complaint"
   }.with_indifferent_access.freeze
 
+  FORMATTED_STATUS = {
+    0 => "In Progress",
+    1 => "Closed",
+    2 => "Rec. Closure",
+    3 => "Rec. Reopening",
+    4 => "Reopened"
+  }.freeze
+
   def initialize(hses_complaint)
     @id = hses_complaint[:id]
     @attributes = hses_complaint[:attributes].with_indifferent_access
     @links = hses_complaint[:links].with_indifferent_access
+  end
+
+  def creation_date
+    Date.parse(attributes[:creationDate])
+  rescue
+    nil
   end
 
   def formatted_creation_date
@@ -35,6 +49,14 @@ class Complaint
     attributes[:grantee]
   end
 
+  def has_monitoring_review?
+    @has_monitoring_review ||= IssueMonitoringReview.where(issue_id: id).any?
+  end
+
+  def has_tta_report?
+    @has_tta_report ||= IssueTtaReport.where(issue_id: id).any?
+  end
+
   def overdue?
     due_date? && due_date.before?(Date.current)
   end
@@ -55,12 +77,18 @@ class Complaint
     links[:html]
   end
 
+  def new?
+    # status_id 0 maps to "Open" label in HSES response
+    creation_date > 1.week.ago && status_id == 0
+  end
+
   def priority
     attributes[:priority][:label]
   end
 
   def status
-    attributes[:status][:label]
+    # we are changing to our own labels rather than the ones in HSES
+    new? ? "New" : FORMATTED_STATUS[status_id]
   end
 
   def summary
@@ -83,12 +111,6 @@ class Complaint
     due_date&.strftime("%m/%d/%Y")
   end
 
-  def creation_date
-    Date.parse(attributes[:creationDate])
-  rescue
-    nil
-  end
-
   def issue_last_updated
     Date.parse(attributes[:issueLastUpdated])
   rescue
@@ -97,5 +119,9 @@ class Complaint
 
   def relative_time_til_due
     (Date.current...due_date).count
+  end
+
+  def status_id
+    attributes[:status][:id]
   end
 end

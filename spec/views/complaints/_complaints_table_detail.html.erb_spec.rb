@@ -9,7 +9,7 @@ RSpec.describe "rendering complaints table" do
       complaint[:attributes][:status] = {id: 0}
       complaint[:id] = "12345"
 
-      render partial: "complaints/complaints_table_detail", locals: {complaint: complaint}
+      render partial: "complaints/complaints_table_detail", locals: {complaint_data: complaint}
       expect(rendered.squish).to match '<span class="text-bold"> <a class="usa-link" href="/complaints/12345">12345</a> </span>'
     end
   end
@@ -19,7 +19,7 @@ RSpec.describe "rendering complaints table" do
       complaint[:attributes][:creationDate] = 1.month.ago.strftime("%FT%TZ")
       complaint[:id] = "12345"
 
-      render partial: "complaints/complaints_table_detail", locals: {complaint: complaint}
+      render partial: "complaints/complaints_table_detail", locals: {complaint_data: complaint}
       expect(rendered.squish).to match '<span class=""> <a class="usa-link" href="/complaints/12345">12345</a> </span>'
     end
   end

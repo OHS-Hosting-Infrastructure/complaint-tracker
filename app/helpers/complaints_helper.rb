@@ -1,14 +1,6 @@
 module ComplaintsHelper
   include Pagy::Frontend
 
-  FORMATTED_STATUS = {
-    0 => "In Progress",
-    1 => "Closed",
-    2 => "Rec. Closure",
-    3 => "Rec. Reopening",
-    4 => "Reopened"
-  }
-
   STATUS_SORT_ORDER = {
     "New" => 0,
     "Rec. Reopening" => 1,
@@ -36,12 +28,11 @@ module ComplaintsHelper
     page == @pagy.series.last ? "Last page, page #{page}" : "Page #{page}"
   end
 
-  def status(complaint_attributes)
-    formatted_status = FORMATTED_STATUS[complaint_attributes[:status][:id]]
-    if complaint_attributes[:creationDate] > 1.week.ago && formatted_status == "In Progress"
-      "New"
-    else
-      formatted_status
-    end
+  def sort_date(date)
+    date.to_datetime.to_i
+  end
+
+  def sort_status(status_label)
+    STATUS_SORT_ORDER[status_label]
   end
 end
