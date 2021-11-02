@@ -8,9 +8,49 @@ RSpec.describe MonitoringReview, type: :model do
     described_class.new id, access_token
   end
 
+  describe "#complete?" do
+    context "review has a status of Complete" do
+      it "is complete" do
+        subject.stub(:status).and_return("Complete")
+        expect(subject.complete?).to be true
+      end
+    end
+
+    context "review has a status of In Progress" do
+      it "is not complete" do
+        subject.stub(:status).and_return("In Progress")
+        expect(subject.complete?).to be false
+      end
+    end
+  end
+
+  describe "#itams_url" do
+    it "returns the URL to view the report in IT-AMS" do
+      expect(subject.itams_url).to eq "https://example.com/TODO"
+    end
+  end
+
+  describe "#outcome" do
+    it "returns an outcome" do
+      expect(FfakerWrapper::REVIEW_OUTCOME.include?(subject.outcome)).to be true
+    end
+  end
+
+  describe "#review_type" do
+    it "returns a review type" do
+      expect(FfakerWrapper::REVIEW_TYPE.include?(subject.review_type)).to be true
+    end
+  end
+
   describe "#start_date" do
     it "returns a start date" do
       expect(subject.start_date).to be_a(String)
+    end
+  end
+
+  describe "#status" do
+    it "returns a status" do
+      expect(FfakerWrapper::REVIEW_STATUS.include?(subject.status)).to be true
     end
   end
 

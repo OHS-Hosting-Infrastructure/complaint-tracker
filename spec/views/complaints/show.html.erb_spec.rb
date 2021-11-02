@@ -5,7 +5,7 @@ RSpec.describe "complaints/show.html.erb", type: :view do
   let(:issue_number) { complaint.id }
   let(:grantee_name) { complaint.grantee }
   let(:summary) { complaint.summary }
-  let(:timeline) { Timeline.new(complaint.attributes, []) }
+  let(:timeline) { Timeline.new(complaint.attributes, [], []) }
 
   describe "no linked TTA reports nor monitoring reviews" do
     before do
