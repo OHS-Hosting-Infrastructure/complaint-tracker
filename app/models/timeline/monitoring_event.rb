@@ -15,7 +15,7 @@ class Timeline::MonitoringEvent < Timeline::Event
   end
 
   def review_link
-    # using content_tag for the link will properly escape any dangerous characters that sneak into name or ttahub_url
+    # using content_tag for the link will properly escape any dangerous characters that sneak into name or monitoring url
     content_tag(:a, name, class: "usa-link", href: review.itams_url, target: "_blank")
   rescue Api::Error
     name

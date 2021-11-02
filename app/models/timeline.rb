@@ -9,7 +9,7 @@ class Timeline
     initialContactDate: "Initial contact from complaint"
   }.with_indifferent_access.freeze
 
-  def initialize(complaint_attributes, tta_reports = [], monitoring_reviews = [])
+  def initialize(complaint_attributes, tta_reports, monitoring_reviews)
     @complaint_events = needed_attributes(complaint_attributes)
       .map { |event| ComplaintEvent.new(event) }
 

@@ -9,14 +9,17 @@ RSpec.describe MonitoringReview, type: :model do
   end
 
   describe "#itams_url" do
-    it "returns a URL" do
-      expect(subject.start_date).to be_a(String)
+    it "returns the URL to view the report in IT-AMS" do
+      expect(subject.itams_url).to eq "https://example.com/TODO"
+    end
+  end
+
     end
   end
 
   describe "#review_type" do
-    it "returns the URL to view the report in IT-AMS" do
-      expect(subject.itams_url).to eq "https://example.com/TODO"
+    it "returns a review type" do
+      expect(FfakerWrapper::REVIEW_TYPE.include?(subject.review_type)).to be true
     end
   end
 
@@ -28,7 +31,7 @@ RSpec.describe MonitoringReview, type: :model do
 
   describe "#status" do
     it "returns a status" do
-      expect(subject.status).to be_a(String)
+      expect(FfakerWrapper::REVIEW_STATUS.include?(subject.status)).to be true
     end
   end
 

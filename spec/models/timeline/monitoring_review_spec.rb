@@ -6,7 +6,6 @@ RSpec.describe Timeline::MonitoringEvent do
   let(:issue_id) { "Test-Issue-ID" }
   # just setting the start_date manually because we aren't triggering the before_validation callback
   let(:event_param) { IssueMonitoringReview.new review_id: review_id, issue_id: issue_id, start_date: date }
-  let(:monitoring_review) { event_param.monitoring_review }
   subject { Timeline::MonitoringEvent.new(event_param) }
 
   describe "#init" do
