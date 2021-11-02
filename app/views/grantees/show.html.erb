@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="grid-col-8">
-      <ul class="usa-process-list ">
+      <ul class="usa-list usa-list--unstyled">
         <% @grantee.complaints.each do |complaint| %>
           <li>
             <%= render "complaints_list_detail", complaint: complaint %>
