@@ -25,39 +25,17 @@ RSpec.describe ComplaintsHelper, type: :helper do
     end
   end
 
-  describe "#status" do
-    describe "a complaint that is less than a week old" do
-      let(:complaint) { {status: {id: 0}, creationDate: 1.day.ago} }
-
-      describe "an open complaint" do
-        it "returns 'New' as the formatted status" do
-          expect(status(complaint)).to eq "New"
-        end
-      end
-
-      describe "a complaint that is not open" do
-        it "returns the formatted status of the complaint's status " do
-          complaint[:status] = {id: 3}
-          expect(status(complaint)).to eq ComplaintsHelper::FORMATTED_STATUS[3]
-        end
-      end
+  describe "#sort_status" do
+    it "sorts New complaints first" do
+      expect(sort_status("New")).to eq 0
     end
 
-    describe "a complaint that is more than a week old" do
-      let(:complaint) { {status: {id: 0}, creationDate: 1.month.ago} }
+    it "sorts In Progress complaints in the middle" do
+      expect(sort_status("In Progress")).to eq 3
+    end
 
-      describe "an open complaint" do
-        it "returns 'In Progress' as the formatted status" do
-          expect(status(complaint)).to eq "In Progress"
-        end
-      end
-
-      describe "a complaint that is not open" do
-        it "returns the formatted status of the complaint's status " do
-          complaint[:status] = {id: 2}
-          expect(status(complaint)).to eq ComplaintsHelper::FORMATTED_STATUS[2]
-        end
-      end
+    it "sorts Closed complaints last" do
+      expect(sort_status("Closed")).to eq 5
     end
   end
 end

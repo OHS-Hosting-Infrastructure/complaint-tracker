@@ -57,7 +57,7 @@
     <div class="grid-col-8">
       <div class="summary-section summary-body">
         <h2 class="ct-section-divider ct-timeline__two-part-container">
-          <%= status(@complaint.attributes) %>
+          <%= @complaint.status %>
           <span class="ct-timeline__date">
             <% if !@complaint.due_date? %>
               No Due Date
