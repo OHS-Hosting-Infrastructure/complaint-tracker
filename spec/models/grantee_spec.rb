@@ -26,25 +26,50 @@ RSpec.describe Grantee, type: :model do
 
     describe "#name" do
       it "delegates to the attributes" do
-        expect(subject.name).to eq hses_grantee[:attributes][:name]
+        expect(subject.name).to eq hses_grantee[:attributes][:granteeName]
       end
     end
 
     describe "#region" do
       it "delegates to the attributes" do
-        expect(subject.region).to eq hses_grantee[:attributes][:region]
+        expect(subject.region).to eq hses_grantee[:attributes][:grants][0][:attributes][:region]
       end
     end
 
-    describe "#centers_total" do
-      it "delegates to the attributes" do
-        expect(subject.centers_total).to eq hses_grantee[:attributes][:numberOfCenters]
+    describe "#centers" do
+      it "adds up all the numberOfCenters in the grants" do
+        count = hses_grantee[:attributes][:grants].sum do |grant|
+          grant[:attributes][:numberOfCenters]
+        end
+
+        expect(subject.centers).to eq count
       end
     end
 
     describe "#complaints_per_fy" do
       it "delegates to the attributes" do
-        expect(subject.complaints_per_fy).to eq hses_grantee[:attributes][:totalComplaintsFiscalYear]
+        complaint_count = {
+          2022 => 0,
+          2021 => 0,
+          2020 => 0
+        }
+
+        hses_grantee[:attributes][:grants].each do |grant|
+          grant[:attributes][:totalComplaintsFiscalYear].each do |count|
+            complaint_count[count[:fiscalYear]] += count[:totalComplaints]
+          end
+        end
+
+        expect(subject.complaints_per_fy).to eq complaint_count
+      end
+    end
+
+    describe "#formatted_grant_ids" do
+      it "returns a list of grant ids with a comma in between" do
+        formatted_string = hses_grantee[:attributes][:grants]
+          .map { |grant| grant[:id] }
+          .join(", ")
+        expect(subject.formatted_grant_ids).to eq formatted_string
       end
     end
 
@@ -61,7 +86,9 @@ RSpec.describe Grantee, type: :model do
     let(:grantee_hash) do
       {
         id: id,
-        attributes: {}
+        attributes: {
+          grants: []
+        }
       }
     end
 
@@ -72,7 +99,7 @@ RSpec.describe Grantee, type: :model do
     end
 
     describe "#name" do
-      it "delegates to the attributes" do
+      it "returns nil" do
         expect(subject.name).to be nil
       end
     end
@@ -83,15 +110,15 @@ RSpec.describe Grantee, type: :model do
       end
     end
 
-    describe "#centers_total" do
+    describe "#centers" do
       it "delegates to the attributes" do
-        expect(subject.centers_total).to be nil
+        expect(subject.centers).to be 0
       end
     end
 
     describe "#complaints_per_fy" do
       it "delegates to the attributes" do
-        expect(subject.complaints_per_fy).to be nil
+        expect(subject.complaints_per_fy).to eq({})
       end
     end
 
