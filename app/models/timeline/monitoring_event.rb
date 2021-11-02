@@ -2,7 +2,8 @@ class Timeline::MonitoringEvent < Timeline::Event
   include ActionView::Helpers::TagHelper
 
   attr_reader :review
-  delegate :api_error_message, :status, :review_type, to: :review
+  delegate :api_error_message, :status, :review_type, :outcome,
+    to: :review
 
   def initialize(issue_monitoring_review)
     @name = issue_monitoring_review.review_id

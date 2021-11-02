@@ -13,6 +13,10 @@ class MonitoringReview
     get_api_data_field :links, :html
   end
 
+  def outcome
+    get_api_data_field :attributes, :outcome
+  end
+
   def review_type
     get_api_data_field :attributes, :reviewType
   end

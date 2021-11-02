@@ -14,6 +14,9 @@ RSpec.describe MonitoringReview, type: :model do
     end
   end
 
+  describe "#outcome" do
+    it "returns an outcome" do
+      expect(FfakerWrapper::REVIEW_OUTCOME.include?(subject.outcome)).to be true
     end
   end
 
