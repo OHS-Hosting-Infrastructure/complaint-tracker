@@ -13,3 +13,7 @@
  *= require_tree .
  *= require_self
  */
+
+ul.usa-process-list {
+  padding: 0rem;
+}
