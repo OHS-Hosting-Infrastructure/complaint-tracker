@@ -8,6 +8,22 @@ RSpec.describe MonitoringReview, type: :model do
     described_class.new id, access_token
   end
 
+  describe "#complete?" do
+    context "review has a status of Complete" do
+      it "is complete" do
+        subject.stub(:status).and_return("Complete")
+        expect(subject.complete?).to be true
+      end
+    end
+
+    context "review has a status of In Progress" do
+      it "is not complete" do
+        subject.stub(:status).and_return("In Progress")
+        expect(subject.complete?).to be false
+      end
+    end
+  end
+
   describe "#itams_url" do
     it "returns the URL to view the report in IT-AMS" do
       expect(subject.itams_url).to eq "https://example.com/TODO"

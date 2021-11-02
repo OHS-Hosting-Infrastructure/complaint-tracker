@@ -6,7 +6,7 @@
   <div>
     <ul class="usa-list usa-list--unstyled">
       <li><strong>Status:</strong> <%= event.status %></li>
-      <% if event.status == "Complete" %>
+      <% if event.complete? %>
         <li><strong>Outcome:</strong> <%= event.outcome %></li>
       <% end %>
       <li><strong>Type:</strong> <%= event.review_type %></li>

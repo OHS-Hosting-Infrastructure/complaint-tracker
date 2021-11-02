@@ -9,6 +9,10 @@ class MonitoringReview
     @errors = []
   end
 
+  def complete?
+    status == "Complete"
+  end
+
   def itams_url
     get_api_data_field :links, :html
   end

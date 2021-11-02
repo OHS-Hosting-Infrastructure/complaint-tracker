@@ -5,6 +5,7 @@ RSpec.describe "rendering monitoring event" do
     it "returns status and type" do
       event = OpenStruct.new(
         api_call_succeeded?: true,
+        complete?: false,
         status: "In Progress",
         outcome: "Should not show up",
         review_type: "RAN"
@@ -22,6 +23,7 @@ RSpec.describe "rendering monitoring event" do
     it "returns status, outcome, and type" do
       event = OpenStruct.new(
         api_call_succeeded?: true,
+        complete?: true,
         status: "Complete",
         outcome: "Compliant",
         review_type: "RAN"
