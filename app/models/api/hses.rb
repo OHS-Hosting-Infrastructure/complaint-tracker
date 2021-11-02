@@ -2,11 +2,15 @@ require "fake_api_response_wrapper"
 require "fake_issues"
 
 module Api::Hses
-  def configure_auth(request)
-    request.basic_auth(
-      Rails.configuration.x.hses.api_username,
-      Rails.configuration.x.hses.api_password
-    )
+  def request
+    Rails.logger.debug <<~EODM
+      HSES #{path}:
+      #{response.inspect}
+    EODM
+    if response.failed?
+      Rails.logger.error "HSES call to #{path} responded with #{response.code}"
+    end
+    response
   end
 
   def error_type
@@ -17,15 +21,17 @@ module Api::Hses
     Rails.configuration.x.hses.api_hostname
   end
 
-  def request
-    Rails.logger.debug <<~EODM
-      HSES #{path}:
-      #{response.inspect}
-    EODM
-    if response.failed?
-      Rails.logger.error "HSES call to #{path} responded with #{response.code}"
-    end
-    response
+  private
+
+  def configure_auth(request)
+    request.basic_auth(
+      Rails.configuration.x.hses.api_username,
+      Rails.configuration.x.hses.api_password
+    )
+  end
+
+  def parameters
+    {}
   end
 end
 
@@ -41,10 +47,6 @@ class Api::Hses::Issue < ApiRequest
 
   def path
     "/issues-ws/issue/#{id}"
-  end
-
-  def parameters
-    {}
   end
 end
 
@@ -84,15 +86,17 @@ class Api::Hses::Issues < ApiRequest
   end
 end
 
-class Api::Hses::Grantee
-  include FakeApiResponseWrapper
+class Api::Hses::Grantee < ApiRequest
+  include Api::Hses
   attr_accessor :id
 
   def initialize(id:)
     @id = id
   end
 
-  def request
-    details_response(Api::FakeData::Grantee.new(id: id).data)
+  private
+
+  def path
+    "/issues-ws/grantee/#{id}"
   end
 end
