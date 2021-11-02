@@ -11,14 +11,14 @@ RSpec.describe MonitoringReview, type: :model do
   describe "#complete?" do
     context "review has a status of Complete" do
       it "is complete" do
-        subject.stub(:status).and_return("Complete")
+        expect(subject).to receive(:status).and_return("Complete")
         expect(subject.complete?).to be true
       end
     end
 
     context "review has a status of In Progress" do
       it "is not complete" do
-        subject.stub(:status).and_return("In Progress")
+        expect(subject).to receive(:status).and_return("In Progress")
         expect(subject.complete?).to be false
       end
     end
