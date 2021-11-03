@@ -1,4 +1,7 @@
-<table class="usa-table" aria-describedby="#caption" >
+<table class="usa-table">
+  <caption>
+    Complaints associated with this user. Data for illustration purposes only.
+  </caption>
   <thead>
     <tr>
       <th scope="col" role="columnheader">HSES Issue #</th>
@@ -6,9 +9,11 @@
         data-sortable
         scope="col"
         role="columnheader"
+        aria-sort="<%= @sort == "creationDate" ? "ascending" : "descending" %>"
+        data-next-sort="<%= complaints_path(page: 1, sort: (@sort == "creationDate" ? "-creationDate" : "creationDate")) %>"
       > Date Created </th>
-      <th data-sortable scope="col" role="columnheader"> Status </th>
-      <th data-sortable scope="col" role="columnheader"> Grantee </th>
+      <th scope="col" role="columnheader"> Status </th>
+      <th scope="col" role="columnheader"> Grantee </th>
       <th scope="col" role="columnheader"> Summary </th>
       <th scope="col" role="columnheader"> TTA </th>
       <th scope="col" role="columnheader"> RAN </th>
@@ -26,4 +31,4 @@
 
 <%= render partial: 'complaints/pagination', locals: {pagy: @pagy} %>
 
-<p class="margin-bottom-3" id="caption">Complaints associated with this user. Data for illustration purposes only.</p>
+<%= javascript_pack_tag 'complaint-sort' %>
