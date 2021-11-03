@@ -9,8 +9,8 @@
         data-sortable
         scope="col"
         role="columnheader"
-        aria-sort="<%= @sort == "creationDate" ? "ascending" : "descending" %>"
-        data-next-sort="<%= complaints_path(page: 1, sort: (@sort == "creationDate" ? "-creationDate" : "creationDate")) %>"
+        <%= sanitize aria_sort("creationDate") %>
+        data-next-sort="<%= complaints_path(page: 1, sort: (current_sort_direction("creationDate") == "descending" ? "creationDate" : "-creationDate")) %>"
       > Date Created </th>
       <th scope="col" role="columnheader"> Status </th>
       <th scope="col" role="columnheader"> Grantee </th>

@@ -35,4 +35,22 @@ module ComplaintsHelper
   def sort_status(status_label)
     STATUS_SORT_ORDER[status_label]
   end
+
+  def aria_sort(column)
+    current_sort_direction = current_sort_direction(column)
+    if current_sort_direction.present?
+      "aria-sort=\"#{current_sort_direction}\""
+    end
+  end
+
+  def current_sort_direction(column)
+    if @sort.nil?
+      column == "creationDate" ? "descending" : nil
+    else
+      match = @sort.match(/(-)?#{column}/)
+      if match
+        match[1] == "-" ? "descending" : "ascending"
+      end
+    end
+  end
 end
