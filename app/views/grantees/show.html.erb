@@ -9,32 +9,28 @@
   <div class="grid-row grid-gap">
     <div class="grid-col-4">
       <div class="summary-section summary-body">
-        <div class="ct-section-divider">
-          <h2>Summary</h2>
-          <p class="display-flex flex-justify">
-            <span> Total Centers:</span> 
-            <span><%= @grantee.centers %> </span>
-          </p>
-          <p>
-            <% @grantee.complaints_per_fy.each do |year, count| %>
-              <span class="display-flex flex-justify">
-                <span> FY<%= year %> Complaints:</span> 
-                <span><%= count %></span>
-              </span>
-            <% end %>
-          </p>
-          <a href="<%= @grantee.hses_link %>" 
-          class="usa-button width-full" target="_blank">Open in HSES</a>
-        </div>
+        <h2>Summary</h2>
+        <p class="display-flex flex-justify">
+          <span> Total Centers:</span> 
+          <span><%= @grantee.centers %> </span>
+        </p>
+        <p>
+          <% @grantee.complaints_per_fy.each do |year, count| %>
+            <span class="display-flex flex-justify">
+              <span> FY<%= year %> Complaints:</span> 
+              <span><%= count %></span>
+            </span>
+          <% end %>
+        </p>
+        <a href="<%= @grantee.hses_link %>" 
+        class="usa-button width-full" target="_blank">Open in HSES</a>
       </div>
       <div class="summary-section summary-body">
-        <div class="ct-section-divider">
-          <h2>Open Issues</h2>
-        </div>
+        <h2>Open Issues</h2>
       </div>
     </div>
     <div class="grid-col-8">
-      <ul class="usa-process-list">
+      <ul class="usa-list usa-list--unstyled">
         <% @grantee.complaints.each do |complaint| %>
           <li>
             <%= render "complaints_list_detail", complaint: complaint %>
