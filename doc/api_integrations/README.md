@@ -1,6 +1,6 @@
 # API Integrations
 
-The Complaints Tracker relies on the following systems in a read-only capacity:
+The Complaint Tracker relies on the following systems in a read-only capacity:
 
 - HSES
   - Authentication
