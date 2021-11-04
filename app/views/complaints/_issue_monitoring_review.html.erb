@@ -1,3 +1,14 @@
 <div class="ct-tta-divider display-flex flex-justify" id="monitoring-activity-show-<%= issue_monitoring_review.id %>">
   <div><%= issue_monitoring_review.review_id %></div>
+  <div>
+    <%=  link_to image_pack_tag("media/usa-icons/link_off.svg", alt: "Unlink RAN ID"),
+      "#unlink-modal-monitoring",
+      class: "ct-link-icon usa-button--unstyled js-open-unlink-modal",
+      "aria-controls": "unlink-modal-monitoring",
+      "aria-label": "Unlink RAN ID",
+      "data-open-modal": true,
+      "data-id": issue_monitoring_review.review_id,
+      "data-input-field": "monitoring_review_id"
+    %>
+  </div>
 </div>

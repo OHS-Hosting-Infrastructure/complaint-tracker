@@ -7,12 +7,13 @@
       "data-id": issue_tta_report.id
     %>
     <%=  link_to image_pack_tag("media/usa-icons/link_off.svg", alt: "Unlink Display ID"),
-      "#unlink-modal",
+      "#unlink-modal-tta",
       class: "ct-link-icon usa-button--unstyled js-open-unlink-modal",
-      "aria-controls": "unlink-modal",
+      "aria-controls": "unlink-modal-tta",
       "aria-label": "Unlink Display ID",
       "data-open-modal": true,
-      "data-display-id": issue_tta_report.tta_report_display_id
+      "data-id": issue_tta_report.tta_report_display_id,
+      "data-input-field": "tta-display_id"
     %>
   </div>
 </div>

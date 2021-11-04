@@ -82,12 +82,16 @@ document.querySelectorAll(".js-close-edit-tta").forEach((el) => {
   })
 })
 
+// Unlink form for TTA and Monitoring
+
 document.querySelectorAll(".js-open-unlink-modal").forEach((el) => {
   el.addEventListener('click', event => {
-    const displayId = event.currentTarget.dataset.displayId
-    // add display id to hidden input form
-    const hiddenInput = document.querySelector("#hidden-tta-display_id")
-    hiddenInput.value = displayId
+    // note: id here refers to monitoring's review id or a TTA issue's display_id
+    const id = event.currentTarget.dataset.id
+    const field = event.currentTarget.dataset.inputField
+    const hiddenInput = document.querySelector("#hidden-"+field)
+    // add id to hidden input form
+    hiddenInput.value = id
   })
 })
 
@@ -95,5 +99,6 @@ document.querySelectorAll(".ct-close-modal").forEach((el) => {
   el.addEventListener('click', event => {
     // remove id from hidden input forms
     clearFormValue("#hidden-tta-display_id")
+    clearFormValue("#hidden-monitoring_review_id")
   })
 })
