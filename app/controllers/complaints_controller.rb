@@ -11,6 +11,7 @@ class ComplaintsController < ApplicationController
 
     @complaints = res.data
     @error = res.error
+    @sort = params[:sort]
     @pagy = Pagy.new(count: res.count, page: params[:page])
   end
 

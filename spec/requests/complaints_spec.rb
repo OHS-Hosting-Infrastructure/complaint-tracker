@@ -51,7 +51,7 @@ RSpec.describe "Complaints", type: :request do
 
           get complaints_path
 
-          expect(response.body).to include '<table class="usa-table" aria-describedby="#caption" >'
+          expect(response.body).to include '<table class="usa-table">'
         end
       end
 
