@@ -21,7 +21,7 @@ RSpec.describe "rendering complaints table" do
 
     expect(rendered).to include <<-EOHTML
       <th
-        data-sortable
+        data-remote-sortable
         scope="col"
         role="columnheader"
         aria-sort="descending"
