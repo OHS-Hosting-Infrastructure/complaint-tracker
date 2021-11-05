@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
 
   def destroy
     reset_session
-    msg = "You are now logged out of the complaints tracker."
+    msg = "You are now logged out of the complaint tracker."
     msg += "<br><em>Note: you may still be logged in to HSES</em>"
     flash[:notice] = msg
     redirect_to root_path

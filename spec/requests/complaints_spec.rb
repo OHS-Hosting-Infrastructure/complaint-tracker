@@ -28,7 +28,7 @@ RSpec.describe "Complaints", type: :request do
       it "displays a message that user was logged out" do
         delete logout_path
         follow_redirect!
-        expect(response.body).to include("You are now logged out of the complaints tracker.<br><em>Note: you may still be logged in to HSES</em>")
+        expect(response.body).to include("You are now logged out of the complaint tracker.<br><em>Note: you may still be logged in to HSES</em>")
       end
     end
 
