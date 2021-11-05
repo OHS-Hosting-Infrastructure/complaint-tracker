@@ -2,16 +2,16 @@
   <div
     class="usa-modal"
     id="unlink-modal-<%= item %>"
-    aria-labelledby="unlink-modal-heading"
+    aria-labelledby="unlink-modal-heading-<%= item %>"
     aria-describedby="unlink-modal-description"
   >
     <div class="usa-modal__content">
       <div class="usa-modal__main">
-        <h2 class="usa-modal__heading" id="unlink-modal-heading">
+        <h2 class="usa-modal__heading" id="unlink-modal-heading-<%= item %>">
           Are you sure you want to unlink this <%= item_type %>?
         </h2>
         <div class="usa-prose">
-          <p id="unlink-modal-description">
+          <p id="unlink-modal-description-<%= item %>">
             This will remove the <%= item_type %> from this complaint, but will not delete the report from <%= item_system %>
           </p>
         </div>
