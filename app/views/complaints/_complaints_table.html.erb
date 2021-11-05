@@ -29,6 +29,6 @@
   <!-- this content will change when sort changes -->
 </div>
 
-<%= render partial: 'complaints/pagination', locals: {pagy: @pagy} %>
+<%= render partial: 'complaints/pagination', locals: {pagy: @pagy, path_args: {sort: @sort}} %>
 
 <%= javascript_pack_tag 'complaint-sort' %>

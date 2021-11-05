@@ -10,14 +10,14 @@ module ComplaintsHelper
     "Closed" => 5
   }
 
-  def page_link(page, current: false)
+  def page_link(page, path_args, current: false)
     options = {
       class: page_link_class(current),
       "aria-label": page_link_label(page)
     }
     options["aria-current"] = "page" if current
 
-    link_to page, complaints_path(page: page), options
+    link_to page, complaints_path(path_args.merge(page: page)), options
   end
 
   def page_link_class(current)
