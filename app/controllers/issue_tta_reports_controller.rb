@@ -17,6 +17,12 @@ class IssueTtaReportsController < ApplicationController
     end
   end
 
+  def destroy
+    tta_report_link = IssueTtaReport.find_by(issue_id: issue_id, tta_report_display_id: tta_report_display_id)
+    tta_report_link.destroy!
+    redirect_back fallback_location: complaint_path(issue_id)
+  end
+
   def update
     @issue_tta_report = IssueTtaReport.find(params[:id])
 
@@ -27,12 +33,6 @@ class IssueTtaReportsController < ApplicationController
         format.js { render "update_errors" }
       end
     end
-  end
-
-  def unlink
-    tta_report_link = IssueTtaReport.find_by(issue_id: issue_id, tta_report_display_id: tta_report_display_id)
-    tta_report_link.destroy!
-    redirect_back fallback_location: complaint_path(issue_id)
   end
 
   private

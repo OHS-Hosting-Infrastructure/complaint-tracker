@@ -19,7 +19,7 @@ class IssueMonitoringReviewsController < ApplicationController
     end
   end
 
-  def unlink
+  def destroy
     review_link = IssueMonitoringReview.find_by(
       issue_id: issue_id,
       review_id: review_id

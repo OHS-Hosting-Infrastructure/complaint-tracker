@@ -18,8 +18,8 @@
         <div class="usa-modal__footer">
           <ul class="usa-button-group">
             <li class="usa-button-group__item">
-            <%= form_with url: public_send(unlink_path, @complaint.id), method: "delete" do %>
-              <%= hidden_field_tag hidden_tag_name, nil, id: hidden_tag_id %>
+            <%= form_with url: unlink_path, method: "delete" do %>
+              <%= hidden_field_tag hidden_tag_name, nil, id: hidden_tag_id, class: "ct-linked-item-clear-field" %>
               <%= submit_tag "Yes, remove the link", class: "usa-button", id: "#{item}-unlink-submit" %>
             <% end %>
             </li>

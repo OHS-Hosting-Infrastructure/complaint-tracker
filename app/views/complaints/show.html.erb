@@ -82,7 +82,7 @@
   item: "tta",
   item_system: "TTA Hub",
   item_type: "TTA activity report",
-  unlink_path: "unlink_tta_report_path",
+  unlink_path: unlink_tta_report_path(@complaint.id),
   hidden_tag_name: "tta_report_display_id",
   hidden_tag_id: "hidden-tta-display_id"
 } %>
@@ -91,7 +91,7 @@
   item: "monitoring",
   item_system: "IT-AMS",
   item_type: "RAN review",
-  unlink_path: "unlink_monitoring_review_path",
+  unlink_path: unlink_monitoring_review_path(@complaint.id),
   hidden_tag_name: "monitoring_review_id",
   hidden_tag_id: "hidden-monitoring_review_id"
 } %>

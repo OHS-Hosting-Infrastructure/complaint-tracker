@@ -118,7 +118,6 @@ RSpec.feature "Associating TTA Activity Report", type: :feature do
     it "can unlink a TTA activity report display id" do
       expect(page).to have_content "TTA Activity:\n#{test_display_id}\n"
       page.find("#tta-activity-show-#{issue_tta_report.id} .js-open-unlink-modal").click
-      # click_button "Yes, remove the link"
       click_button "tta-unlink-submit"
 
       expect(page).to_not have_content "TTA Activity:\n#{test_display_id}\n"

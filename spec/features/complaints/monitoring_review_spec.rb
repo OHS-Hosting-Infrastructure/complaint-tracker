@@ -36,4 +36,25 @@ RSpec.feature "Associating monitoring review", type: :feature do
       end
     end
   end
+
+  context "the complaint has an associated monitoring review", js: true do
+    let!(:issue_monitoring_review) do
+      IssueMonitoringReview.create(
+        issue_id: complaint.id,
+        review_id: test_id
+      )
+    end
+
+    before do
+      visit "complaints/#{complaint.id}"
+    end
+
+    it "can unlink a monitoring review id" do
+      expect(page).to have_content "RAN activity:\n#{test_id}\n"
+      page.find("#monitoring-activity-show-#{issue_monitoring_review.id} .js-open-unlink-modal").click
+      click_button "monitoring-unlink-submit"
+
+      expect(page).to_not have_content "RAN Activity:\n#{test_id}\n"
+    end
+  end
 end
