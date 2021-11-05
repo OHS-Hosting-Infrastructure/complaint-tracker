@@ -4,11 +4,6 @@ const openForm = function (formId, itemId) {
   document.querySelector(itemId).focus()
 }
 
-const clearFormValue = function (elementId) {
-  const input = document.querySelector(elementId)
-  input.value = ""
-}
-
 const closeForm = function (containerId) {
   const formContainer = document.querySelector(containerId)
   formContainer.classList.add("display-none")
@@ -82,18 +77,23 @@ document.querySelectorAll(".js-close-edit-tta").forEach((el) => {
   })
 })
 
+// Unlink form for TTA and Monitoring
+
 document.querySelectorAll(".js-open-unlink-modal").forEach((el) => {
   el.addEventListener('click', event => {
-    const displayId = event.currentTarget.dataset.displayId
-    // add display id to hidden input form
-    const hiddenInput = document.querySelector("#hidden-tta-display_id")
-    hiddenInput.value = displayId
+    // note: id here refers to monitoring's review id or a TTA issue's display_id
+    const { id, inputField } = event.currentTarget.dataset
+    const hiddenInput = document.querySelector("#hidden-"+inputField)
+    // add id to hidden input form
+    hiddenInput.value = id
   })
 })
 
 document.querySelectorAll(".ct-close-modal").forEach((el) => {
   el.addEventListener('click', event => {
     // remove id from hidden input forms
-    clearFormValue("#hidden-tta-display_id")
+    document.querySelectorAll(".ct-linked-item-clear").forEach((input) => {
+      input.value = ""
+    })
   })
 })

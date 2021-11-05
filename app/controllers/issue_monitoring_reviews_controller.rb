@@ -19,6 +19,15 @@ class IssueMonitoringReviewsController < ApplicationController
     end
   end
 
+  def destroy
+    review_link = IssueMonitoringReview.find_by(
+      issue_id: issue_id,
+      review_id: review_id
+    )
+    review_link.destroy!
+    redirect_back fallback_location: complaint_path(issue_id)
+  end
+
   private
 
   def issue_id
