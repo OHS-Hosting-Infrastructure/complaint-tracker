@@ -4,8 +4,9 @@
     <div class="display-flex flex-justify margin-bottom-2">
       <span> Activity Report ID</span>
       <%= button_to "Cancel", ".js-add-tta-report",
-        class: "usa-link usa-button--unstyled js-close-edit-tta",
-        "data-id": issue_tta_report.id
+        class: "usa-link usa-button--unstyled js-close-edit-link",
+        "data-id": issue_tta_report.id,
+        "data-activity-type": "tta"
       %>
     </div>
     <div>

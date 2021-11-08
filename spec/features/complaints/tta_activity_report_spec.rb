@@ -97,7 +97,7 @@ RSpec.feature "Associating TTA Activity Report", type: :feature do
       it "can successfully edit a TTA activity report display id" do
         expect(page).to have_content "TTA Activity:\n#{test_display_id}\n"
 
-        find_button("Edit Display ID").click
+        find_button("Edit Activity Report Display ID").click
         # fill_in "TTA report display ID", with: "R02-AR-14532"
         page.find("##{test_display_id}").fill_in with: "R02-AR-14532"
         click_button "Save"
@@ -107,9 +107,9 @@ RSpec.feature "Associating TTA Activity Report", type: :feature do
 
       it "can cancel out of editing a TTA activity report display id" do
         expect(page).to have_content "TTA Activity:\n#{test_display_id}\n"
-        find_button("Edit Display ID").click
+        find_button("Edit Activity Report Display ID").click
         page.find("##{test_display_id}").fill_in with: "RO2-AR-14532"
-        page.find("#edit-tta-activity-#{issue_tta_report.id} .js-close-edit-tta").click
+        page.find("#edit-tta-activity-#{issue_tta_report.id} .js-close-edit-link").click
 
         expect(page).to have_content "TTA Activity:\n#{test_display_id}\n"
       end

@@ -1,6 +1,12 @@
-<div class="ct-tta-divider display-flex flex-justify" id="monitoring-activity-show-<%= issue_monitoring_review.id %>">
+<div class="ct-monitoring-divider display-flex flex-justify" id="monitoring-activity-show-<%= issue_monitoring_review.id %>">
   <div><%= issue_monitoring_review.review_id %></div>
   <div>
+    <%= button_tag image_pack_tag("media/usa-icons/edit.svg", alt: "Edit RAN Review ID"),
+      class: "ct-link-icon usa-button--unstyled js-edit-link",
+      "aria-label": "Edit RAN Review ID",
+      "data-id": issue_monitoring_review.id,
+      "data-activity-type": "monitoring"
+    %>
     <%=  link_to image_pack_tag("media/usa-icons/link_off.svg", alt: "Unlink RAN ID"),
       "#unlink-modal-monitoring",
       class: "ct-link-icon usa-button--unstyled js-open-unlink-modal",
@@ -11,4 +17,8 @@
       "data-input-field": "monitoring_review_id"
     %>
   </div>
+</div>
+
+<div class="display-none" id="edit-monitoring-activity-<%= issue_monitoring_review.id %>">
+  <%= render "monitoring_edit_review", issue_monitoring_review: issue_monitoring_review %>
 </div>

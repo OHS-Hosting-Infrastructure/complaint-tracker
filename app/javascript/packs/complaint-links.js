@@ -50,40 +50,41 @@ document.querySelector("#js-close-monitoring-form").addEventListener('click', ev
   clearFormValue("#monitoring-review-id")
 })
 
+// Edit form
 
-document.querySelectorAll(".js-edit-tta").forEach((el) => {
+document.querySelectorAll(".js-edit-link").forEach((el) => {
   el.addEventListener('click', event => {
     event.preventDefault()
 
     // hide details
-    const id = event.currentTarget.dataset.id
-    document.querySelector(`#tta-activity-show-${id}`).classList.add("display-none")
+    const { id, activityType } = event.currentTarget.dataset
+    document.querySelector(`#${activityType}-activity-show-${id}`).classList.add("display-none")
     // show form
-    const form = document.querySelector(`#edit-tta-activity-${id}`)
+    const form = document.querySelector(`#edit-${activityType}-activity-${id}`)
     form.classList.remove("display-none")
     form.querySelector("input[type='text']").focus()
   })
 })
 
-document.querySelectorAll(".js-close-edit-tta").forEach((el) => {
+document.querySelectorAll(".js-close-edit-link").forEach((el) => {
   el.addEventListener('click', event => {
     event.preventDefault()
 
-    const id = event.currentTarget.dataset.id
+    const { id, activityType } = event.currentTarget.dataset
     // hide form
-    closeForm(`#edit-tta-activity-${id}`)
+    closeForm(`#edit-${activityType}-activity-${id}`)
     // show detail
-    document.querySelector(`#tta-activity-show-${id}`).classList.remove("display-none")
+    document.querySelector(`#${activityType}-activity-show-${id}`).classList.remove("display-none")
   })
 })
 
-// Unlink form for TTA and Monitoring
+// Unlink form
 
 document.querySelectorAll(".js-open-unlink-modal").forEach((el) => {
   el.addEventListener('click', event => {
     // note: id here refers to monitoring's review id or a TTA issue's display_id
     const { id, inputField } = event.currentTarget.dataset
-    const hiddenInput = document.querySelector("#hidden-"+inputField)
+    const hiddenInput = document.querySelector(`#hidden-${inputField}`)
     // add id to hidden input form
     hiddenInput.value = id
   })
