@@ -54,7 +54,6 @@ RSpec.feature "Associating monitoring review", type: :feature do
         expect(page).to have_content "RAN Activity:\n#{test_id}\n"
 
         find_button("Edit RAN Review ID").click
-        # fill_in "RAN review ID", with: "NEW-TEST-ID"
         page.find("##{test_id}").fill_in with: "NEW-TEST-ID"
         click_button "Save"
 

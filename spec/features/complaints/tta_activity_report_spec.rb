@@ -98,7 +98,6 @@ RSpec.feature "Associating TTA Activity Report", type: :feature do
         expect(page).to have_content "TTA Activity:\n#{test_display_id}\n"
 
         find_button("Edit Activity Report Display ID").click
-        # fill_in "TTA report display ID", with: "R02-AR-14532"
         page.find("##{test_display_id}").fill_in with: "R02-AR-14532"
         click_button "Save"
 
