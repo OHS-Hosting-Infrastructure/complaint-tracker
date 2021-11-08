@@ -23,6 +23,10 @@ class Complaint
     @links = hses_complaint[:links].with_indifferent_access
   end
 
+  def agency_id
+    attributes[:agencyId]
+  end
+
   def creation_date
     Date.parse(attributes[:creationDate])
   rescue

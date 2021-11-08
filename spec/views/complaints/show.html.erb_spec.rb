@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe "complaints/show.html.erb", type: :view do
   let(:complaint) { Complaint.new(Api::FakeData::Complaint.new.data) }
   let(:issue_number) { complaint.id }
+  let(:agency_id) { complaint.agency_id }
   let(:grantee_name) { complaint.grantee }
   let(:summary) { complaint.summary }
   let(:timeline) { Timeline.new(complaint.attributes, [], []) }
@@ -20,8 +21,8 @@ RSpec.describe "complaints/show.html.erb", type: :view do
       expect(rendered).to match "<h1>HSES Issue ##{issue_number}</h1>"
     end
 
-    it "displays the grantee name" do
-      expect(rendered).to match CGI.escapeHTML(grantee_name)
+    it "displays the grantee name and link" do
+      expect(rendered).to match "<strong><a href=\"/grantees/#{agency_id}\">#{CGI.escapeHTML(grantee_name)}</a>:</strong>"
     end
 
     it "displays the issue text" do

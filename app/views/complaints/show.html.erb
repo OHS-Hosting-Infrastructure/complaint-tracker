@@ -13,7 +13,7 @@
         <div class="ct-section-divider">
           <h2>Summary</h2>
           <p>
-            <strong><%= @complaint.grantee %>:</strong>
+            <strong><%= link_to @complaint.grantee, grantee_path(id: @complaint.agency_id) %>:</strong>
             <%= @complaint.summary %>
           </p>
         </div>
