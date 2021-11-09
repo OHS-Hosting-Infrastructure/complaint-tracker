@@ -13,8 +13,7 @@ class IssueMonitoringReviewsController < ApplicationController
         format.js { render inline: "location.reload(true);" }
       else
         format.js { render inline: "alert('there was an error linking to a RAN review');" }
-        # TODO implement when working on error handling
-        # format.js { render "create_errors" }
+        # TODO implement create_errors when working on error handling
       end
     end
   end
@@ -36,7 +35,7 @@ class IssueMonitoringReviewsController < ApplicationController
         format.js { render inline: "location.reload(true);" }
       else
         format.js { render inline: "alert('there was an error changing the id of the RAN review');" }
-        # format.js { render "update_errors" }
+        # TODO implement update_errors when working on error handling
       end
     end
   end
