@@ -22,7 +22,7 @@ RSpec.describe "complaints/show.html.erb", type: :view do
     end
 
     it "displays the grantee name and link" do
-      expect(rendered).to match "<strong><a href=\"/grantees/#{agency_id}\">#{CGI.escapeHTML(grantee_name)}</a>:</strong>"
+      expect(rendered).to match "<strong><a class=\"usa-link\" href=\"/grantees/#{agency_id}\">#{CGI.escapeHTML(grantee_name)}</a>:</strong>"
     end
 
     it "displays the issue text" do

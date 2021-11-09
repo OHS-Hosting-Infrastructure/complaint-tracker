@@ -1,10 +1,11 @@
 <div class="ct-tta-divider display-flex flex-justify" id="tta-activity-show-<%= issue_tta_report.id %>">
   <div><%= issue_tta_report.tta_report_display_id %></div>
   <div>
-    <%= button_tag image_pack_tag("media/usa-icons/edit.svg", alt: "Edit Display ID"),
-      class: "ct-link-icon usa-button--unstyled js-edit-tta",
-      "aria-label": "Edit Display ID",
-      "data-id": issue_tta_report.id
+    <%= button_tag image_pack_tag("media/usa-icons/edit.svg", alt: "Edit Activity Report Display ID"),
+      class: "ct-link-icon usa-button--unstyled js-edit-link",
+      "aria-label": "Edit Activity Report Display ID",
+      "data-id": issue_tta_report.id,
+      "data-activity-type": "tta"
     %>
     <%=  link_to image_pack_tag("media/usa-icons/link_off.svg", alt: "Unlink Display ID"),
       "#unlink-modal-tta",
@@ -17,6 +18,7 @@
     %>
   </div>
 </div>
+
 <div class="display-none" id="edit-tta-activity-<%= issue_tta_report.id %>">
   <%= render "tta_edit_activity_report", issue_tta_report: issue_tta_report %>
 </div>

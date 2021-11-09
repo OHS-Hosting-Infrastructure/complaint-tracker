@@ -49,8 +49,29 @@ RSpec.feature "Associating monitoring review", type: :feature do
       visit "complaints/#{complaint.id}"
     end
 
+    context "editing the associated review" do
+      it "can successfully edit a RAN review id" do
+        expect(page).to have_content "RAN Activity:\n#{test_id}\n"
+
+        find_button("Edit RAN Review ID").click
+        page.find("##{test_id}").fill_in with: "NEW-TEST-ID"
+        click_button "Save"
+
+        expect(page).to_not have_content "RAN Activity:\n#{test_id}\n"
+      end
+
+      it "can cancel out of editing a RAN review id" do
+        expect(page).to have_content "RAN Activity:\n#{test_id}\n"
+        find_button("Edit RAN Review ID").click
+        page.find("##{test_id}").fill_in with: "NEW-TEST-ID"
+        page.find("#edit-monitoring-activity-#{issue_monitoring_review.id} .js-close-edit-link").click
+
+        expect(page).to have_content "RAN Activity:\n#{test_id}\n"
+      end
+    end
+
     it "can unlink a monitoring review id" do
-      expect(page).to have_content "RAN activity:\n#{test_id}\n"
+      expect(page).to have_content "RAN Activity:\n#{test_id}\n"
       page.find("#monitoring-activity-show-#{issue_monitoring_review.id} .js-open-unlink-modal").click
       click_button "monitoring-unlink-submit"
 

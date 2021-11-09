@@ -13,8 +13,7 @@ class IssueMonitoringReviewsController < ApplicationController
         format.js { render inline: "location.reload(true);" }
       else
         format.js { render inline: "alert('there was an error linking to a RAN review');" }
-        # TODO implement when working on error handling
-        # format.js { render "create_errors" }
+        # TODO implement create_errors when working on error handling
       end
     end
   end
@@ -26,6 +25,19 @@ class IssueMonitoringReviewsController < ApplicationController
     )
     review_link.destroy!
     redirect_back fallback_location: complaint_path(issue_id)
+  end
+
+  def update
+    @issue_monitoring_review = IssueMonitoringReview.find(params[:id])
+
+    respond_to do |format|
+      if @issue_monitoring_review.update(review_id: review_id, access_token: hses_access_token)
+        format.js { render inline: "location.reload(true);" }
+      else
+        format.js { render inline: "alert('there was an error changing the id of the RAN review');" }
+        # TODO implement update_errors when working on error handling
+      end
+    end
   end
 
   private

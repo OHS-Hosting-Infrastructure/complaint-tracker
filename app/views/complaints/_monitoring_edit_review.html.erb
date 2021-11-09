@@ -1,0 +1,24 @@
+<div class="ct-section-divider">
+  <% review_id = issue_monitoring_review.review_id %>
+  <p>
+    <div class="display-flex flex-justify margin-bottom-2">
+      <span> RAN Review ID</span>
+      <%= button_to "Cancel", ".js-add-monitoring-review",
+        class: "usa-link usa-button--unstyled js-close-edit-link",
+        "data-id": issue_monitoring_review.id,
+        "data-activity-type": "monitoring"
+      %>
+    </div>
+    <div>
+      <%= form_with url: issue_monitoring_review_path(issue_monitoring_review), local: false, method: "put", class: "usa-search display-flex" do %>
+        <%= hidden_field_tag(:issue_id_monitoring, @complaint.id) %>
+        <div class="usa-form-group">
+          <%= label_tag "monitoring-edit-review-id", "Monitoring RAN ID", class: "usa-sr-only  monitoring-edit-review-label" %>
+          <span class="usa-error-message"></span>
+          <%= text_field_tag :monitoring_review_id, review_id, id: review_id, "aria-describedBy": "monitoring-edit-review-label" %>
+          <%= submit_tag "Save", class: "usa-button usa-search__submit-text" %>
+        </div>
+      <% end %>
+    </div>
+  </p>
+</div>
