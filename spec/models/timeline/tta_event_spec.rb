@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Timeline::TtaEvent do
   let(:date) { 1.day.ago.strftime("%F") }
-  let(:display_id) { "Test-Display-Name" }
+  let(:display_id) { "R12-AR-532413" }
   # just setting the start_date manually because we aren't triggering the before_validation callback
   let(:event_param) { IssueTtaReport.new tta_report_display_id: display_id, start_date: date }
   let(:tta_activity_report) { event_param.tta_activity_report }

@@ -4,7 +4,7 @@ require "api_delegator"
 
 RSpec.describe "IssueTtaReports", type: :request do
   let(:complaint_id) { FakeIssues.instance.data.first[:id] }
-  let(:tta_display_id) { "RO4-VQ-14661" }
+  let(:tta_display_id) { "R04-AR-14661" }
   let(:user) {
     {
       name: "Request Spec",
@@ -79,6 +79,7 @@ RSpec.describe "IssueTtaReports", type: :request do
     end
 
     context "with an authorized user" do
+      let(:new_display_id) { "R04-AR-909090" }
       it "sends an API request to the tta system" do
         expect(ApiDelegator).to receive(:use)
           .with("tta", "activity_report", {display_id: tta_display_id, access_token: kind_of(HsesAccessToken)})
@@ -88,17 +89,17 @@ RSpec.describe "IssueTtaReports", type: :request do
 
       it "updates the IssueTtaReport object" do
         put issue_tta_report_path(issue_tta_report),
-          params: {tta_report_display_id: "new_display_id", issue_id_tta: complaint_id, format: :js}
+          params: {tta_report_display_id: new_display_id, issue_id_tta: complaint_id, format: :js}
 
         updated_report = IssueTtaReport.find(issue_tta_report.id)
-        expect(updated_report.tta_report_display_id).to eq "new_display_id"
+        expect(updated_report.tta_report_display_id).to eq new_display_id
       end
     end
   end
 
   describe "DELETE /issue_tta_report/unlink_report/:issue_id" do
     context "with an authorized user" do
-      let(:display_report_id) { "DisplayID " }
+      let(:display_report_id) { "R04-AR-909090" }
       let(:complaint_id) { FakeIssues.instance.data.first[:id] }
       let!(:issue_tta_report) do
         IssueTtaReport.create(
@@ -119,7 +120,7 @@ RSpec.describe "IssueTtaReports", type: :request do
       end
 
       describe "if a complaint has multiple TTA records" do
-        let(:second_display_id) { "SecondDisplayId" }
+        let(:second_display_id) { "R04-AR-11111" }
 
         before do
           post issue_tta_reports_path,
