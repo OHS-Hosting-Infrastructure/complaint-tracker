@@ -7,7 +7,7 @@ RSpec.describe Api::FakeData::Tta do
 
     describe "#request" do
       context "successful request" do
-        let(:display_id) { "RO4-VQ-14661" }
+        let(:display_id) { "RO4-AR-14661" }
 
         it "returns an activity report with the right display_id" do
           expect(subject.request.data[:attributes][:displayId]).to eq display_id

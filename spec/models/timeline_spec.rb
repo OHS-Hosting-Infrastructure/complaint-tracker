@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe Timeline do
-  let(:tta_display_id) { "First-Display-ID" }
-  let(:tta_display_id_2) { "Second-Display-ID" }
+  let(:tta_display_id) { "R09-AR-First-ID" }
+  let(:tta_display_id_2) { "R09-AR-Second-ID" }
   let(:review_id) { "First-Review-ID" }
   let(:review_id_2) { "Second-Review-ID" }
   let(:tta_activity_report) { IssueTtaReport.create tta_report_display_id: tta_display_id, issue_id: "1" }

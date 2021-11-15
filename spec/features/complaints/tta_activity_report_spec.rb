@@ -16,7 +16,7 @@ RSpec.feature "Associating TTA Activity Report", type: :feature do
       expires: true
     }
   }
-  let(:test_display_id) { "Test-Display-ID" }
+  let(:test_display_id) { "R12-AR-1234" }
 
   let!(:complaint) { Complaint.new(FakeIssues.instance.data.first) }
 

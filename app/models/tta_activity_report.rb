@@ -2,6 +2,7 @@ require "api_delegator"
 
 class TtaActivityReport
   include ActiveModel::Validations
+  validate :check_display_id_format
   validate :api_call_succeeded
 
   attr_accessor :access_token, :display_id
@@ -38,6 +39,7 @@ class TtaActivityReport
   private
 
   def api_call_succeeded
+    return unless errors.blank?
     errors.add(:base, tta_link_error_message) if activity_data.failed?
   end
 
@@ -55,6 +57,15 @@ class TtaActivityReport
 
   def api
     ApiDelegator.use("tta", "activity_report", display_id: display_id, access_token: access_token)
+  end
+
+  def check_display_id_format
+    # TODO: There are legacy display IDs in the system that may have a different format.
+    # If a user is attemping to use a legacy display ID, this may not work. Please update to ensure all
+    # possible display IDs will pass through correctly. (And/or fix on TTAHub Api side.)
+    unless display_id.match?(/^R\d{2}-AR-/)
+      errors.add(:base, "This doesn't look like a TTA Activity Report Display ID. Please double check the format.")
+    end
   end
 
   def tta_link_error_message

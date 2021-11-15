@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Api::FakeData::ActivityReport do
   describe "ActivityReport" do
-    let(:display_id) { "RO4-VQ-14661" }
+    let(:display_id) { "RO4-AR-14661" }
     let(:report) { Api::FakeData::ActivityReport.new(display_id: display_id) }
 
     describe "#init" do
