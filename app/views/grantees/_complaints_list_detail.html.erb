@@ -3,9 +3,7 @@
     <a href="<%= complaint.hses_link %>" target="_blank" class="display-flex flex-justify flex-align-center">
       <h2>Complaint #<%= complaint.id %></h2>
       <div>
-        <svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
-          <use xlink:href="/assets/img/sprite.svg#arrow_forward"></use>
-        </svg>
+        <%= image_pack_tag "media/usa-icons/arrow_forward.svg", alt: "Arrow pointing to the right" %>
       </div>
     </a>
   </div>
