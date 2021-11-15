@@ -2,9 +2,7 @@
   <div class="grid-container">
     <div class="grid-row">
       <div class="usa-logo grid-col-6" id="basic-logo">
-        <em class="usa-logo__text font-heading-xl">
-            OHS Complaint Tracker
-        </em>
+        <%= link_to "OHS Complaint Tracker", root_path, class: "usa-logo__text font-heading-xl" %>
       </div>
       <div class="grid-row grid-col-6 grid-gap flex-align-center flex-justify-end">
         <% if user_signed_in? %>
