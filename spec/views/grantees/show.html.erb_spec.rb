@@ -33,10 +33,6 @@ RSpec.describe "grantees/show", type: :view do
     end
   end
 
-  it "displays the open issues card" do
-    expect(rendered).to match "<h2>Open Issues</h2>"
-  end
-
   describe "complaints list" do
     it "displays the list" do
       expect(rendered).to match '<ul class=\"usa-list usa-list--unstyled\">'
