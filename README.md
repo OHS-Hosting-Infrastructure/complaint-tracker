@@ -1,3 +1,5 @@
+## Note: This repo is not currently in active development.
+
 # Complaint Tracker
 
 The Complaint Tracker is intended to connect complaints data across the OHS ecosystem for greater
